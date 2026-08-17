@@ -1,4 +1,4 @@
-import { UserRowSkeleton } from "@entities/user";
+import { UserRowSkeleton } from "@entities/users";
 
 import { USERS_SKELETON_COUNT } from "../config";
 

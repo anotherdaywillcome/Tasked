@@ -3,20 +3,16 @@
 import { ROUTES } from "@shared/config";
 import { NavigationLinkHighlight, useNavigationLinkHighlight } from "@shared/ui";
 
+import { GetAssignedProjectsResponse } from "@entities/projects";
+
 import { ProjectsNavigationLink } from "./projects-navigation-link";
 
-type Project = {
-	id: string;
-	name: string;
-	image: string;
-};
-
 type ProjectsNavigationLinksListProps = {
-	projects: Array<Project>;
+	projects: GetAssignedProjectsResponse;
 };
 
-export const ProjectsNavigationLinksList = ({ projects }: ProjectsNavigationLinksListProps) => {
-	const { activeLinkId, handleLinkSelection, handleLinkUnselection } = useNavigationLinkHighlight(
+export const ProjectsNavigationLinksList = ({ projects }: Readonly<ProjectsNavigationLinksListProps>) => {
+	const { activeLinkId, routeActiveLinkId, handleLinkSelection, handleLinkUnselection } = useNavigationLinkHighlight(
 		projects.map((project) => ({
 			id: project.id,
 			match: (pathname: string) => pathname === ROUTES.Project(project.id)
@@ -29,9 +25,10 @@ export const ProjectsNavigationLinksList = ({ projects }: ProjectsNavigationLink
 			onPointerLeave={handleLinkUnselection}
 			onBlurCapture={handleLinkUnselection}
 		>
-			{projects.map(({ id, name, image }) => {
+			{projects.map(({ id, name, imageUrl }) => {
 				{
 					const isActive = activeLinkId === id;
+					const isCurrent = routeActiveLinkId === id;
 
 					return (
 						<li
@@ -41,7 +38,13 @@ export const ProjectsNavigationLinksList = ({ projects }: ProjectsNavigationLink
 							onFocusCapture={() => handleLinkSelection(id)}
 						>
 							{isActive && <NavigationLinkHighlight layoutId="projects-navigation-link-highlight" />}
-							<ProjectsNavigationLink id={id} name={name} image={image} isActive={isActive}>
+							<ProjectsNavigationLink
+								id={id}
+								name={name}
+								imageUrl={imageUrl}
+								isActive={isActive}
+								isCurrent={isCurrent}
+							>
 								{name}
 							</ProjectsNavigationLink>
 						</li>

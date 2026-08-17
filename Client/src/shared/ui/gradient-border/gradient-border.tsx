@@ -6,10 +6,22 @@ type GradientBorderProps = {
 	animationDuration?: number;
 };
 
+type GradientBorderSettings = {
+	thickness: number;
+	radius: number;
+	animationDuration: number;
+};
+
+const GRADIENT_BORDER_DEFAULT_SETTINGS = {
+	thickness: 1,
+	radius: 24,
+	animationDuration: 8
+} satisfies GradientBorderSettings;
+
 export const GradientBorder = ({
-	thickness = 1,
-	radius = 24,
-	animationDuration = 8
+	thickness = GRADIENT_BORDER_DEFAULT_SETTINGS.thickness,
+	radius = GRADIENT_BORDER_DEFAULT_SETTINGS.radius,
+	animationDuration = GRADIENT_BORDER_DEFAULT_SETTINGS.animationDuration
 }: Readonly<GradientBorderProps>) => {
 	const gradientBorderId = `gradient-border-${useId().replaceAll(":", "")}`;
 

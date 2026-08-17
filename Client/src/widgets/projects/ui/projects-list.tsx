@@ -5,7 +5,7 @@ import Paypal from "@public/images/projects/paypal.svg";
 import Sleekpay from "@public/images/projects/sleekpay.svg";
 import Youtube from "@public/images/projects/youtube.svg";
 
-import { ProjectRow, ProjectRowActions } from "@entities/project";
+import { ProjectRow, ProjectRowActions } from "@entities/projects";
 
 type ProjectsListProps = {
 	renderActions?: (projectId: string) => ReactElement;

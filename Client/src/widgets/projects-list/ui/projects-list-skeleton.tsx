@@ -1,4 +1,4 @@
-import { ProjectRowSkeleton, ProjectRowVariants } from "@entities/project";
+import { ProjectRowSkeleton, ProjectRowVariants } from "@entities/projects";
 
 import { PROJECTS_LIST_SKELETON_COUNT } from "../config";
 

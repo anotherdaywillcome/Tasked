@@ -1,10 +1,12 @@
-import clsx from "clsx";
-import Image from "next/image";
+import type { ReactElement } from "react";
+import { isValidElement } from "react";
 
-type User = {
-	imageUrl: string;
-	fullName: string;
-};
+import type { GetFeaturedClientsResponse } from "@entities/users";
+
+import { AvatarStackCompact } from "./avatar-stack-compact";
+import type { AvatarStackDescriptionProps } from "./avatar-stack-description";
+import { AvatarStackDescription } from "./avatar-stack-description";
+import { AvatarStackExtended } from "./avatar-stack-extended";
 
 export const AvatarStackVariants = {
 	Compact: "compact",
@@ -13,82 +15,71 @@ export const AvatarStackVariants = {
 
 export type AvatarStackVariant = (typeof AvatarStackVariants)[keyof typeof AvatarStackVariants];
 
+type AvatarStackSettings = {
+	variant: AvatarStackVariant;
+	max: number;
+};
+
 type AvatarStackProps = {
-	users: Array<User>;
-	description?: string;
+	users: GetFeaturedClientsResponse;
 	max?: number;
 	className?: string;
 	variant?: AvatarStackVariant;
+	children?: ReactElement<AvatarStackDescriptionProps, typeof AvatarStackDescription>;
 };
 
-export const AvatarStack = ({
+type AvatarStackComponents = {
+	Description: typeof AvatarStackDescription;
+};
+
+type AvatarStack = ((props: Readonly<AvatarStackProps>) => ReactElement) & AvatarStackComponents;
+
+const AVATAR_STACK_DEFAULT_SETTINGS = {
+	variant: AvatarStackVariants.Compact,
+	max: 6
+} satisfies AvatarStackSettings;
+
+export const AvatarStack = (({
 	users,
-	description,
-	max,
+	max = AVATAR_STACK_DEFAULT_SETTINGS.max,
 	className,
-	variant = AvatarStackVariants.Compact
+	variant = AVATAR_STACK_DEFAULT_SETTINGS.variant,
+	children
 }: Readonly<AvatarStackProps>) => {
 	const visibleUsers = max ? users.slice(0, max) : users;
 	const remainingUsers = max ? Math.max(users.length - max, 0) : 0;
 
+	let avatarStackDescription: ReactElement<AvatarStackDescriptionProps, typeof AvatarStackDescription> | null = null;
+
+	if (children && isValidElement(children) && children.type === AvatarStackDescription) {
+		avatarStackDescription = children;
+	} else {
+		throw new Error(
+			`<AvatarStack> only accepts <AvatarStack.Description> as its child. ` +
+				`Received: <${typeof children!.type === "string" ? children!.type : (children!.type.name ?? "Unknown")}>.`
+		);
+	}
+
 	switch (variant) {
 		case AvatarStackVariants.Compact:
 			return (
-				<p className={clsx("flex flex-row gap-x-[0.875rem]", className)}>
-					<span className="flex flex-row items-center shrink-0" aria-hidden="true">
-						{visibleUsers.map(({ imageUrl, fullName }, index) => (
-							<span
-								key={index + "-" + fullName}
-								className={clsx(
-									"relative block w-[2.5rem] h-[2.5rem] rounded-[2.5rem] overflow-hidden shadow-[0.063rem_0.063rem_0.375rem_0_rgba(0,0,0,0.12)] shrink-0",
-									index !== 0 && "-ml-[1.25rem]"
-								)}
-								style={{ zIndex: index }}
-							>
-								<Image className="object-cover" src={imageUrl} alt={fullName} width={40} height={40} />
-							</span>
-						))}
-						{remainingUsers > 0 && (
-							<span className="font-(family-name:--font-barlow) font-semibold leading-[1.125rem] tracking-[0.01em] text-(--desert-storm)">
-								+{remainingUsers}
-							</span>
-						)}
-					</span>
-					{description && (
-						<span className="font-(family-name:--font-barlow) font-semibold text-[0.875rem] leading-[1.125rem] tracking-[0.01em] text-(--desert-storm)">
-							{description}
-						</span>
-					)}
-				</p>
+				<AvatarStackCompact
+					visibleUsers={visibleUsers}
+					remainingUsers={remainingUsers}
+					avatarStackDescription={avatarStackDescription}
+					className={className}
+				/>
 			);
 		case AvatarStackVariants.Extended:
 			return (
-				<p className={clsx("flex flex-row gap-x-[0.875rem]", className)}>
-					<span className="flex flex-row items-center shrink-0" aria-hidden="true">
-						{visibleUsers.map(({ imageUrl, fullName }, index) => (
-							<span
-								key={index + "-" + fullName}
-								className={clsx(
-									"relative block w-[1.5rem] h-[1.5rem] rounded-full overflow-hidden border border-solid border-(--black-pearl) shrink-0",
-									index !== 0 && "-ml-[0.25rem]"
-								)}
-								style={{ zIndex: index }}
-							>
-								<Image className="object-cover" src={imageUrl} alt={fullName} width={24} height={24} />
-							</span>
-						))}
-						{remainingUsers > 0 && (
-							<span className="font-(family-name:--font-barlow) font-semibold leading-[1.125rem] tracking-[0.01em] text-(--desert-storm)">
-								+{remainingUsers}
-							</span>
-						)}
-					</span>
-					{description && (
-						<span className="font-(family-name:--font-barlow) font-semibold text-[0.875rem] leading-[1.125rem] tracking-[0.01em] text-(--desert-storm)">
-							{description}
-						</span>
-					)}
-				</p>
+				<AvatarStackExtended
+					visibleUsers={visibleUsers}
+					remainingUsers={remainingUsers}
+					avatarStackDescription={avatarStackDescription}
+					className={className}
+				/>
 			);
 	}
-};
+}) as AvatarStack;
+
+AvatarStack.Description = AvatarStackDescription;

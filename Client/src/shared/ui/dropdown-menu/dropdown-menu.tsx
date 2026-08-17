@@ -1,115 +1,76 @@
 "use client";
 
 import { clsx } from "clsx";
-import { AnimatePresence, motion, type Variants } from "motion/react";
-import type { ComponentPropsWithoutRef, KeyboardEvent } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 
-import { ICON, Icon } from "../icon";
+import { DropdownMenuContext } from "./context";
+import { getElementById, getFirstEnabledItem, getLastEnabledItem, getNextEnabledItem } from "./lib";
+import type { DropdownMenuContextValue, DropdownMenuItemRecord, DropdownMenuPosition } from "./types";
 
-// TODO
-// MAKE SHADCN LIKE with CompositionPattern
-// https://ui.shadcn.com/docs/components/base/dropdown-menu
-// Temporary solution
-
-export type DropdownMenuOption = {
-	label: string;
-	value: string;
-	disabled?: boolean;
-};
-
-type DropdownMenuPosition = {
-	left: number;
-	top: number;
-	width: number;
-};
-
-type DropdownMenuProps = Omit<
-	ComponentPropsWithoutRef<"button">,
-	"children" | "defaultValue" | "onChange" | "value"
-> & {
-	label: string;
-	name: string;
-	options: DropdownMenuOption[];
-	placeholder?: string;
-	value?: string;
+type DropdownMenuProps = ComponentPropsWithoutRef<"div"> & {
+	children: ReactNode;
+	defaultOpen?: boolean;
 	defaultValue?: string;
+	disabled?: boolean;
+	name?: string;
+	onOpenChange?: (open: boolean) => void;
 	onValueChange?: (value: string) => void;
-	className?: string;
-	contentClassName?: string;
-	triggerClassName?: string;
-};
-
-const DROPDOWN_MENU_CONTENT_ANIMATION_VARIANTS: Variants = {
-	initial: {
-		opacity: 0,
-		scale: 0.98,
-		y: -4
-	},
-	visible: {
-		opacity: 1,
-		scale: 1,
-		y: 0
-	},
-	exit: {
-		opacity: 0,
-		scale: 0.98,
-		y: -4
-	}
-};
-
-const getNextEnabledIndex = (options: DropdownMenuOption[], startIndex: number, direction: 1 | -1) => {
-	if (!options.length) return -1;
-
-	for (let step = 0; step < options.length; step += 1) {
-		const optionIndex = (startIndex + step * direction + options.length) % options.length;
-
-		if (!options[optionIndex]?.disabled) {
-			return optionIndex;
-		}
-	}
-
-	return -1;
+	open?: boolean;
+	value?: string;
 };
 
 export const DropdownMenu = ({
-	label,
-	name,
-	options,
-	placeholder = "Select option",
-	value,
-	defaultValue,
-	onValueChange,
+	children,
 	className,
-	contentClassName,
-	triggerClassName,
+	defaultOpen = false,
+	defaultValue,
 	disabled,
 	id,
+	name,
+	onOpenChange,
+	onValueChange,
+	open,
+	value,
 	...props
 }: Readonly<DropdownMenuProps>) => {
 	const generatedId = useId();
 	const triggerId = id ?? generatedId;
 	const contentId = `${triggerId}-content`;
-	const isControlled = value !== undefined;
+	const isOpenControlled = open !== undefined;
+	const isValueControlled = value !== undefined;
 
-	const [open, setOpen] = useState(false);
-	const [uncontrolledValue, setUncontrolledValue] = useState(
-		defaultValue ?? options.find((option) => !option.disabled)?.value ?? ""
-	);
-	const [activeIndex, setActiveIndex] = useState(-1);
+	const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+	const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+	const [selectedLabel, setSelectedLabel] = useState<ReactNode>(null);
+	const [activeItemId, setActiveItemId] = useState<string | null>(null);
 	const [position, setPosition] = useState<DropdownMenuPosition | null>(null);
+	const itemsRef = useRef<DropdownMenuItemRecord[]>([]);
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 
-	const selectedValue = isControlled ? value : uncontrolledValue;
-	const selectedOption = useMemo(
-		() => options.find((option) => option.value === selectedValue),
-		[options, selectedValue]
+	const isOpen = isOpenControlled ? open : uncontrolledOpen;
+	const selectedValue = isValueControlled ? value : uncontrolledValue;
+
+	const setOpen = useCallback(
+		(nextOpen: boolean) => {
+			if (disabled && nextOpen) return;
+
+			if (!nextOpen) {
+				setActiveItemId(null);
+			}
+
+			if (!isOpenControlled) {
+				setUncontrolledOpen(nextOpen);
+			}
+
+			onOpenChange?.(nextOpen);
+		},
+		[disabled, isOpenControlled, onOpenChange]
 	);
 
 	const updatePosition = useCallback(() => {
-		const triggerElement = triggerRef.current;
+		const triggerElement = triggerRef.current ?? getElementById<HTMLButtonElement>(triggerId);
 
 		if (!triggerElement) return;
 
@@ -120,90 +81,80 @@ export const DropdownMenu = ({
 			top: triggerRect.bottom + 4,
 			width: triggerRect.width
 		});
-	}, []);
+	}, [triggerId]);
 
-	const selectOption = useCallback(
-		(option: DropdownMenuOption) => {
-			if (option.disabled) return;
-
-			if (!isControlled) {
-				setUncontrolledValue(option.value);
+	const setSelectedValue = useCallback(
+		(nextValue: string) => {
+			if (!isValueControlled) {
+				setUncontrolledValue(nextValue);
 			}
 
-			onValueChange?.(option.value);
-			setOpen(false);
-			triggerRef.current?.focus();
+			onValueChange?.(nextValue);
 		},
-		[isControlled, onValueChange]
+		[isValueControlled, onValueChange]
 	);
 
-	const openMenu = useCallback(() => {
-		if (disabled) return;
+	const registerItem = useCallback(
+		(item: DropdownMenuItemRecord) => {
+			itemsRef.current = [...itemsRef.current.filter((currentItem) => currentItem.id !== item.id), item];
 
-		const selectedIndex = options.findIndex((option) => option.value === selectedValue);
-		setActiveIndex(getNextEnabledIndex(options, selectedIndex >= 0 ? selectedIndex : 0, 1));
-		updatePosition();
-		setOpen(true);
-	}, [disabled, options, selectedValue, updatePosition]);
+			if (isOpen && !item.disabled && (item.value === selectedValue || activeItemId === null)) {
+				setActiveItemId(item.id);
+			}
 
-	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-		if (disabled) return;
+			return () => {
+				itemsRef.current = itemsRef.current.filter((currentItem) => currentItem.id !== item.id);
+			};
+		},
+		[activeItemId, isOpen, selectedValue]
+	);
 
-		if (event.key === "Escape") {
+	const selectItem = useCallback(
+		(item: DropdownMenuItemRecord, label: ReactNode) => {
+			if (item.disabled) return;
+
+			item.onSelect?.();
+
+			if (item.value !== undefined) {
+				setSelectedValue(item.value);
+				setSelectedLabel(label);
+			}
+
 			setOpen(false);
-			return;
-		}
+			queueMicrotask(() => {
+				(triggerRef.current ?? getElementById<HTMLButtonElement>(triggerId))?.focus();
+			});
+		},
+		[setOpen, setSelectedValue, triggerId]
+	);
 
-		if (event.key === "Enter" || event.key === " ") {
-			event.preventDefault();
+	const setNextItemActive = useCallback(
+		(direction: 1 | -1) => {
+			const nextItem = getNextEnabledItem(itemsRef.current, activeItemId, direction);
 
-			if (open && activeIndex >= 0 && options[activeIndex]) {
-				selectOption(options[activeIndex]);
-				return;
-			}
+			setActiveItemId(nextItem?.id ?? null);
+		},
+		[activeItemId]
+	);
 
-			openMenu();
-			return;
-		}
+	const setFirstItemActive = useCallback(() => {
+		setActiveItemId(getFirstEnabledItem(itemsRef.current)?.id ?? null);
+	}, []);
 
-		if (event.key === "ArrowDown") {
-			event.preventDefault();
+	const setLastItemActive = useCallback(() => {
+		setActiveItemId(getLastEnabledItem(itemsRef.current)?.id ?? null);
+	}, []);
 
-			if (!open) {
-				openMenu();
-				return;
-			}
+	const selectActiveItem = useCallback(() => {
+		const activeItem = itemsRef.current.find((item) => item.id === activeItemId);
 
-			setActiveIndex((currentIndex) => getNextEnabledIndex(options, currentIndex + 1, 1));
-			return;
-		}
+		if (!activeItem) return;
 
-		if (event.key === "ArrowUp") {
-			event.preventDefault();
-
-			if (!open) {
-				openMenu();
-				return;
-			}
-
-			setActiveIndex((currentIndex) => getNextEnabledIndex(options, currentIndex - 1, -1));
-			return;
-		}
-
-		if (event.key === "Home") {
-			event.preventDefault();
-			setActiveIndex(getNextEnabledIndex(options, 0, 1));
-			return;
-		}
-
-		if (event.key === "End") {
-			event.preventDefault();
-			setActiveIndex(getNextEnabledIndex(options, options.length - 1, -1));
-		}
-	};
+		selectItem(activeItem, activeItem.label);
+	}, [activeItemId, selectItem]);
 
 	useLayoutEffect(() => {
-		if (!open) return;
+		if (!isOpen) return;
 
 		updatePosition();
 		window.addEventListener("resize", updatePosition);
@@ -213,17 +164,19 @@ export const DropdownMenu = ({
 			window.removeEventListener("resize", updatePosition);
 			window.removeEventListener("scroll", updatePosition, true);
 		};
-	}, [open, updatePosition]);
+	}, [isOpen, updatePosition]);
 
 	useEffect(() => {
-		if (!open) return;
+		if (!isOpen) return;
 
 		const handlePointerDown = (event: PointerEvent) => {
 			const target = event.target;
 
 			if (!(target instanceof Node)) return;
 
-			if (triggerRef.current?.contains(target) || contentRef.current?.contains(target)) return;
+			const triggerElement = triggerRef.current ?? getElementById<HTMLButtonElement>(triggerId);
+
+			if (triggerElement?.contains(target) || contentRef.current?.contains(target)) return;
 
 			setOpen(false);
 		};
@@ -233,103 +186,63 @@ export const DropdownMenu = ({
 		return () => {
 			document.removeEventListener("pointerdown", handlePointerDown);
 		};
-	}, [open]);
+	}, [isOpen, setOpen, triggerId]);
 
-	const content =
-		position && typeof document !== "undefined"
-			? createPortal(
-					<AnimatePresence>
-						{open && (
-							<motion.div
-								ref={contentRef}
-								variants={DROPDOWN_MENU_CONTENT_ANIMATION_VARIANTS}
-								initial="initial"
-								animate="visible"
-								exit="exit"
-								transition={{ duration: 0.16, ease: "easeOut" }}
-								className={clsx(
-									"fixed z-[100] max-h-[14rem] overflow-y-auto rounded-[0.625rem] border-[0.031rem] border-solid border-(--white-pallete-10) bg-(--geek-blue-primary-opacity-200) p-[0.25rem] shadow-[0_1rem_2rem_rgba(0,0,0,0.28)] backdrop-blur-[2rem]",
-									contentClassName
-								)}
-								style={{
-									left: position.left,
-									top: position.top,
-									width: position.width
-								}}
-								id={contentId}
-								role="listbox"
-							>
-								{options.map((option, optionIndex) => {
-									const selected = option.value === selectedValue;
-									const active = optionIndex === activeIndex;
-
-									return (
-										<button
-											key={option.value}
-											id={`${contentId}-${option.value}`}
-											className={clsx(
-												"flex w-full cursor-pointer items-center justify-between rounded-[0.5rem] px-[0.5rem] pt-[0.438rem] pb-[0.563rem] text-left font-(family-name:--font-barlow) font-medium text-[0.75rem] leading-[133%] tracking-[0.01em] text-(--white-pallete-100) transition-[background-color,color] duration-150 ease-out focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40",
-												active && "bg-(--geek-blue-primary-opacity-300)",
-												selected && "text-(--daybreak-blue-200)",
-												!selected && !active && "hover:bg-(--geek-blue-primary-opacity-150)"
-											)}
-											type="button"
-											role="option"
-											aria-selected={selected}
-											disabled={option.disabled}
-											onMouseEnter={() => setActiveIndex(optionIndex)}
-											onClick={() => selectOption(option)}
-										>
-											<span className="truncate">{option.label}</span>
-											{selected && (
-												<span className="h-[0.375rem] w-[0.375rem] rounded-full bg-(--daybreak-blue-200)" />
-											)}
-										</button>
-									);
-								})}
-							</motion.div>
-						)}
-					</AnimatePresence>,
-					document.body
-				)
-			: null;
+	const contextValue = useMemo<DropdownMenuContextValue>(
+		() => ({
+			activeItemId,
+			contentId,
+			contentRef,
+			disabled,
+			isControlled: isValueControlled,
+			name,
+			open: isOpen,
+			position,
+			selectedLabel,
+			selectedValue,
+			setActiveItemId,
+			setOpen,
+			setSelectedLabel,
+			setSelectedValue,
+			triggerId,
+			triggerRef,
+			updatePosition,
+			registerItem,
+			selectActiveItem,
+			selectItem,
+			setFirstItemActive,
+			setLastItemActive,
+			setNextItemActive
+		}),
+		[
+			activeItemId,
+			contentId,
+			disabled,
+			isOpen,
+			isValueControlled,
+			name,
+			position,
+			registerItem,
+			selectActiveItem,
+			selectItem,
+			selectedLabel,
+			selectedValue,
+			setOpen,
+			setFirstItemActive,
+			setLastItemActive,
+			setNextItemActive,
+			setSelectedValue,
+			triggerId,
+			updatePosition
+		]
+	);
 
 	return (
-		<div className={clsx("flex flex-col gap-y-[0.25rem]", className)}>
-			<label
-				className="font-(family-name:--font-barlow) font-medium text-[0.75rem] leading-[133%] tracking-[0.01em] text-(--neutrals-3)"
-				htmlFor={triggerId}
-			>
-				{label}
-			</label>
-			<input readOnly type="hidden" name={name} value={selectedValue ?? ""} />
-			<button
-				ref={triggerRef}
-				className={clsx(
-					"flex w-full cursor-pointer items-center justify-between gap-x-[0.5rem] border-[0.031rem] border-solid border-(--white-pallete-10) rounded-[0.625rem] bg-(--geek-blue-primary-opacity-100) px-[0.5rem] pt-[0.438rem] pb-[0.563rem] text-left font-(family-name:--font-barlow) font-medium text-[0.75rem] leading-[133%] tracking-[0.01em] text-(--white-pallete-100) transition-[border-color,background-color,box-shadow,color] duration-200 ease-out hover:border-(--white-pallete-20) hover:bg-(--geek-blue-primary-opacity-200) focus-visible:outline-none focus-visible:border-(--geek-blue-4) focus-visible:bg-(--geek-blue-primary-opacity-200) focus-visible:shadow-[0_0_0_0.125rem_var(--daybreak-blue-200)] disabled:cursor-not-allowed disabled:opacity-60",
-					triggerClassName
-				)}
-				type="button"
-				id={triggerId}
-				aria-controls={contentId}
-				aria-expanded={open}
-				aria-haspopup="listbox"
-				aria-activedescendant={
-					open && activeIndex >= 0 ? `${contentId}-${options[activeIndex]?.value}` : undefined
-				}
-				disabled={disabled}
-				onClick={() => (open ? setOpen(false) : openMenu())}
-				onKeyDown={handleKeyDown}
-				{...props}
-			>
-				<span className={clsx("truncate", !selectedOption && "text-(--neutrals-3)")}>
-					{selectedOption?.label ?? placeholder}
-				</span>
-				<motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.16, ease: "easeOut" }}>
-					<Icon type={ICON.Chevron} size={16} className="text-[#95ACCB]" />
-				</motion.span>
-			</button>
-			{content}
-		</div>
+		<DropdownMenuContext.Provider value={contextValue}>
+			<div className={clsx("flex flex-col gap-y-[0.25rem]", className)} {...props}>
+				{name && <input readOnly type="hidden" name={name} value={selectedValue ?? ""} />}
+				{children}
+			</div>
+		</DropdownMenuContext.Provider>
 	);
 };

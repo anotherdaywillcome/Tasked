@@ -13,14 +13,34 @@ type SpinnerProps = {
 	className?: string;
 };
 
+type SpinnerSettings = {
+	size: number;
+	spinDuration: number;
+	spinStiffness: number;
+	spinDamping: number;
+	backgroundColor: string;
+	trackColor: string;
+	activeColor: string;
+};
+
+const SPINNER_DEFAULT_SETTINGS = {
+	size: 48,
+	spinDuration: 1.35,
+	spinStiffness: 78,
+	spinDamping: 16,
+	backgroundColor: "var(--geek-blue-primary-opacity-100)",
+	trackColor: "var(--geek-blue-primary-opacity-200)",
+	activeColor: "var(--geek-blue-5)"
+} satisfies SpinnerSettings;
+
 export const Spinner = ({
-	size = 48,
-	spinDuration = 1.35,
-	spinStiffness = 78,
-	spinDamping = 16,
-	backgroundColor = "var(--geek-blue-primary-opacity-100)",
-	trackColor = "var(--geek-blue-primary-opacity-200)",
-	activeColor = "var(--geek-blue-5)",
+	size = SPINNER_DEFAULT_SETTINGS.size,
+	spinDuration = SPINNER_DEFAULT_SETTINGS.spinDuration,
+	spinStiffness = SPINNER_DEFAULT_SETTINGS.spinStiffness,
+	spinDamping = SPINNER_DEFAULT_SETTINGS.spinDamping,
+	backgroundColor = SPINNER_DEFAULT_SETTINGS.backgroundColor,
+	trackColor = SPINNER_DEFAULT_SETTINGS.trackColor,
+	activeColor = SPINNER_DEFAULT_SETTINGS.activeColor,
 	className
 }: Readonly<SpinnerProps>) => {
 	return (

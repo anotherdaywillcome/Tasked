@@ -2,33 +2,50 @@
 
 import { clsx } from "clsx";
 import { motion } from "motion/react";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 import { useFormStatus } from "react-dom";
 
-import type { ButtonVariants } from "@shared/ui";
-import { Button, Spinner } from "@shared/ui";
+import { Button } from "../button";
+import { Spinner } from "../spinner";
+
+export const SUBMIT_BUTTON_VARIANTS = {
+	Primary: "primary",
+	Secondary: "secondary"
+} as const;
+
+type SubmitButtonVariant = (typeof SUBMIT_BUTTON_VARIANTS)[keyof typeof SUBMIT_BUTTON_VARIANTS];
 
 type SubmitButtonProps = {
 	children: ReactElement | string;
-	variant?: ButtonVariants;
+	variant?: SubmitButtonVariant;
 	className?: string;
 	spinnerClasses?: string;
 	childrenDisplayedWhenPending?: boolean;
 };
 
+type SubmitButtonSettings = {
+	variant: SubmitButtonVariant;
+	childrenDisplayedWhenPending: boolean;
+};
+
+const SUBMIT_BUTTON_DEFAULT_SETTINGS = {
+	variant: SUBMIT_BUTTON_VARIANTS.Primary,
+	childrenDisplayedWhenPending: true
+} satisfies SubmitButtonSettings;
+
 export const SubmitButton = ({
-	variant = "primary",
+	variant = SUBMIT_BUTTON_DEFAULT_SETTINGS.variant,
 	children,
 	className,
 	spinnerClasses,
-	childrenDisplayedWhenPending = true
+	childrenDisplayedWhenPending = SUBMIT_BUTTON_DEFAULT_SETTINGS.childrenDisplayedWhenPending
 }: Readonly<SubmitButtonProps>) => {
 	const { pending } = useFormStatus();
 
 	const displayChildren = !pending || childrenDisplayedWhenPending;
 
 	const spinnerColors =
-		variant === "secondary"
+		variant === SUBMIT_BUTTON_VARIANTS.Secondary
 			? {
 					backgroundColor: "var(--white-pallete-10)",
 					trackColor: "var(--white-pallete-20)",

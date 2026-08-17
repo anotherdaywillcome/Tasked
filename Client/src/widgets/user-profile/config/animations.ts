@@ -3,6 +3,7 @@ import type { Transition, Variants } from "motion/react";
 export const TRANSITION_LAYOUT: Transition = { type: "spring", stiffness: 400, damping: 30 };
 export const TRANSITION_CHEVRON: Transition = { type: "spring", stiffness: 300, damping: 25 };
 export const TRANSITION_HOVER: Transition = { duration: 0.15, ease: "easeOut" };
+export const TRANSITION_HIGHLIGHT: Transition = { type: "spring", stiffness: 500, damping: 40 };
 
 export const USER_PROFILE_CONTAINER_VARIANTS: Variants = {
 	closed: {

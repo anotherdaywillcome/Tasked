@@ -8,7 +8,7 @@ import { CreateTask } from "@features/create-task";
 import { Search } from "@features/search";
 
 import { ROUTES } from "@shared/config";
-import { Icon, ICON } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 
 type SettingsLayoutProps = {
 	children: ReactNode;
@@ -16,22 +16,22 @@ type SettingsLayoutProps = {
 
 const SETTINGS_NAVIGATION_ITEMS = [
 	{
-		icon: ICON.UserSquareOutline,
+		icon: ICON_TYPES.UserSquareOutline,
 		label: "Account",
 		href: ROUTES.Account
 	},
 	{
-		icon: ICON.SettingsOutline,
+		icon: ICON_TYPES.SettingsOutline,
 		label: "Main settings",
 		href: ROUTES.MainSettings
 	},
 	{
-		icon: ICON.CalendarAddOutline,
+		icon: ICON_TYPES.CalendarAddOutline,
 		label: "Reminders",
 		href: ROUTES.Reminders
 	},
 	{
-		icon: ICON.NotificationsOutline,
+		icon: ICON_TYPES.NotificationsOutline,
 		label: "Notifications",
 		href: ROUTES.Notifications
 	}
@@ -43,13 +43,13 @@ const SETTINGS_NAVIGATION_ITEMS = [
 const SettingsLayout = ({ children }: Readonly<SettingsLayoutProps>) => {
 	return (
 		<Fragment>
-			<ViewHeader title="Settings" icon={ICON.Settings}>
+			<ViewHeader title="Settings" icon={ICON_TYPES.Settings}>
 				<ViewHeader.Tools>
 					<Search />
 					<CreateTask />
 				</ViewHeader.Tools>
 			</ViewHeader>
-			<section className="flex min-h-0 flex-row gap-x-[8px] h-full">
+			<section className="flex min-h-0 flex-row gap-x-[8px] h-full mt-[1.25rem]">
 				<h1 className="sr-only">Settings</h1>
 				<section className="flex flex-col basis-[25%] border-[0.50px] border-solid border-(--white-pallete-10) rounded-[20px] bg-(--geek-blue-primary-opacity-100) backdrop-blur-[32px] pb-[18px]">
 					<h2 className="sr-only">Settings list</h2>
@@ -76,7 +76,7 @@ const SettingsLayout = ({ children }: Readonly<SettingsLayoutProps>) => {
 										</p>
 										<Icon
 											className="mr-0 ml-[auto] mb-[-5px]"
-											type={ICON.ArrowRightOutline}
+											type={ICON_TYPES.ArrowRightOutline}
 											size={20}
 										/>
 									</Link>

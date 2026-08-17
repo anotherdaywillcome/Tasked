@@ -1,4 +1,4 @@
-import { Button, Icon, ICON } from "@shared/ui";
+import { Button, Icon, ICON_TYPES } from "@shared/ui";
 
 const MessagesPage = () => {
 	return (
@@ -6,7 +6,7 @@ const MessagesPage = () => {
 			<header className="relative flex px-[20px] py-[12px] items-center justify-between border-b-[0.50px] border-solid border-(--geek-blue-primary-opacity-50) backdrop-blur-[50px] bg-(--geek-blue-primary-opacity-100)">
 				<div className="flex items-center gap-x-[12px]">
 					<span className="flex w-[32px] h-[32px] items-center justify-center rounded-full border-[0.50px] border-solid border-(--white-pallete-10) bg-(--geek-blue-primary-opacity-400) text-(--neutrals-3)">
-						<Icon type={ICON.Message} size={16} />
+						<Icon type={ICON_TYPES.Message} size={16} />
 					</span>
 					<h4 className="font-(family-name:--font-barlow) font-bold text-[16px] leading-[125%] tracking-[0.01em] text-(--white-pallete-100)">
 						Select a conversation
@@ -18,13 +18,13 @@ const MessagesPage = () => {
 					disabled
 				>
 					<span>Attach task</span>
-					<Icon type={ICON.TaskSquare} size={14} />
+					<Icon type={ICON_TYPES.TaskSquare} size={14} />
 				</button>
 			</header>
 			<div className="relative z-10 flex h-full items-center justify-center px-[24px] py-[24px] bg-[rgba(1,0,9,0.25)]">
 				<div className="flex max-w-[360px] flex-col items-center text-center">
 					<span className="mb-[16px] flex w-[56px] h-[56px] items-center justify-center rounded-full border-[0.50px] border-solid border-(--white-pallete-10) bg-(--geek-blue-primary-opacity-150) text-(--white-pallete-100)">
-						<Icon type={ICON.Message} size={24} />
+						<Icon type={ICON_TYPES.Message} size={24} />
 					</span>
 					<h2 className="font-(family-name:--font-barlow) font-bold text-[16px] leading-[125%] tracking-[0.01em] text-(--white-pallete-100)">
 						No conversation selected
@@ -49,7 +49,7 @@ const MessagesPage = () => {
 						/>
 						<Button
 							className="absolute bottom-[12px] right-[12px] px-[16px] py-[7px] rounded-[0.625rem] opacity-50 cursor-not-allowed"
-							trailingIcon={<Icon type={ICON.SendBold} size={16} />}
+							trailingIcon={<Icon type={ICON_TYPES.SendBold} size={16} />}
 							type="submit"
 							disabled
 						>
@@ -58,11 +58,11 @@ const MessagesPage = () => {
 						<div className="flex gap-x-[10px] absolute bottom-[12px] left-[12px]">
 							<button className="cursor-not-allowed text-[#95ACCB] opacity-50" type="button" disabled>
 								<span className="sr-only">Attach file</span>
-								<Icon size={16} type={ICON.Attach} />
+								<Icon size={16} type={ICON_TYPES.Attach} />
 							</button>
 							<button className="cursor-not-allowed text-[#95ACCB] opacity-50" type="button" disabled>
 								<span className="sr-only">Add emoji</span>
-								<Icon size={16} type={ICON.Smileys} />
+								<Icon size={16} type={ICON_TYPES.Smileys} />
 							</button>
 						</div>
 					</div>

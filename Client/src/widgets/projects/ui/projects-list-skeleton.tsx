@@ -1,8 +1,11 @@
-import { ProjectRowSkeleton } from "@entities/project";
+import { ProjectRowSkeleton } from "@entities/projects";
+import { PROJECTS_SKELETON_COUNT } from "@widgets/projects/config";
 
-import { PROJECTS_SKELETON_COUNT } from "../config";
+type ProjectsListSkeletonProps = {
+	count?: number;
+};
 
-export const ProjectsListSkeleton = () => {
+export const ProjectsListSkeleton = ({ count = PROJECTS_SKELETON_COUNT }: ProjectsListSkeletonProps) => {
 	return (
 		<div className="flex flex-col gap-y-[0.5rem]">
 			{Array.from({ length: PROJECTS_SKELETON_COUNT }, (_, index) => (

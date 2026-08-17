@@ -1,10 +1,10 @@
 import { clsx } from "clsx";
 import Image from "next/image";
 
-import { groupMessagesBySender } from "@entities/message";
+import { groupMessagesBySender } from "@entities/messages";
 
 import { getRelativeTime } from "@shared/lib/utils";
-import { Button, Icon, ICON } from "@shared/ui";
+import { Button, Icon, ICON_TYPES } from "@shared/ui";
 
 type Attachment = {
 	id: string;
@@ -240,7 +240,7 @@ const messagesByConversationId: Record<string, Array<Message>> = {
 		{
 			id: "1",
 			senderId: "2",
-			text: "The project settings copy is approved.",
+			text: "The projects settings copy is approved.",
 			createdAt: "2025-02-18T13:10:00Z",
 			attachments: []
 		}
@@ -363,7 +363,7 @@ const messagesByConversationId: Record<string, Array<Message>> = {
 		{
 			id: "1",
 			senderId: "2",
-			text: "I found one label that is too long for the compact layout: \"Automatically notify all project collaborators when this task changes status\". It wraps, but it should still feel intentional in the sidebar and not collide with the timestamp.",
+			text: 'I found one label that is too long for the compact layout: "Automatically notify all projects collaborators when this task changes status". It wraps, but it should still feel intentional in the sidebar and not collide with the timestamp.',
 			createdAt: "2025-02-18T15:02:00Z",
 			attachments: []
 		},
@@ -522,7 +522,7 @@ const ConversationPage = async ({ params }: { params: Promise<{ conversationId: 
 					className="flex flex-row-reverse items-center cursor-pointer font-(family-name:--font-barlow) font-bold text-[14px] leading-[114%] tracking-[0.01em] text-(--white-pallete-100) px-[16px] py-[7px] gap-x-[4px] border-[0.50px] border-solid border-(--white-pallete-10) rounded-[10px] bg-(--geek-blue-primary-opacity-150)"
 				>
 					<span>Attach task</span>
-					<Icon type={ICON.TaskSquare} size={14} />
+					<Icon type={ICON_TYPES.TaskSquare} size={14} />
 				</button>
 			</header>
 			<ol className="relative z-10 flex flex-col gap-y-[12px] h-full px-[24px] py-[24px] bg-[rgba(1,0,9,0.25)]">
@@ -601,7 +601,7 @@ const ConversationPage = async ({ params }: { params: Promise<{ conversationId: 
 						/>
 						<Button
 							className="absolute bottom-[12px] right-[12px] px-[16px] py-[7px] rounded-[0.625rem]"
-							trailingIcon={<Icon type={ICON.SendBold} size={16} />}
+							trailingIcon={<Icon type={ICON_TYPES.SendBold} size={16} />}
 							type="submit"
 						>
 							Send
@@ -609,11 +609,11 @@ const ConversationPage = async ({ params }: { params: Promise<{ conversationId: 
 						<div className="flex gap-x-[10px] absolute bottom-[12px] left-[12px]">
 							<button className="cursor-pointer text-[#95ACCB] hover:text-[#fff]" type="button">
 								<span className="sr-only">Attach file</span>
-								<Icon size={16} type={ICON.Attach} />
+								<Icon size={16} type={ICON_TYPES.Attach} />
 							</button>
 							<button className="cursor-pointer text-[#95ACCB] hover:text-[#fff]" type="button">
 								<span className="sr-only">Add emoji</span>
-								<Icon size={16} type={ICON.Smileys} />
+								<Icon size={16} type={ICON_TYPES.Smileys} />
 							</button>
 						</div>
 					</div>

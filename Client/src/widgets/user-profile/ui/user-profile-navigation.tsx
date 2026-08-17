@@ -3,25 +3,25 @@
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 
-import { TRANSITION_HIGHLIGHT } from "@shared/config";
 import { useNavigationLinkHighlight } from "@shared/ui";
 
-import { USER_PROFILE_ITEMS, USER_PROFILE_NAVIGATION_VARIANTS } from "../config";
+import { TRANSITION_HIGHLIGHT, USER_PROFILE_ITEMS, USER_PROFILE_NAVIGATION_VARIANTS } from "../config";
 
 import { UserProfileNavigationLink } from "./user-profile-navigation-link";
 
 type UserProfileNavigationProps = {
+	id: string;
 	isUserProfileOpened: boolean;
 };
 
-export const UserProfileNavigation = ({ isUserProfileOpened }: Readonly<UserProfileNavigationProps>) => {
+export const UserProfileNavigation = ({ isUserProfileOpened, id }: Readonly<UserProfileNavigationProps>) => {
 	const { activeLinkId, handleLinkSelection, handleLinkUnselection } = useNavigationLinkHighlight(USER_PROFILE_ITEMS);
 
 	return (
 		<AnimatePresence initial={false}>
 			{isUserProfileOpened && (
 				<motion.ul
-					id="user-profile-navigation"
+					id={id}
 					key="user-profile-navigation"
 					className="relative z-50 flex flex-col gap-y-[0.25rem] overflow-hidden border-t-[0.031rem] border-solid px-[0.5rem]"
 					animate="opened"

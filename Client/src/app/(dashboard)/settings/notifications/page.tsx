@@ -1,4 +1,4 @@
-import { Button, Checkbox, ICON, Icon, Switch } from "@shared/ui";
+import { Button, Checkbox, Icon, ICON_TYPES, Switch } from "@shared/ui";
 
 const PROJECT_NOTIFICATIONS = [
 	{ id: "comments", label: "Comments for you" },
@@ -6,9 +6,9 @@ const PROJECT_NOTIFICATIONS = [
 	{ id: "tasks-completed", label: "Completed tasks" },
 	{ id: "tasks-uncompleted", label: "Uncompleted tasks" },
 	{ id: "mentions", label: "Mentions in comments" },
-	{ id: "project-invitation-accepted", label: "Project invitation accepted" },
-	{ id: "project-invitation-declined", label: "Project invitation declined" },
-	{ id: "member-left", label: "Member left the project" },
+	{ id: "projects-invitation-accepted", label: "Project invitation accepted" },
+	{ id: "projects-invitation-declined", label: "Project invitation declined" },
+	{ id: "member-left", label: "Member left the projects" },
 	{ id: "member-removed", label: "Member removed" }
 ];
 
@@ -20,7 +20,7 @@ const NotificationsPage = () => {
 		>
 			<header className="relative flex items-center justify-between border-b-[0.5px] border-solid border-(--geek-blue-primary-opacity-50) bg-(--geek-blue-primary-opacity-100) px-[20px] py-[18px] backdrop-blur-[50px]">
 				<div className="flex items-center gap-x-[12px]">
-					<Icon className="text-[white]" type={ICON.NotificationsBold} size={16} />
+					<Icon className="text-[white]" type={ICON_TYPES.NotificationsBold} size={16} />
 
 					<h2
 						id="notifications-title"

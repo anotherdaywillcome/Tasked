@@ -7,7 +7,20 @@ type InputProps = ComponentPropsWithoutRef<"input"> & {
 	placeholder?: string;
 };
 
-export const Input = ({ label, name, placeholder = "Please write data", ...props }: Readonly<InputProps>) => {
+type InputSettings = {
+	placeholder: string;
+};
+
+const INPUT_DEFAULT_SETTINGS = {
+	placeholder: "Please write data"
+} satisfies InputSettings;
+
+export const Input = ({
+	label,
+	name,
+	placeholder = INPUT_DEFAULT_SETTINGS.placeholder,
+	...props
+}: Readonly<InputProps>) => {
 	const inputId = useId();
 
 	return (

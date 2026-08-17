@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 
-import { ICON, Icon } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 
 type TotalUsers = {
 	total: number;
@@ -40,7 +40,11 @@ export const TotalUsers = async () => {
 						isIncrease ? "text-(--green-50)" : "text-(--volcano-1000)"
 					)}
 				>
-					<Icon className={clsx(isIncrease ? "-rotate-90" : "rotate-90")} size={14} type={ICON.Chevron} />
+					<Icon
+						className={clsx(isIncrease ? "-rotate-90" : "rotate-90")}
+						size={14}
+						type={ICON_TYPES.Chevron}
+					/>
 					<span
 						className={clsx(
 							"font-(family-name:--font-barlow) font-bold text-[0.625rem] leading-[140%] tracking-[0.01em] uppercase",

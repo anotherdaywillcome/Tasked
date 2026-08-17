@@ -5,7 +5,7 @@ import JennyWilson from "@public/images/users/jared_padalecki.jpg";
 import GuyHawkins from "@public/images/users/katarina_vukovic.jpg";
 import WadeWarren from "@public/images/users/matteo_ricci.jpg";
 
-import { UserRow } from "@entities/user";
+import { UserRow } from "@entities/users";
 import { StaticImageData } from "next/image";
 
 type User = {

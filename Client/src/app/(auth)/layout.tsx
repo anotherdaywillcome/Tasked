@@ -20,7 +20,7 @@ const AuthLayout = ({ children }: Readonly<AuthLayoutProps>) => {
 			<Header className="relative z-50 mr-[2.5rem]">
 				<UserProfile />
 			</Header>
-			{children}
+			<main className="z-50 flex-1">{children}</main>
 		</Fragment>
 	);
 };

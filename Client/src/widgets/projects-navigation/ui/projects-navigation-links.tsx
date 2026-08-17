@@ -1,31 +1,13 @@
-import Dribble from "@public/images/projects/dribble.svg";
-import Paypal from "@public/images/projects/paypal.svg";
-import Sleekpay from "@public/images/projects/sleekpay.svg";
-import Youtube from "@public/images/projects/youtube.svg";
+import { getAssignedProjects } from "../api";
 
 import { ProjectsNavigationLinksList } from "./projects-navigation-links-list";
 
-type Project = {
-	id: string;
-	name: string;
-	image: string;
-};
-
-const getProjects = (): Promise<Array<Project>> => {
-	return new Promise((resolve) => {
-		return setTimeout(() => {
-			return resolve([
-				{ id: String(1), name: "Sleekpay App", image: Sleekpay },
-				{ id: String(2), name: "PayPal App", image: Paypal },
-				{ id: String(3), name: "Dribble Posts", image: Dribble },
-				{ id: String(4), name: "Youtube", image: Youtube }
-			]);
-		}, 6000);
-	});
-};
+const mockUserId = "e0603458-b76d-4602-b130-151e71d56b11";
 
 export const ProjectsNavigationLinks = async () => {
-	const projects = await getProjects();
+	const projects = await getAssignedProjects({ id: mockUserId });
+	// TODO
+	// If error we show toast, right now app just crashes
 
 	return <ProjectsNavigationLinksList projects={projects} />;
 };

@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 
-import { ICON, Icon } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 
 export const PrivateNotepadFormattingToolbar = () => {
 	return (
@@ -23,7 +23,7 @@ export const PrivateNotepadFormattingToolbar = () => {
 					type="button"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon width={20} height={20} type={ICON.TextBold} />
+					<Icon width={20} height={20} type={ICON_TYPES.TextBold} />
 					<span className="sr-only">Bold text</span>
 				</motion.button>
 				<motion.button
@@ -38,7 +38,7 @@ export const PrivateNotepadFormattingToolbar = () => {
 					type="button"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon width={20} height={20} type={ICON.TextItalic} />
+					<Icon width={20} height={20} type={ICON_TYPES.TextItalic} />
 					<span className="sr-only">Italic text</span>
 				</motion.button>
 				<motion.button
@@ -53,7 +53,7 @@ export const PrivateNotepadFormattingToolbar = () => {
 					type="button"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon width={20} height={20} type={ICON.TextUnderline} />
+					<Icon width={20} height={20} type={ICON_TYPES.TextUnderline} />
 					<span className="sr-only">Underline text</span>
 				</motion.button>
 				<motion.button
@@ -68,7 +68,7 @@ export const PrivateNotepadFormattingToolbar = () => {
 					type="button"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon width={20} height={20} type={ICON.LinkSquare} />
+					<Icon width={20} height={20} type={ICON_TYPES.LinkSquare} />
 					<span className="sr-only">Insert link</span>
 				</motion.button>
 			</div>
@@ -85,7 +85,7 @@ export const PrivateNotepadFormattingToolbar = () => {
 					type="button"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon width={20} height={20} type={ICON.TextAlignLeft} />
+					<Icon width={20} height={20} type={ICON_TYPES.TextAlignLeft} />
 					<span className="sr-only">Align left</span>
 				</motion.button>
 				<motion.button
@@ -100,7 +100,7 @@ export const PrivateNotepadFormattingToolbar = () => {
 					type="button"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon width={20} height={20} type={ICON.TextAlignCenter} />
+					<Icon width={20} height={20} type={ICON_TYPES.TextAlignCenter} />
 					<span className="sr-only">Align center</span>
 				</motion.button>
 				<motion.button
@@ -115,7 +115,7 @@ export const PrivateNotepadFormattingToolbar = () => {
 					type="button"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon width={20} height={20} type={ICON.TextAlignRight} />
+					<Icon width={20} height={20} type={ICON_TYPES.TextAlignRight} />
 					<span className="sr-only">Align right</span>
 				</motion.button>
 				<motion.button
@@ -130,7 +130,7 @@ export const PrivateNotepadFormattingToolbar = () => {
 					type="button"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon width={20} height={20} type={ICON.TextAlignJustifyCenter} />
+					<Icon width={20} height={20} type={ICON_TYPES.TextAlignJustifyCenter} />
 					<span className="sr-only">Justify text</span>
 				</motion.button>
 			</div>

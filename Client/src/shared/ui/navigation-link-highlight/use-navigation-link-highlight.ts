@@ -19,6 +19,7 @@ export const useNavigationLinkHighlight = (items: NavigationItem[]) => {
 
 	return {
 		activeLinkId,
+		routeActiveLinkId,
 
 		handleLinkSelection: setHoveredLinkId,
 		handleLinkUnselection: () => setHoveredLinkId(null)

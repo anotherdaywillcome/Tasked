@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 
 import { FONTS } from "@shared/config";
 
+import { QueryProvider } from "./_providers";
+
 import "./_styles/styles.css";
 import "./_styles/tailwind.css";
 
@@ -64,7 +66,7 @@ const RootLayout = ({ children }: Readonly<RootLayoutProps>) => {
 				<div className="absolute inset-0 z-20">
 					<Image src="/images/shadow_2.png" alt="" className="opacity-80" fill />
 				</div>
-				{children}
+				<QueryProvider>{children}</QueryProvider>
 			</body>
 		</html>
 	);

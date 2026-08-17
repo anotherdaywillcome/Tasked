@@ -1,10 +1,10 @@
 import type { ReactElement } from "react";
 import { Fragment } from "react";
 
-type ProjectNavigationActionsProps = {
+export type ProjectsNavigationActionsProps = {
 	children: ReactElement | ReactElement[];
 };
 
-export const ProjectsNavigationActions = ({ children }: Readonly<ProjectNavigationActionsProps>) => {
+export const ProjectsNavigationActions = ({ children }: Readonly<ProjectsNavigationActionsProps>) => {
 	return <Fragment>{children}</Fragment>;
 };

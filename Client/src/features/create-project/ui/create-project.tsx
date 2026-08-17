@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 
-import { Button, ICON, Icon } from "@shared/ui";
+import { Button, Icon, ICON_TYPES } from "@shared/ui";
 
 import type { CreateProjectTriggerVariant } from "../config";
 import { CREATE_PROJECT_TRIGGER_VARIANT } from "../config";
@@ -30,7 +30,7 @@ export const CreateProject = ({
 					aria-label="Create new project"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon className="w-[1rem] h-[1rem]" type={ICON.AddCircle} />
+					<Icon className="w-[1rem] h-[1rem]" type={ICON_TYPES.AddCircle} />
 					<span className="sr-only">Create New Project</span>
 				</motion.button>
 			);
@@ -39,7 +39,7 @@ export const CreateProject = ({
 				<Button
 					variant="secondary"
 					className="w-[2rem]! h-[2rem]! p-[0.5rem]! rounded-[0.625rem]"
-					leadingIcon={<Icon className="w-[1rem] h-[1rem]" type={ICON.Add} />}
+					leadingIcon={<Icon className="w-[1rem] h-[1rem]" type={ICON_TYPES.Add} />}
 				>
 					<span className="sr-only">Create New Project</span>
 				</Button>
@@ -47,7 +47,7 @@ export const CreateProject = ({
 		case CREATE_PROJECT_TRIGGER_VARIANT.Button:
 			return (
 				<Button className="flex items-center gap-x-[4px] rounded-[12px]">
-					<Icon type={ICON.AddCircle} size={16} />
+					<Icon type={ICON_TYPES.AddCircle} size={16} />
 					<span className="font-(family-name:--font-barlow) font-bold!s text-(--white-pallete-100)">
 						New Project
 					</span>

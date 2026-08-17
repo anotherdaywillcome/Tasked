@@ -1,189 +1,118 @@
 "use client";
 
+import { MotionConfig } from "motion/react";
 import Link from "next/link";
 import { useActionState } from "react";
 
-import { ROUTES } from "@shared/config";
+import { MOTION_CONFIG_DEFAULT, ROUTES } from "@shared/config";
 import { getActionError } from "@shared/lib/utils";
-import { Button, ICON, Icon, Input, SubmitButton, ValidationErrorMessage } from "@shared/ui";
+import {
+	Button,
+	BUTTON_VARIANTS,
+	GlowEffect,
+	GlowEffectPositions,
+	Icon,
+	ICON_TYPES,
+	Input,
+	SubmitButton,
+	ValidationErrorMessage
+} from "@shared/ui";
 
 import { registrationAction } from "../api";
 import type { RegistrationState } from "../model";
 import { initialState } from "../model";
 
-const TopRightCornerGlowEffect = () => {
-	return (
-		<svg
-			className="absolute top-0 right-0 z-10"
-			width="277"
-			height="301"
-			viewBox="0 0 277 301"
-			fill="none"
-			shapeRendering="geometricPrecision"
-			aria-hidden="true"
-			focusable="false"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<g filter="url(#filter0_f_488_129570)">
-				<circle cx="246.518" cy="54.0254" r="110" fill="url(#paint0_radial_488_129570)" />
-			</g>
-			<defs>
-				<filter
-					id="filter0_f_488_129570"
-					x="0.000244141"
-					y="-192.492"
-					width="493.035"
-					height="493.035"
-					filterUnits="userSpaceOnUse"
-					colorInterpolationFilters="sRGB"
-				>
-					<feFlood floodOpacity="0" result="BackgroundImageFix" />
-					<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-					<feGaussianBlur stdDeviation="68.2587" result="effect1_foregroundBlur_488_129570" />
-				</filter>
-				<radialGradient
-					id="paint0_radial_488_129570"
-					cx="0"
-					cy="0"
-					r="1"
-					gradientUnits="userSpaceOnUse"
-					gradientTransform="translate(246.518 54.0254) rotate(90) scale(110)"
-				>
-					<stop stopColor="#1D39C4" />
-					<stop offset="1" stopColor="#1D39C4" stopOpacity="0" />
-				</radialGradient>
-			</defs>
-		</svg>
-	);
-};
-
-const BottomLeftCornerGlowEffect = () => {
-	return (
-		<svg
-			className="absolute bottom-0 left-0 z-10"
-			width="340"
-			height="489"
-			viewBox="0 0 340 489"
-			fill="none"
-			shapeRendering="geometricPrecision"
-			aria-hidden="true"
-			focusable="false"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<g filter="url(#filter0_f_488_129571)">
-				<circle cx="104" cy="437.775" r="261" fill="url(#paint0_radial_488_129571)" />
-			</g>
-			<defs>
-				<filter
-					id="filter0_f_488_129571"
-					x="-333.776"
-					y="-0.000274658"
-					width="875.551"
-					height="875.551"
-					filterUnits="userSpaceOnUse"
-					colorInterpolationFilters="sRGB"
-				>
-					<feFlood floodOpacity="0" result="BackgroundImageFix" />
-					<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-					<feGaussianBlur stdDeviation="88.3878" result="effect1_foregroundBlur_488_129571" />
-				</filter>
-				<radialGradient
-					id="paint0_radial_488_129571"
-					cx="0"
-					cy="0"
-					r="1"
-					gradientUnits="userSpaceOnUse"
-					gradientTransform="translate(104 437.775) rotate(90) scale(261)"
-				>
-					<stop stopColor="#1A34B6" />
-					<stop offset="1" stopColor="#1D39C4" stopOpacity="0" />
-				</radialGradient>
-			</defs>
-		</svg>
-	);
-};
-
 export const Registration = () => {
 	const [state, action] = useActionState<RegistrationState, FormData>(registrationAction, initialState);
 
 	return (
-		<section className="relative z-[100] border-[0.031rem] border-solid border-(--white-pallete-20) rounded-[1rem] px-[2rem] py-[3rem] backdrop-blur-[3.625rem] bg-[rgba(1,0,9,0.15)] overflow-hidden">
-			<TopRightCornerGlowEffect />
-			<h2 className="font-(family-name:--font-barlow) font-bold text-[1.375rem] leading-[1.75rem] tracking-[0.01em] text-center text-(--white-pallete-100) capitalize mb-[2rem] relative z-20">
-				Register your account
-			</h2>
-			<ValidationErrorMessage
-				id="network-error"
-				className="mb-[1rem]"
-				validationId={state?.validationId}
-				message={state?.error}
-			/>
-			<form className="relative z-20 flex flex-col gap-y-[1rem]" action={action} noValidate>
-				<div className="relative">
-					<Input
-						label="Full name"
-						name="fullName"
-						type="text"
-						aria-describedby={state?.fieldErrors?.fullName ? "fullName-error" : undefined}
-					/>
-					<ValidationErrorMessage
-						id="fullName-error"
-						className="mt-[0.5rem]"
-						validationId={state?.validationId}
-						message={getActionError(state?.fieldErrors, "fullName")}
-					/>
-				</div>
-				<div className="relative">
-					<Input
-						label="Email"
-						name="email"
-						type="email"
-						aria-describedby={state?.fieldErrors?.email ? "email-error" : undefined}
-					/>
-					<ValidationErrorMessage
-						id="email-error"
-						className="mt-[0.5rem]"
-						validationId={state?.validationId}
-						message={getActionError(state?.fieldErrors, "email")}
-					/>
-				</div>
-				<div className="relative">
-					<Input
-						label="Password"
-						name="password"
-						type="password"
-						aria-describedby={state?.fieldErrors?.password ? "password-error" : undefined}
-					/>
-					<ValidationErrorMessage
-						id="password-error"
-						className="mt-[0.5rem]"
-						validationId={state?.validationId}
-						message={getActionError(state?.fieldErrors, "password")}
-					/>
-				</div>
-				<SubmitButton
-					childrenDisplayedWhenPending={false}
-					className="w-full mt-[1rem] max-h-[2.5rem]!"
-					spinnerClasses="mt-[-0.25rem]"
+		<MotionConfig {...MOTION_CONFIG_DEFAULT}>
+			<section className="relative z-[100] border-[0.031rem] border-solid border-(--white-pallete-20) rounded-[1rem] px-[2rem] py-[3rem] backdrop-blur-[3.625rem] bg-[rgba(1,0,9,0.15)] overflow-hidden">
+				<GlowEffect position={GlowEffectPositions.TopRight} />
+				<h2 className="font-(family-name:--font-barlow) font-bold text-[1.375rem] leading-[1.75rem] tracking-[0.01em] text-center text-(--white-pallete-100) capitalize mb-[2rem] relative z-20">
+					Register your account
+				</h2>
+				<form className="relative z-20 flex flex-col gap-y-[1rem]" action={action} noValidate>
+					<ValidationErrorMessage>
+						<ValidationErrorMessage.Content id="network-error" validationId={state?.validationId}>
+							{state?.error as string}
+						</ValidationErrorMessage.Content>
+					</ValidationErrorMessage>
+					<div className="relative">
+						<Input
+							label="Full name"
+							name="fullName"
+							type="text"
+							aria-describedby={state?.fieldErrors?.fullName ? "fullName-error" : undefined}
+						/>
+						<ValidationErrorMessage>
+							<ValidationErrorMessage.Content
+								id="fullName-error"
+								className="mt-[0.5rem]"
+								validationId={state?.validationId}
+							>
+								{getActionError(state?.fieldErrors, "fullName") as string}
+							</ValidationErrorMessage.Content>
+						</ValidationErrorMessage>
+					</div>
+					<div className="relative">
+						<Input
+							label="Email"
+							name="email"
+							type="email"
+							aria-describedby={state?.fieldErrors?.email ? "email-error" : undefined}
+						/>
+						<ValidationErrorMessage>
+							<ValidationErrorMessage.Content
+								id="email-error"
+								className="mt-[0.5rem]"
+								validationId={state?.validationId}
+							>
+								{getActionError(state?.fieldErrors, "email") as string}
+							</ValidationErrorMessage.Content>
+						</ValidationErrorMessage>
+					</div>
+					<div className="relative">
+						<Input
+							label="Password"
+							name="password"
+							type="password"
+							aria-describedby={state?.fieldErrors?.password ? "password-error" : undefined}
+						/>
+						<ValidationErrorMessage>
+							<ValidationErrorMessage.Content
+								id="password-error"
+								className="mt-[0.5rem]"
+								validationId={state?.validationId}
+							>
+								{getActionError(state?.fieldErrors, "password") as string}
+							</ValidationErrorMessage.Content>
+						</ValidationErrorMessage>
+					</div>
+					<SubmitButton
+						childrenDisplayedWhenPending={false}
+						className="w-full mt-[1rem] max-h-[2.5rem]!"
+						spinnerClasses="mt-[-0.25rem]"
+					>
+						Register Account
+					</SubmitButton>
+				</form>
+				<p className="relative z-20 font-(family-name:--font-barlow) font-medium text-[0.75rem] leading-[1rem] tracking-[0.01em] text-center text-(--neutrals-3) my-[1rem]">
+					Already Have An Account —{" "}
+					<Link className="text-(--geek-blue-4) focus-ring" href={ROUTES.Login}>
+						Sign In Here
+					</Link>
+				</p>
+				<Button
+					leadingIcon={<Icon type={ICON_TYPES.Google} size={16} />}
+					className="relative z-20 w-full"
+					variant={BUTTON_VARIANTS.Secondary}
+					type="button"
 				>
-					Register Account
-				</SubmitButton>
-			</form>
-			<p className="relative z-20 font-(family-name:--font-barlow) font-medium text-[0.75rem] leading-[1rem] tracking-[0.01em] text-center text-(--neutrals-3) my-[1rem]">
-				Already Have An Account —{" "}
-				<Link className="text-(--geek-blue-4) focus-ring" href={ROUTES.Login}>
-					Sign In Here
-				</Link>
-			</p>
-			<Button
-				leadingIcon={<Icon type={ICON.Google} size={16} />}
-				className="relative z-20 w-full"
-				variant="secondary"
-				type="button"
-			>
-				SignUp With Google Account
-			</Button>
-			<BottomLeftCornerGlowEffect />
-		</section>
+					SignUp With Google Account
+				</Button>
+				<GlowEffect position={GlowEffectPositions.BottomLeft} />
+			</section>
+		</MotionConfig>
 	);
 };

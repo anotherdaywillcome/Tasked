@@ -3,10 +3,25 @@
 import { motion } from "motion/react";
 import type { ComponentProps } from "react";
 
-import { Cog, Dashboard, Home, Lock, Messages, Projects, Search, Settings, Star, Tasks } from "./icons";
+import { Attach, Cog, Dashboard, Home, Lock, Messages, Projects, Search, Settings, Star, Tasks } from "./icons";
 
-import { Attach } from "@shared/ui/motion-icon/icons/attach";
-import { MOTION_ICON, type MotionIconType } from "./motion-icon-config";
+export const MOTION_ICON_TYPES = {
+	Chevron: "Chevron",
+	ChevronHorizontal: "ChevronHorizontal",
+	Home: "Home",
+	Tasks: "Tasks",
+	Projects: "Users",
+	Messages: "Messages",
+	Settings: "Settings",
+	Dashboard: "Dashboard",
+	Star: "Star",
+	Lock: "Lock",
+	Cog: "Cog",
+	Search: "Search",
+	Attach: "Attach"
+} as const;
+
+export type MotionIconType = (typeof MOTION_ICON_TYPES)[keyof typeof MOTION_ICON_TYPES];
 
 type MotionIconProps = ComponentProps<typeof motion.svg> & {
 	type: MotionIconType;
@@ -16,7 +31,7 @@ type MotionIconProps = ComponentProps<typeof motion.svg> & {
 
 export const MotionIcon = ({ type, isActive, size, ...props }: Readonly<MotionIconProps>) => {
 	switch (type) {
-		case MOTION_ICON.Chevron:
+		case MOTION_ICON_TYPES.Chevron:
 			return (
 				<motion.svg
 					width={size ?? 16}
@@ -24,6 +39,7 @@ export const MotionIcon = ({ type, isActive, size, ...props }: Readonly<MotionIc
 					viewBox="0 0 16 16"
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
+					aria-hidden="true"
 					{...props}
 				>
 					<path
@@ -36,7 +52,7 @@ export const MotionIcon = ({ type, isActive, size, ...props }: Readonly<MotionIc
 					/>
 				</motion.svg>
 			);
-		case MOTION_ICON.ChevronHorizontal:
+		case MOTION_ICON_TYPES.ChevronHorizontal:
 			return (
 				<motion.svg
 					width={size ?? 7}
@@ -58,27 +74,27 @@ export const MotionIcon = ({ type, isActive, size, ...props }: Readonly<MotionIc
 					/>
 				</motion.svg>
 			);
-		case MOTION_ICON.Home:
+		case MOTION_ICON_TYPES.Home:
 			return <Home isActive={isActive} {...props} />;
-		case MOTION_ICON.Tasks:
+		case MOTION_ICON_TYPES.Tasks:
 			return <Tasks isActive={isActive} {...props} />;
-		case MOTION_ICON.Projects:
+		case MOTION_ICON_TYPES.Projects:
 			return <Projects isActive={isActive} {...props} />;
-		case MOTION_ICON.Messages:
+		case MOTION_ICON_TYPES.Messages:
 			return <Messages isActive={isActive} {...props} />;
-		case MOTION_ICON.Settings:
+		case MOTION_ICON_TYPES.Settings:
 			return <Settings isActive={isActive} {...props} />;
-		case MOTION_ICON.Dashboard:
+		case MOTION_ICON_TYPES.Dashboard:
 			return <Dashboard isActive={isActive} {...props} />;
-		case MOTION_ICON.Star:
+		case MOTION_ICON_TYPES.Star:
 			return <Star isActive={isActive} {...props} />;
-		case MOTION_ICON.Lock:
+		case MOTION_ICON_TYPES.Lock:
 			return <Lock isActive={isActive} {...props} />;
-		case MOTION_ICON.Cog:
+		case MOTION_ICON_TYPES.Cog:
 			return <Cog isActive={isActive} {...props} />;
-		case MOTION_ICON.Search:
+		case MOTION_ICON_TYPES.Search:
 			return <Search isActive={isActive} {...props} />;
-		case MOTION_ICON.Attach:
+		case MOTION_ICON_TYPES.Attach:
 			return <Attach isActive={isActive} {...props} />;
 	}
 };

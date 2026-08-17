@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import type { CSSProperties } from "react";
 
-import { toCssUnit } from "@shared/lib/utils";
+import { toCssUnit } from "../../lib/utils";
 
 type DividerProps = {
 	width?: number | string;
@@ -9,7 +9,21 @@ type DividerProps = {
 	className?: string;
 };
 
-export const Divider = ({ width = 229, height = 5, className }: Readonly<DividerProps>) => {
+type DividerSettings = {
+	width: number;
+	height: number;
+};
+
+const DIVIDER_DEFAULT_SETTINGS = {
+	width: 229,
+	height: 5
+} satisfies DividerSettings;
+
+export const Divider = ({
+	width = DIVIDER_DEFAULT_SETTINGS.width,
+	height = DIVIDER_DEFAULT_SETTINGS.height,
+	className
+}: Readonly<DividerProps>) => {
 	return (
 		<div
 			className={clsx(

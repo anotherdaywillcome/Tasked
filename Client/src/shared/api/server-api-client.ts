@@ -2,19 +2,11 @@ import "server-only";
 
 import { cookies } from "next/headers";
 
-import { envServer } from "../config/env";
+import { envServer } from "../config/env/server-env";
+import { buildApiBaseUrl } from "../lib/utils";
 
 import type { ApiRequestOptions } from "./base-api-client";
 import { BaseApiClient } from "./base-api-client";
-
-const buildApiBaseUrl = (): string => {
-	const apiUrl = new URL(envServer.NEXT_PUBLIC_API_BASE_URL);
-	const normalizedVersion = envServer.NEXT_PUBLIC_API_VERSION.replace(/^\/+/, "");
-
-	apiUrl.pathname = [apiUrl.pathname.replace(/\/$/, ""), normalizedVersion].filter(Boolean).join("/");
-
-	return apiUrl.toString();
-};
 
 export class ServerApiClient extends BaseApiClient {
 	protected override async request<T>(path: string, options: ApiRequestOptions = {}): Promise<T> {
@@ -38,4 +30,15 @@ export class ServerApiClient extends BaseApiClient {
 	}
 }
 
-export const serverApiClient = new ServerApiClient(buildApiBaseUrl());
+export const serverApiClient = new ServerApiClient(
+	buildApiBaseUrl({
+		baseUrl: envServer.NEXT_PUBLIC_API_BASE_URL,
+		version: envServer.NEXT_PUBLIC_API_VERSION
+	})
+);
+
+export const bffServerApiClient = new ServerApiClient(
+	buildApiBaseUrl({
+		baseUrl: envServer.BFF_URL
+	})
+);

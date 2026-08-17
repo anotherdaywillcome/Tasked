@@ -10,7 +10,7 @@ import { Search } from "@features/search";
 
 import { ROUTES } from "@shared/config";
 import { getRelativeTime } from "@shared/lib/utils";
-import { Icon, ICON } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 
 type MessagesLayoutProps = {
 	children: ReactNode;
@@ -167,13 +167,13 @@ const MessagesLayout = async ({ children }: Readonly<MessagesLayoutProps>) => {
 
 	return (
 		<Fragment>
-			<ViewHeader title="Messages" icon={ICON.Message}>
+			<ViewHeader title="Messages" icon={ICON_TYPES.Message}>
 				<ViewHeader.Tools>
 					<Search />
 					<CreateTask />
 				</ViewHeader.Tools>
 			</ViewHeader>
-			<section className="flex min-h-0 flex-row gap-x-[8px] h-full">
+			<section className="flex min-h-0 flex-row gap-x-[8px] h-full mt-[1.25rem]">
 				<h1 className="sr-only">Messages</h1>
 				<section className="flex flex-col basis-[30%] border-[0.50px] border-solid border-(--white-pallete-10) rounded-[20px] bg-(--geek-blue-primary-opacity-100) backdrop-blur-[32px] pb-[18px]">
 					<h2 className="sr-only">Conversation list</h2>
@@ -189,7 +189,7 @@ const MessagesLayout = async ({ children }: Readonly<MessagesLayoutProps>) => {
 							type="button"
 						>
 							<span>Filter</span>
-							<Icon className="text-[#fff]" type={ICON.Filter} size={16} />
+							<Icon className="text-[#fff]" type={ICON_TYPES.Filter} size={16} />
 						</button>
 					</header>
 					<nav className="overflow-y-auto">

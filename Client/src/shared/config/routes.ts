@@ -1,7 +1,3 @@
-export type Route = (typeof ROUTES)[keyof typeof ROUTES];
-
-export type StaticRoute = Exclude<(typeof ROUTES)[keyof typeof ROUTES], (id: string) => string>;
-
 export const ROUTES = {
 	Home: "/",
 	Registration: "/registration",

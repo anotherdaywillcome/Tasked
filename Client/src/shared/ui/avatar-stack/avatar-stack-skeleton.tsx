@@ -2,11 +2,21 @@ import clsx from "clsx";
 
 import { Skeleton } from "../skeleton";
 
-type AvatarStackSkeleton = {
+type AvatarStackSkeletonProps = {
 	max?: number;
 };
 
-export const AvatarStackSkeleton = ({ max = 6 }: Readonly<AvatarStackSkeleton>) => {
+type AvatarStackSkeletonSettings = {
+	max: number;
+};
+
+export const AVATAR_STACK_SKELETON_DEFAULT_SETTINGS = {
+	max: 6
+} satisfies AvatarStackSkeletonSettings;
+
+export const AvatarStackSkeleton = ({
+	max = AVATAR_STACK_SKELETON_DEFAULT_SETTINGS.max
+}: Readonly<AvatarStackSkeletonProps>) => {
 	return (
 		<div className="flex flex-row items-center mt-[1.5rem]">
 			{Array.from({ length: max }, (_, index) => (

@@ -16,14 +16,24 @@ type ProjectImageProps = {
 	iconClasses?: string;
 };
 
+type ProjectImageSettings = {
+	imageSize: number;
+	iconSize: number;
+};
+
+const PROJECT_IMAGE_DEFAULT_SETTINGS = {
+	imageSize: 24,
+	iconSize: 16
+} satisfies ProjectImageSettings;
+
 export const ProjectImage = ({
 	name,
 	imageUrl,
-	imageSize = 24,
-	iconSize = 16,
+	imageSize = PROJECT_IMAGE_DEFAULT_SETTINGS.imageSize,
+	iconSize = PROJECT_IMAGE_DEFAULT_SETTINGS.iconSize,
 	imageClasses,
 	iconClasses
-}: ProjectImageProps) => {
+}: Readonly<ProjectImageProps>) => {
 	const [backgroundColor, setBackgroundColor] = useState<string>("transparent");
 
 	const projectImageRef = useRef<HTMLImageElement | null>(null);
@@ -66,7 +76,7 @@ export const ProjectImage = ({
 	return (
 		<div
 			style={{ backgroundColor, width: imageSize, height: imageSize }}
-			className={clsx("rounded-[0.5rem] p-[0.25rem]", imageClasses && imageClasses)}
+			className={clsx("shrink-0 rounded-[0.5rem] p-[0.25rem]", imageClasses && imageClasses)}
 		>
 			<Image
 				ref={projectImageRef}

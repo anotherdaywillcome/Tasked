@@ -2,7 +2,15 @@ type LogotypeProps = {
 	color?: string;
 };
 
-export const Logotype = ({ color = "white" }: Readonly<LogotypeProps>) => {
+type LogotypeSettings = {
+	color: string;
+};
+
+const LOGOTYPE_DEFAULT_SETTINGS = {
+	color: "white"
+} satisfies LogotypeSettings;
+
+export const Logotype = ({ color = LOGOTYPE_DEFAULT_SETTINGS.color }: Readonly<LogotypeProps>) => {
 	return (
 		<svg
 			width="119"

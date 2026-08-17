@@ -8,7 +8,7 @@ import Link from "next/link";
 // TEMPORARY
 import UserImage from "@public/images/users/di_smolskii.png";
 
-import { Button, ICON, Icon, Input, Textarea } from "@shared/ui";
+import { Button, Icon, ICON_TYPES, Input, Textarea } from "@shared/ui";
 
 const AccountPage = () => {
 	return (
@@ -18,7 +18,7 @@ const AccountPage = () => {
 		>
 			<header className="relative flex px-[20px] py-[18px] items-center justify-between border-b-[0.50px] border-solid border-(--geek-blue-primary-opacity-50) backdrop-blur-[50px] bg-(--geek-blue-primary-opacity-100)">
 				<div className="flex items-center gap-x-[12px]">
-					<Icon className="text-[white]" type={ICON.UserSquareBold} size={16} />
+					<Icon className="text-[white]" type={ICON_TYPES.UserSquareBold} size={16} />
 					<h2
 						id="account-settings-title"
 						className="font-(family-name:--font-barlow) font-bold text-[16px] leading-[125%] tracking-[0.01em] text-(--white-pallete-100)"
@@ -79,7 +79,7 @@ const AccountPage = () => {
 						type="button"
 						className="px-[16px] pt-[7px] pb-[9px] rounded-[10px]"
 						aria-describedby="delete-account-description"
-						leadingIcon={<Icon type={ICON.TrashBold} size={16} />}
+						leadingIcon={<Icon type={ICON_TYPES.TrashBold} size={16} />}
 					>
 						Delete account
 					</Button>

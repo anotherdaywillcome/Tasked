@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { ICON, Icon } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 
 import { PrivateNotepadFormattingToolbar } from "./private-notepad-formatting-toolbar";
 import { PrivateNotepadSkeleton } from "./private-notepad-skeleton";
@@ -19,7 +19,7 @@ export const PrivateNotepad = () => {
 				>
 					Private Notepad
 				</h2>
-				<Icon width={15} height={15} className="text-(--neutrals-2)" type={ICON.LockedLock} />
+				<Icon width={15} height={15} className="text-(--neutrals-2)" type={ICON_TYPES.LockedLock} />
 			</header>
 			<div className="m-[0.75rem] border-[0.031rem] border-solid border-(--white-pallete-10) rounded-[1rem] bg-(--geek-blue-primary-opacity-100) flex flex-col flex-1">
 				<Suspense fallback={<PrivateNotepadSkeleton />}>

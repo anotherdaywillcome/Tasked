@@ -5,26 +5,54 @@ import { motion, useAnimationFrame, useMotionValue, useTransform } from "motion/
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+export const ANIMATION_DIRECTION_VARIANTS = {
+	Horizontal: "horizontal",
+	Vertical: "vertical",
+	Diagonal: "diagonal"
+} as const;
+
+export type AnimationDirectionVariant =
+	(typeof ANIMATION_DIRECTION_VARIANTS)[keyof typeof ANIMATION_DIRECTION_VARIANTS];
+
 type GradientTextProps = {
 	children: ReactNode;
 	className?: string;
 	colors?: string[];
 	animationSpeed?: number;
 	showBorder?: boolean;
-	direction?: "horizontal" | "vertical" | "diagonal";
+	direction?: AnimationDirectionVariant;
 	pauseOnHover?: boolean;
 	yoyo?: boolean;
 };
 
+type GradientTextSettings = {
+	colors: Array<string>;
+	animationSpeed: number;
+	showBorder: boolean;
+	direction: AnimationDirectionVariant;
+	pauseOnHover: boolean;
+	yoyo: boolean;
+};
+
+const GRADIENT_TEXT_DEFAULT_SETTINGS = {
+	colors: ["#3254ff", "#cda2ff"],
+	animationSpeed: 4,
+	showBorder: false,
+	direction: ANIMATION_DIRECTION_VARIANTS.Horizontal,
+	pauseOnHover: false,
+	yoyo: true
+} satisfies GradientTextSettings;
+
 export const GradientText = ({
 	children,
 	className = "",
-	colors = ["#6872FF", "#A268FF", "#DC68FF", "#190DC0", "#6CB3FF"],
-	animationSpeed = 3,
-	showBorder = false,
-	direction = "horizontal",
-	pauseOnHover = false,
-	yoyo = true
+	// colors = ["#6872FF", "#A268FF", "#DC68FF", "#190DC0", "#6CB3FF"],
+	colors = GRADIENT_TEXT_DEFAULT_SETTINGS.colors,
+	animationSpeed = GRADIENT_TEXT_DEFAULT_SETTINGS.animationSpeed,
+	showBorder = GRADIENT_TEXT_DEFAULT_SETTINGS.showBorder,
+	direction = GRADIENT_TEXT_DEFAULT_SETTINGS.direction,
+	pauseOnHover = GRADIENT_TEXT_DEFAULT_SETTINGS.pauseOnHover,
+	yoyo = GRADIENT_TEXT_DEFAULT_SETTINGS.yoyo
 }: Readonly<GradientTextProps>) => {
 	const [isPaused, setIsPaused] = useState<boolean>(false);
 	const progress = useMotionValue<number>(0);

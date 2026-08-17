@@ -1,4 +1,4 @@
-import { TaskRow } from "@entities/task";
+import { TaskRow } from "@entities/tasks";
 
 import Dribble from "@public/images/projects/dribble.svg";
 import Paypal from "@public/images/projects/paypal.svg";
@@ -19,7 +19,7 @@ const getTasks = async (): Promise<Array<Task>> => {
 		setTimeout(() => {
 			resolve([
 				{
-					description: "Research your target audience and create 3-5 user personas",
+					description: "Research your target audience and create 3-5 users personas",
 					image: Sleekpay,
 					projectName: "SleekPay",
 					dueDate: "2026-03-12T00:00:00Z",
@@ -35,7 +35,7 @@ const getTasks = async (): Promise<Array<Task>> => {
 					priority: "high"
 				},
 				{
-					description: "Upload a project showreel and make a cover for the video",
+					description: "Upload a projects showreel and make a cover for the video",
 					image: Youtube,
 					projectName: "Youtube",
 					dueDate: "2026-03-19T00:00:00Z",
@@ -51,7 +51,7 @@ const getTasks = async (): Promise<Array<Task>> => {
 					priority: "high"
 				},
 				{
-					description: "Publishing design post for financial app project (SleekPay)",
+					description: "Publishing design post for financial app projects (SleekPay)",
 					image: Dribble,
 					projectName: "Dribble",
 					dueDate: "2026-03-13T00:00:00Z",

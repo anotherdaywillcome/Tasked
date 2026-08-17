@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { ICON, Icon } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 
 import { TasksCount } from "./tasks-count";
 import { TasksCountSkeleton } from "./tasks-count-skeleton";
@@ -26,7 +26,7 @@ export const Tasks = () => {
 					<span className="font-(family-name:--font-barlow) font-medium text-[0.75rem] leading-[133%] tracking-[0.01em] text-(--white-pallete-100)">
 						All Projects
 					</span>
-					<Icon className="text-(--neutrals-3) rotate-90" type={ICON.Chevron} size={16} />
+					<Icon className="text-(--neutrals-3) rotate-90" type={ICON_TYPES.Chevron} size={16} />
 				</button>
 			</header>
 			<Suspense fallback={<TasksListSkeleton />}>

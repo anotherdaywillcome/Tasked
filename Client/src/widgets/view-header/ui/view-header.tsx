@@ -64,7 +64,7 @@ export const ViewHeader = (({ title, imageUrl, icon, children }: Readonly<ViewHe
 	}
 
 	return (
-		<div className="flex justify-between items-center pb-[1rem] mb-[1.25rem] border-b-[0.031rem] border-solid border-(--white-pallete-10)">
+		<div className="flex justify-between items-center pb-[1rem] border-b-[0.031rem] border-solid border-(--white-pallete-10)">
 			<div className="flex items-center">
 				<div
 					className={clsx(

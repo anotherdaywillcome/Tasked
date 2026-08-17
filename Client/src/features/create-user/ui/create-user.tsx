@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 
-import { Button, ICON, Icon } from "@shared/ui";
+import { Button, Icon, ICON_TYPES } from "@shared/ui";
 
 import type { CreateUserTriggerVariant } from "../config";
 import { CREATE_USER_TRIGGER_VARIANT } from "../config";
@@ -28,7 +28,7 @@ export const CreateUser = ({ triggerVariant = CREATE_USER_TRIGGER_VARIANT.Icon }
 					aria-label="Create new user"
 					className="cursor-pointer text-(--neutrals-2)"
 				>
-					<Icon className="w-[1rem] h-[1rem]" type={ICON.AddCircle} />
+					<Icon className="w-[1rem] h-[1rem]" type={ICON_TYPES.AddCircle} />
 					<span className="sr-only">Create New User</span>
 				</motion.button>
 			);
@@ -37,7 +37,7 @@ export const CreateUser = ({ triggerVariant = CREATE_USER_TRIGGER_VARIANT.Icon }
 				<Button
 					variant="secondary"
 					className="w-[2rem]! h-[2rem]! p-[0.5rem]! rounded-[0.625rem]"
-					leadingIcon={<Icon className="w-[1rem] h-[1rem]" type={ICON.Add} />}
+					leadingIcon={<Icon className="w-[1rem] h-[1rem]" type={ICON_TYPES.Add} />}
 				>
 					<span className="sr-only">Create New User</span>
 				</Button>

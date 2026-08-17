@@ -1,3 +1,4 @@
+export * from "./attach";
 export * from "./cog";
 export * from "./dashboard";
 export * from "./home";

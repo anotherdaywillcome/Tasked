@@ -1,4 +1,4 @@
-import { TaskRowSkeleton } from "@entities/task";
+import { TaskRowSkeleton } from "@entities/tasks";
 
 import { TASKS_SKELETON_COUNT } from "../config";
 

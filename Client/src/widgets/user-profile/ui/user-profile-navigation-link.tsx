@@ -23,7 +23,7 @@ export const UserProfileNavigationLink = ({ href, icon, isActive, children }: Us
 				isActive ? "text-(--white-pallete-100)" : "text-(--neutrals-3)"
 			)}
 		>
-			<span className="w-[1.5rem] h-[1.5rem] flex items-center justify-center">
+			<span aria-hidden={true} className="w-[1.5rem] h-[1.5rem] flex items-center justify-center">
 				<MotionIcon isActive={isActive} className="w-[1rem] h-[1rem]" type={icon} />
 			</span>
 			<span>{children}</span>

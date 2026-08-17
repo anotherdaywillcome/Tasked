@@ -1,6 +1,6 @@
 import { ROUTES } from "@shared/config";
 import type { MotionIconType } from "@shared/ui";
-import { MOTION_ICON } from "@shared/ui";
+import { MOTION_ICON_TYPES } from "@shared/ui";
 
 type UserProfileItem = {
 	id: string;
@@ -12,13 +12,13 @@ type UserProfileItem = {
 export const USER_PROFILE_ITEMS: Array<UserProfileItem> = [
 	{
 		id: "dashboard",
-		icon: MOTION_ICON.Dashboard,
+		icon: MOTION_ICON_TYPES.Dashboard,
 		label: "Dashboard",
 		href: ROUTES.Home
 	},
 	{
 		id: "settings",
-		icon: MOTION_ICON.Settings,
+		icon: MOTION_ICON_TYPES.Settings,
 		label: "Settings",
 		href: ROUTES.Account
 	}

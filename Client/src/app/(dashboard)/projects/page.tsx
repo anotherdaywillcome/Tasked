@@ -17,12 +17,12 @@ import { DeleteProject } from "@features/delete-project";
 import { EditProject } from "@features/edit-project";
 import { Search } from "@features/search";
 
-import { ICON } from "@shared/ui";
+import { ICON_TYPES } from "@shared/ui";
 
 const ProjectsPage = () => {
 	return (
 		<Fragment>
-			<ViewHeader title="Projects" icon={ICON.Projects}>
+			<ViewHeader title="Projects" icon={ICON_TYPES.Projects}>
 				<ViewHeader.Tools>
 					<Search />
 					<CreateProject triggerVariant={CREATE_PROJECT_TRIGGER_VARIANT.Button} />

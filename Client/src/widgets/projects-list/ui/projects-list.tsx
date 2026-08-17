@@ -6,7 +6,7 @@ import Paypal from "@public/images/projects/paypal.svg";
 import Sleekpay from "@public/images/projects/sleekpay.svg";
 import Youtube from "@public/images/projects/youtube.svg";
 
-import { ProjectRow, ProjectRowActions, ProjectRowVariants } from "@entities/project";
+import { ProjectRow, ProjectRowActions, ProjectRowVariants } from "@entities/projects";
 
 import type { ProjectsListActionsProps } from "./projects-list-actions";
 import { ProjectsListActions } from "./projects-list-actions";

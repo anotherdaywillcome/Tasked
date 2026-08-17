@@ -1,6 +1,55 @@
 import type { SVGProps } from "react";
 
-import { ICON, IconType } from "./icon-config";
+export const ICON_TYPES = {
+	Account: "Account",
+	Google: "Google",
+	Improvements: "Improvements",
+	Add: "Add",
+	AddCircle: "AddCircle",
+	Home: "Home",
+	TaskSquare: "TaskSquare",
+	Projects: "Projects",
+	Message: "Message",
+	Settings: "Settings",
+	LockedLock: "LockedLock",
+	TextBold: "TextBold",
+	TextItalic: "TextItalic",
+	TextUnderline: "TextUnderline",
+	LinkSquare: "LinkSquare",
+	TextAlignLeft: "TextAlignLeft",
+	TextAlignCenter: "TextAlignCenter",
+	TextAlignRight: "TextAlignRight",
+	TextAlignJustifyCenter: "TextAlignJustifyCenter",
+	More: "More",
+	Chevron: "Chevron",
+	Clock: "Clock",
+	Grid: "Grid",
+	Filter: "Filter",
+	User: "User",
+	UserBold: "UserBold",
+	UserSquareBold: "UserSquareBold",
+	UserSquareOutline: "UserSquareOutline",
+	UserOctagon: "UserOctagon",
+	SendBold: "SendBold",
+	Attach: "Attach",
+	Smileys: "Smileys",
+	SettingsOutline: "SettingsOutline",
+	SettingsBold: "SettingsBold",
+	CalendarAddOutline: "CalendarAddOutline",
+	NotificationsOutline: "NotificationsOutline",
+	NotificationsBold: "NotificationsBold",
+	ArrowRightOutline: "ArrowRightOutline",
+	TrashBold: "TrashBold",
+	CalendarAddBold: "CalendarAddBold",
+	Kanban: "Kanban",
+	List: "List",
+	Folder: "Folder",
+	Calendar: "Calendar",
+	CloseCircleBold: "CloseCircleBold",
+	ImportOutline: "ImportOutline"
+} as const;
+
+export type IconType = (typeof ICON_TYPES)[keyof typeof ICON_TYPES];
 
 type IconProps = SVGProps<SVGSVGElement> & {
 	type: IconType;
@@ -9,7 +58,7 @@ type IconProps = SVGProps<SVGSVGElement> & {
 
 export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 	switch (type) {
-		case ICON.Account:
+		case ICON_TYPES.Account:
 			return (
 				<svg
 					width={size ?? 16}
@@ -32,7 +81,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Google:
+		case ICON_TYPES.Google:
 			return (
 				<svg
 					width={size ?? 24}
@@ -51,7 +100,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Improvements:
+		case ICON_TYPES.Improvements:
 			return (
 				<svg
 					width={size ?? 24}
@@ -74,7 +123,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Add:
+		case ICON_TYPES.Add:
 			return (
 				<svg
 					width={size ?? 24}
@@ -97,7 +146,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.AddCircle:
+		case ICON_TYPES.AddCircle:
 			return (
 				<svg
 					width={size ?? 24}
@@ -116,7 +165,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Home:
+		case ICON_TYPES.Home:
 			return (
 				<svg
 					width={size ?? 24}
@@ -135,7 +184,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.TaskSquare:
+		case ICON_TYPES.TaskSquare:
 			return (
 				<svg
 					width={size ?? 24}
@@ -154,7 +203,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Projects:
+		case ICON_TYPES.Projects:
 			return (
 				<svg
 					width={size ?? 24}
@@ -177,7 +226,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Message:
+		case ICON_TYPES.Message:
 			return (
 				<svg
 					width={size ?? 24}
@@ -200,7 +249,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Settings:
+		case ICON_TYPES.Settings:
 			return (
 				<svg
 					width={size ?? 24}
@@ -219,7 +268,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.LockedLock:
+		case ICON_TYPES.LockedLock:
 			return (
 				<svg
 					width={size ?? 24}
@@ -242,7 +291,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.TextBold:
+		case ICON_TYPES.TextBold:
 			return (
 				<svg
 					width={size ?? 24}
@@ -269,7 +318,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.TextItalic:
+		case ICON_TYPES.TextItalic:
 			return (
 				<svg
 					width={size ?? 24}
@@ -288,7 +337,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.TextUnderline:
+		case ICON_TYPES.TextUnderline:
 			return (
 				<svg
 					width={size ?? 24}
@@ -307,7 +356,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.LinkSquare:
+		case ICON_TYPES.LinkSquare:
 			return (
 				<svg
 					width={size ?? 24}
@@ -326,7 +375,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.TextAlignLeft:
+		case ICON_TYPES.TextAlignLeft:
 			return (
 				<svg
 					width={size ?? 24}
@@ -357,7 +406,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.TextAlignCenter:
+		case ICON_TYPES.TextAlignCenter:
 			return (
 				<svg
 					width={size ?? 24}
@@ -388,7 +437,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.TextAlignRight:
+		case ICON_TYPES.TextAlignRight:
 			return (
 				<svg
 					width={size ?? 24}
@@ -419,7 +468,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.TextAlignJustifyCenter:
+		case ICON_TYPES.TextAlignJustifyCenter:
 			return (
 				<svg
 					width={size ?? 24}
@@ -450,7 +499,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.More:
+		case ICON_TYPES.More:
 			return (
 				<svg
 					width={size ?? 24}
@@ -477,7 +526,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Chevron:
+		case ICON_TYPES.Chevron:
 			return (
 				<svg
 					width={size ?? 24}
@@ -496,7 +545,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Clock:
+		case ICON_TYPES.Clock:
 			return (
 				<svg
 					width={size ?? 24}
@@ -515,7 +564,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Grid:
+		case ICON_TYPES.Grid:
 			return (
 				<svg
 					width={size ?? 24}
@@ -546,7 +595,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Filter:
+		case ICON_TYPES.Filter:
 			return (
 				<svg
 					width={size ?? 16}
@@ -564,7 +613,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					<path d="M6.66699 11.333H9.33366" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
 				</svg>
 			);
-		case ICON.UserBold:
+		case ICON_TYPES.UserBold:
 			return (
 				<svg
 					width={size ?? 24}
@@ -587,7 +636,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.UserSquareBold:
+		case ICON_TYPES.UserSquareBold:
 			return (
 				<svg
 					width={size ?? 24}
@@ -610,7 +659,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.UserSquareOutline:
+		case ICON_TYPES.UserSquareOutline:
 			return (
 				<svg
 					width={size ?? 24}
@@ -640,7 +689,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.UserOctagon:
+		case ICON_TYPES.UserOctagon:
 			return (
 				<svg
 					width={size ?? 24}
@@ -659,7 +708,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.User:
+		case ICON_TYPES.User:
 			return (
 				<svg
 					width={size ?? 24}
@@ -682,7 +731,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.SendBold:
+		case ICON_TYPES.SendBold:
 			return (
 				<svg
 					width={size ?? 24}
@@ -701,7 +750,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Attach:
+		case ICON_TYPES.Attach:
 			return (
 				<svg
 					width={size ?? 24}
@@ -724,7 +773,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.Smileys:
+		case ICON_TYPES.Smileys:
 			return (
 				<svg
 					width={size ?? 24}
@@ -771,7 +820,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.SettingsOutline:
+		case ICON_TYPES.SettingsOutline:
 			return (
 				<svg
 					width={size ?? 24}
@@ -794,7 +843,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.CalendarAddOutline:
+		case ICON_TYPES.CalendarAddOutline:
 			return (
 				<svg
 					width={size ?? 24}
@@ -849,7 +898,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.NotificationsOutline:
+		case ICON_TYPES.NotificationsOutline:
 			return (
 				<svg
 					width={size ?? 24}
@@ -876,7 +925,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.NotificationsBold:
+		case ICON_TYPES.NotificationsBold:
 			return (
 				<svg
 					width={size ?? 24}
@@ -899,7 +948,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.ArrowRightOutline:
+		case ICON_TYPES.ArrowRightOutline:
 			return (
 				<svg
 					width={size ?? 24}
@@ -918,7 +967,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.TrashBold:
+		case ICON_TYPES.TrashBold:
 			return (
 				<svg
 					width={size ?? 24}
@@ -941,7 +990,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.SettingsBold:
+		case ICON_TYPES.SettingsBold:
 			return (
 				<svg
 					width={size ?? 24}
@@ -960,7 +1009,7 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 				</svg>
 			);
-		case ICON.CalendarAddBold:
+		case ICON_TYPES.CalendarAddBold:
 			return (
 				<svg
 					width={size ?? 24}
@@ -983,6 +1032,145 @@ export const Icon = ({ type, size, ...props }: Readonly<IconProps>) => {
 					/>
 					<path
 						d="M21.83 16.17C20.27 14.61 17.73 14.61 16.17 16.17C14.61 17.73 14.61 20.27 16.17 21.83C17.73 23.39 20.27 23.39 21.83 21.83C23.39 20.27 23.39 17.73 21.83 16.17ZM21.07 19.56C20.94 19.7 20.75 19.78 20.54 19.78H19.8V20.56C19.8 20.77 19.72 20.95 19.58 21.09C19.44 21.23 19.26 21.31 19.05 21.31C18.64 21.31 18.3 20.97 18.3 20.56V19.78H17.55C17.14 19.78 16.8 19.45 16.8 19.03C16.8 18.62 17.14 18.28 17.55 18.28H18.3V17.57C18.3 17.16 18.63 16.82 19.05 16.82C19.46 16.82 19.8 17.16 19.8 17.57V18.28H20.54C20.96 18.28 21.29 18.62 21.29 19.03C21.29 19.24 21.21 19.43 21.07 19.56Z"
+						fill="currentColor"
+					/>
+				</svg>
+			);
+		case ICON_TYPES.Kanban:
+			return (
+				<svg
+					width={size ?? 24}
+					height={size ?? 24}
+					viewBox="0 0 24 24"
+					fill="none"
+					shapeRendering="geometricPrecision"
+					aria-hidden="true"
+					focusable="false"
+					xmlns="http://www.w3.org/2000/svg"
+					{...props}
+				>
+					<path
+						d="M10.5 19.9V4.1C10.5 2.6 9.86 2 8.27 2H4.23C2.64 2 2 2.6 2 4.1V19.9C2 21.4 2.64 22 4.23 22H8.27C9.86 22 10.5 21.4 10.5 19.9Z"
+						fill="currentColor"
+					/>
+					<path
+						d="M22 12.9V4.1C22 2.6 21.36 2 19.77 2H15.73C14.14 2 13.5 2.6 13.5 4.1V12.9C13.5 14.4 14.14 15 15.73 15H19.77C21.36 15 22 14.4 22 12.9Z"
+						fill="currentColor"
+					/>
+				</svg>
+			);
+		case ICON_TYPES.List:
+			return (
+				<svg
+					width={size ?? 24}
+					height={size ?? 24}
+					viewBox="0 0 24 24"
+					fill="none"
+					shapeRendering="geometricPrecision"
+					aria-hidden="true"
+					focusable="false"
+					xmlns="http://www.w3.org/2000/svg"
+					{...props}
+				>
+					<path
+						d="M19.9 13.5H4.1C2.6 13.5 2 14.14 2 15.73V19.77C2 21.36 2.6 22 4.1 22H19.9C21.4 22 22 21.36 22 19.77V15.73C22 14.14 21.4 13.5 19.9 13.5Z"
+						fill="currentColor"
+					/>
+					<path
+						d="M19.9 2H4.1C2.6 2 2 2.64 2 4.23V8.27C2 9.86 2.6 10.5 4.1 10.5H19.9C21.4 10.5 22 9.86 22 8.27V4.23C22 2.64 21.4 2 19.9 2Z"
+						fill="currentColor"
+					/>
+				</svg>
+			);
+		case ICON_TYPES.Folder:
+			return (
+				<svg
+					width={size ?? 24}
+					height={size ?? 24}
+					viewBox="0 0 24 24"
+					fill="none"
+					shapeRendering="geometricPrecision"
+					aria-hidden="true"
+					focusable="false"
+					xmlns="http://www.w3.org/2000/svg"
+					{...props}
+				>
+					<path
+						d="M21.0169 7.99175C21.4148 8.55833 20.9405 9.25 20.2482 9.25H3C2.44772 9.25 2 8.80228 2 8.25V6.42C2 3.98 3.98 2 6.42 2H8.74C10.37 2 10.88 2.53 11.53 3.4L12.93 5.26C13.24 5.67 13.28 5.72 13.86 5.72H16.65C18.4546 5.72 20.0516 6.61709 21.0169 7.99175Z"
+						fill="currentColor"
+					/>
+					<path
+						d="M20.9834 10.7495C21.5343 10.7495 21.9815 11.1952 21.9834 11.7461L22 16.6498C22 19.5998 19.6 21.9998 16.65 21.9998H7.35C4.4 21.9998 2 19.5998 2 16.6498V11.7498C2 11.1975 2.44771 10.7498 2.99999 10.7498L20.9834 10.7495Z"
+						fill="currentColor"
+					/>
+				</svg>
+			);
+		case ICON_TYPES.Calendar:
+			return (
+				<svg
+					width={size ?? 24}
+					height={size ?? 24}
+					viewBox="0 0 24 24"
+					fill="none"
+					shapeRendering="geometricPrecision"
+					aria-hidden="true"
+					focusable="false"
+					xmlns="http://www.w3.org/2000/svg"
+					{...props}
+				>
+					<path
+						d="M16.75 3.56V2C16.75 1.59 16.41 1.25 16 1.25C15.59 1.25 15.25 1.59 15.25 2V3.5H8.74999V2C8.74999 1.59 8.40999 1.25 7.99999 1.25C7.58999 1.25 7.24999 1.59 7.24999 2V3.56C4.54999 3.81 3.23999 5.42 3.03999 7.81C3.01999 8.1 3.25999 8.34 3.53999 8.34H20.46C20.75 8.34 20.99 8.09 20.96 7.81C20.76 5.42 19.45 3.81 16.75 3.56Z"
+						fill="currentColor"
+					/>
+					<path
+						d="M20 9.83997H4C3.45 9.83997 3 10.29 3 10.84V17C3 20 4.5 22 8 22H16C19.5 22 21 20 21 17V10.84C21 10.29 20.55 9.83997 20 9.83997ZM9.21 18.21C9.11 18.3 9 18.37 8.88 18.42C8.76 18.47 8.63 18.5 8.5 18.5C8.37 18.5 8.24 18.47 8.12 18.42C8 18.37 7.89 18.3 7.79 18.21C7.61 18.02 7.5 17.76 7.5 17.5C7.5 17.24 7.61 16.98 7.79 16.79C7.89 16.7 8 16.63 8.12 16.58C8.36 16.48 8.64 16.48 8.88 16.58C9 16.63 9.11 16.7 9.21 16.79C9.39 16.98 9.5 17.24 9.5 17.5C9.5 17.76 9.39 18.02 9.21 18.21ZM9.42 14.38C9.37 14.5 9.3 14.61 9.21 14.71C9.11 14.8 9 14.87 8.88 14.92C8.76 14.97 8.63 15 8.5 15C8.37 15 8.24 14.97 8.12 14.92C8 14.87 7.89 14.8 7.79 14.71C7.7 14.61 7.63 14.5 7.58 14.38C7.53 14.26 7.5 14.13 7.5 14C7.5 13.87 7.53 13.74 7.58 13.62C7.63 13.5 7.7 13.39 7.79 13.29C7.89 13.2 8 13.13 8.12 13.08C8.36 12.98 8.64 12.98 8.88 13.08C9 13.13 9.11 13.2 9.21 13.29C9.3 13.39 9.37 13.5 9.42 13.62C9.47 13.74 9.5 13.87 9.5 14C9.5 14.13 9.47 14.26 9.42 14.38ZM12.71 14.71C12.61 14.8 12.5 14.87 12.38 14.92C12.26 14.97 12.13 15 12 15C11.87 15 11.74 14.97 11.62 14.92C11.5 14.87 11.39 14.8 11.29 14.71C11.11 14.52 11 14.26 11 14C11 13.74 11.11 13.48 11.29 13.29C11.39 13.2 11.5 13.13 11.62 13.08C11.86 12.97 12.14 12.97 12.38 13.08C12.5 13.13 12.61 13.2 12.71 13.29C12.89 13.48 13 13.74 13 14C13 14.26 12.89 14.52 12.71 14.71Z"
+						fill="currentColor"
+					/>
+				</svg>
+			);
+		case ICON_TYPES.CloseCircleBold:
+			return (
+				<svg
+					width={size ?? 24}
+					height={size ?? 24}
+					viewBox="0 0 24 24"
+					fill="none"
+					shapeRendering="geometricPrecision"
+					aria-hidden="true"
+					focusable="false"
+					xmlns="http://www.w3.org/2000/svg"
+					{...props}
+				>
+					<path
+						d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM15.36 14.3C15.65 14.59 15.65 15.07 15.36 15.36C15.21 15.51 15.02 15.58 14.83 15.58C14.64 15.58 14.45 15.51 14.3 15.36L12 13.06L9.7 15.36C9.55 15.51 9.36 15.58 9.17 15.58C8.98 15.58 8.79 15.51 8.64 15.36C8.35 15.07 8.35 14.59 8.64 14.3L10.94 12L8.64 9.7C8.35 9.41 8.35 8.93 8.64 8.64C8.93 8.35 9.41 8.35 9.7 8.64L12 10.94L14.3 8.64C14.59 8.35 15.07 8.35 15.36 8.64C15.65 8.93 15.65 9.41 15.36 9.7L13.06 12L15.36 14.3Z"
+						fill="currentColor"
+					/>
+				</svg>
+			);
+		case ICON_TYPES.ImportOutline:
+			return (
+				<svg
+					width={size ?? 24}
+					height={size ?? 24}
+					viewBox="0 0 24 24"
+					fill="none"
+					style={{ transform: "rotate(90deg)" }}
+					shapeRendering="geometricPrecision"
+					aria-hidden="true"
+					focusable="false"
+					xmlns="http://www.w3.org/2000/svg"
+					{...props}
+				>
+					<path
+						d="M15.26 22.25H8.73998C3.82998 22.25 1.72998 20.15 1.72998 15.24V15.11C1.72998 10.67 3.47998 8.53003 7.39998 8.16003C7.79998 8.13003 8.17998 8.43003 8.21998 8.84003C8.25998 9.25003 7.95998 9.62003 7.53998 9.66003C4.39998 9.95003 3.22998 11.43 3.22998 15.12V15.25C3.22998 19.32 4.66998 20.76 8.73998 20.76H15.26C19.33 20.76 20.77 19.32 20.77 15.25V15.12C20.77 11.41 19.58 9.93003 16.38 9.66003C15.97 9.62003 15.66 9.26003 15.7 8.85003C15.74 8.44003 16.09 8.13003 16.51 8.17003C20.49 8.51003 22.27 10.66 22.27 15.13V15.26C22.27 20.15 20.17 22.25 15.26 22.25Z"
+						fill="currentColor"
+					/>
+					<path
+						d="M12 15.7501C11.59 15.7501 11.25 15.4101 11.25 15.0001V3.62012C11.25 3.21012 11.59 2.87012 12 2.87012C12.41 2.87012 12.75 3.21012 12.75 3.62012V15.0001C12.75 15.4101 12.41 15.7501 12 15.7501Z"
+						fill="currentColor"
+					/>
+					<path
+						d="M15.3501 6.59994C15.1601 6.59994 14.9701 6.52994 14.8201 6.37994L12.0001 3.55994L9.18009 6.37994C8.89009 6.66994 8.41009 6.66994 8.12009 6.37994C7.83009 6.08994 7.83009 5.60994 8.12009 5.31994L11.4701 1.96994C11.7601 1.67994 12.2401 1.67994 12.5301 1.96994L15.8801 5.31994C16.1701 5.60994 16.1701 6.08994 15.8801 6.37994C15.7401 6.52994 15.5401 6.59994 15.3501 6.59994Z"
 						fill="currentColor"
 					/>
 				</svg>

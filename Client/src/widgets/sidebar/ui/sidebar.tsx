@@ -1,11 +1,11 @@
-import type { ReactElement } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { Children, isValidElement } from "react";
 
 import { SidebarContent } from "./sidebar-content";
 import { SidebarDivider } from "./sidebar-divider";
 import { SidebarFooter } from "./sidebar-footer";
 import { SidebarHeader } from "./sidebar-header";
-import { SidebarTrigger } from "./sidebar-trigger";
+import { SidebarRoot } from "./sidebar-root";
 
 type SidebarComponents = {
 	Header: typeof SidebarHeader;
@@ -26,6 +26,9 @@ const SidebarBackground = () => {
 			className="absolute top-0 left-0 -z-10 w-full h-full"
 			viewBox="0 0 228 908"
 			fill="none"
+			shapeRendering="geometricPrecision"
+			aria-hidden="true"
+			focusable="false"
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<g filter="url(#filter0_f_38129_50083)">
@@ -90,15 +93,14 @@ const SidebarBackground = () => {
 
 const validateSidebarChildren = (children: ReactElement | ReactElement[]) => {
 	Children.forEach(children, (child) => {
-		if (
-			!(
-				isValidElement(child) &&
-				(child.type === SidebarHeader ||
-					child.type === SidebarContent ||
-					child.type === SidebarFooter ||
-					child.type === SidebarDivider)
-			)
-		) {
+		if (!isValidElement(child) || child.type === undefined) return;
+
+		if (!(
+			child.type === SidebarHeader ||
+			child.type === SidebarContent ||
+			child.type === SidebarFooter ||
+			child.type === SidebarDivider
+		)) {
 			throw new Error(`
 				Component <Sidebar> can only accept children of types <Sidebar.Header>, <Sidebar.Content>, <Sidebar.Footer> and <Sidebar.Divider>.
 				Received child of type ${child.type}.
@@ -111,18 +113,7 @@ const validateSidebarChildren = (children: ReactElement | ReactElement[]) => {
 export const Sidebar = (({ children }: Readonly<SidebarProps>) => {
 	validateSidebarChildren(children);
 
-	return (
-		<aside className="relative my-[0.75rem] ml-[0.75rem]" aria-labelledby="dashboard-sidebar-title">
-			<SidebarTrigger />
-			<div className="relative border-[0.031rem] border-solid border-(--white-pallete-10) rounded-[1.5rem] bg-(--white-pallete-50) flex flex-col overflow-hidden h-full">
-				<h2 id="dashboard-sidebar-title" className="sr-only">
-					Dashboard sidebar
-				</h2>
-				<SidebarBackground />
-				{children}
-			</div>
-		</aside>
-	);
+	return <SidebarRoot background={<SidebarBackground />}>{children as ReactNode}</SidebarRoot>;
 }) as Sidebar;
 
 Sidebar.Header = SidebarHeader;

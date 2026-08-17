@@ -9,7 +9,7 @@ import { useGridMeasurements } from "../lib/hooks/use-grid-measurements";
 import { hasCollision } from "../lib/utils/has-collision";
 import { useActiveLayout, useEditMode } from "../model/selectors";
 import { useDashboardLayoutStore } from "../model/store";
-import type { DashboardWidgetDefinition, DashboardWidget as DashboardWidgetType } from "../model/types";
+import type { DashboardWidget as DashboardWidgetType, DashboardWidgetDefinition } from "../model/types";
 
 import { GridLayoutManagerComponent } from "./grid-layout-manager-component";
 import { GridLayoutManagerComponentGhostLayer } from "./grid-layout-manager-component-ghost-layer";
@@ -173,9 +173,16 @@ export const GridLayoutManager = (({
 		<GridContainerContext.Provider value={contextValue}>
 			<main
 				ref={setContainerRef}
-				className={["relative", "isolate", "grid", "overflow-hidden", "min-h-0", "shrink-0", "w-full"].join(
-					" "
-				)}
+				className={[
+					"relative",
+					"isolate",
+					"grid",
+					"overflow-hidden",
+					"min-h-0",
+					"shrink-0",
+					"w-full",
+					"mt-[1.25rem]"
+				].join(" ")}
 				style={{
 					width: gridSettings.rowWidth && sizes.gridWidth ? `${sizes.gridWidth}px` : undefined,
 					height: sizes.gridHeight ? `${sizes.gridHeight}px` : undefined,

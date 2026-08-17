@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useMotionTemplate, useMotionValue } from "moti
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import { Fragment, useCallback, useDeferredValue, useEffect, useId, useMemo, useRef, useState } from "react";
 
-import { MOTION_ICON, MotionIcon, Spinner } from "@shared/ui";
+import { MOTION_ICON_TYPES, MotionIcon, Spinner } from "@shared/ui";
 
 import { FILTERS, GROUPS } from "../config/search";
 import type { Filter, SearchResult, SearchState } from "../model/types";
@@ -280,7 +280,7 @@ export const Search = () => {
 				<span className="absolute left-[1rem] flex items-center">
 					<MotionIcon
 						isActive={isOpen}
-						type={MOTION_ICON.Search}
+						type={MOTION_ICON_TYPES.Search}
 						className="h-[1rem]! w-[1rem]! text-(--neutrals-3)"
 					/>
 				</span>
@@ -360,7 +360,7 @@ export const Search = () => {
 									<span className="absolute left-0 top-1/2 flex -translate-y-1/2 items-center">
 										<MotionIcon
 											isActive
-											type={MOTION_ICON.Search}
+											type={MOTION_ICON_TYPES.Search}
 											className="h-[1.125rem]! w-[1.125rem]! text-(--neutrals-3)"
 										/>
 									</span>
@@ -481,7 +481,7 @@ export const Search = () => {
 																	<span className="relative z-10 flex h-[2.5rem] w-[2.5rem] shrink-0 items-center justify-center rounded-[0.75rem] border border-(--white-pallete-10) bg-(--white-pallete-50)">
 																		<MotionIcon
 																			isActive={active}
-																			type={MOTION_ICON[result.icon]}
+																			type={MOTION_ICON_TYPES[result.icon]}
 																			className="h-[1.125rem]! w-[1.125rem]! text-(--white-pallete-100)"
 																		/>
 																	</span>
