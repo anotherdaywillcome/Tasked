@@ -21,11 +21,15 @@ export const DropdownMenuSub = ({
 	open
 }: Readonly<DropdownMenuSubProps>) => {
 	const generatedId = useId();
+
 	const isControlled = open !== undefined;
+
 	const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
 	const [position, setPosition] = useState<Omit<DropdownMenuPosition, "width"> | null>(null);
+
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
+
 	const isOpen = isControlled ? open : uncontrolledOpen;
 
 	const setOpen = useCallback(
@@ -47,7 +51,7 @@ export const DropdownMenuSub = ({
 		const triggerRect = triggerElement.getBoundingClientRect();
 
 		setPosition({
-			left: triggerRect.right + 4,
+			left: triggerRect.right - 4,
 			top: triggerRect.top
 		});
 	}, [generatedId]);

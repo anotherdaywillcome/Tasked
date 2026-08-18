@@ -8,7 +8,9 @@ type DropdownMenuPortalProps = {
 };
 
 export const DropdownMenuPortal = ({ children }: Readonly<DropdownMenuPortalProps>) => {
-	if (typeof document === "undefined") return null;
+	if (typeof document === "undefined") {
+		return null;
+	}
 
 	return createPortal(children, document.body);
 };

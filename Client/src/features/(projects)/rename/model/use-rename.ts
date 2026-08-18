@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 
 import { projectMutations } from "@entities/projects/api/project.mutations";
 
-import type { RenameProjectFormValues } from "./schema";
-import { renameProjectSchema } from "./schema";
+import type { RenameFormValues } from "./schema";
+import { renameSchema } from "./schema";
 
-type UseRenameProjectParams = {
+type UseRenameParams = {
 	id: string;
 };
 
-export const useRenameProject = ({ id }: Readonly<UseRenameProjectParams>) => {
+export const useRename = ({ id }: Readonly<UseRenameParams>) => {
 	const queryClient = useQueryClient();
 
 	const { mutate: renameProject, isError, isPending } = useMutation(projectMutations(queryClient).rename());
@@ -19,11 +19,11 @@ export const useRenameProject = ({ id }: Readonly<UseRenameProjectParams>) => {
 	const {
 		register,
 		formState: { errors }
-	} = useForm<RenameProjectFormValues>({
-		resolver: zodResolver(renameProjectSchema)
+	} = useForm<RenameFormValues>({
+		resolver: zodResolver(renameSchema)
 	});
 
-	const handleNameChange = ({ name }: RenameProjectFormValues) => {
+	const handleNameChange = ({ name }: RenameFormValues) => {
 		renameProject({
 			id,
 			name

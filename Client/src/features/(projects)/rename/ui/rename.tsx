@@ -8,21 +8,21 @@ import { formatDate } from "@shared/lib/utils";
 
 import { Project } from "@entities/projects/model/types";
 
-import { useRenameProject } from "../model";
+import { useRename } from "../model";
 
-type RenameProjectProps = {
+type RenameProps = {
 	project: Omit<Project, "taskSummary">;
 };
 
-export const RenameProject = ({
+export const Rename = ({
 	project: {
 		id,
 		name,
 		createdAt,
 		createdBy: { fullName }
 	}
-}: Readonly<RenameProjectProps>) => {
-	const renameProjectId = useId();
+}: Readonly<RenameProps>) => {
+	const renameId = useId();
 
 	const [projectName, setProjectName] = useState<string>(name);
 	const debouncedProjectName = useDebounce<string>(projectName, 600);
@@ -33,7 +33,7 @@ export const RenameProject = ({
 		isPending,
 		isError,
 		errors: { name: nameValidationError }
-	} = useRenameProject({ id });
+	} = useRename({ id });
 
 	useEffect(() => {
 		if (debouncedProjectName === name) {
@@ -48,7 +48,7 @@ export const RenameProject = ({
 	return (
 		<div className="flex flex-col gap-y-[0.125rem] w-full">
 			<form className="relative w-full">
-				<label htmlFor={renameProjectId} className="sr-only">
+				<label htmlFor={renameId} className="sr-only">
 					Project name
 				</label>
 				<input
@@ -57,7 +57,7 @@ export const RenameProject = ({
 							setProjectName(event.target.value);
 						}
 					})}
-					id={renameProjectId}
+					id={renameId}
 					className="font-(family-name:--font-barlow) font-bold text-[1.25rem] leading-[130%] tracking-[0.01em] text-(--white-pallete-100) border-b-[0.031rem] border-solid border-(--white-pallete-100) pb-[0.25rem] w-full focus:outline-none"
 					type="text"
 					name="name"

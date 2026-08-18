@@ -6,7 +6,8 @@ export const API_ENDPOINTS = {
 	},
 	Projects: {
 		Update: {
-			Name: (id: string) => `projects/${id}`
+			Name: (id: string) => `projects/${id}`,
+			Description: (id: string) => `projects/${id}`
 		},
 		Upload: {
 			Image: (id: string) => `projects/${id}/image`,

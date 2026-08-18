@@ -1,15 +1,17 @@
+"use client";
+
 import { mutationOptions, type QueryClient } from "@tanstack/react-query";
 
-// import type { CreateProjectInput, UpdateProjectInput } from "../api";
-// import { createProject, deleteProject, updateProject } from "../api";
 import { bffBrowserApiClient } from "@shared/api/browser-api-client";
 import { BFF_ENDPOINTS } from "@shared/config";
 
-import { CreateNewProjectResponse } from "./create-new-project";
+import { Project } from "../model/types";
+
 import { projectQueryKeys } from "./project.query-keys";
-import { UpdateProjectImageCommand, UpdateProjectImageResponse } from "./update-project-image";
-import { UpdateProjectNameCommand, UpdateProjectNameResponse } from "./update-project-name";
-import { Project } from "@entities/projects/model/types";
+import type { CreateNewProjectResponse } from "./create-new-project";
+import type { UpdateProjectImageCommand, UpdateProjectImageResponse } from "./update-project-image";
+import type { UpdateProjectNameCommand, UpdateProjectNameResponse } from "./update-project-name";
+import type { UpdateProjectDescriptionCommand, UpdateProjectDescriptionResponse } from "./update-project-description";
 
 export const projectMutations = (queryClient: QueryClient) => ({
 	create: () =>

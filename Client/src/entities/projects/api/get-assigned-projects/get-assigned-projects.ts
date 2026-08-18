@@ -1,4 +1,4 @@
-import { serverApiClient } from "@shared/api/server-api-client";
+import { serverApiClient } from "@shared/api";
 import { API_ENDPOINTS } from "@shared/config";
 
 import { GetAssignedProjectsQuery } from "./get-assigned-projects-query";

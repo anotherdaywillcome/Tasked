@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import type { CreateNewProjectResponse } from "@entities/projects/api/create-new-project";
+import type { CreateNewProjectResponse } from "@entities/projects";
 import { Privacy } from "@entities/projects/model/types";
 
 import { delay } from "@shared/lib/utils";

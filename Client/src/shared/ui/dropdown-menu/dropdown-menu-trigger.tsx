@@ -1,12 +1,9 @@
 "use client";
 
 import { clsx } from "clsx";
-import { motion } from "motion/react";
 import type { ComponentPropsWithoutRef, KeyboardEvent, MouseEvent, ReactElement, ReactNode, Ref } from "react";
 import { cloneElement, useCallback } from "react";
 
-import { Icon, ICON_TYPES } from "../icon";
-import { DROPDOWN_MENU_TRANSITION } from "./animations";
 import { useDropdownMenu } from "./context";
 import { mergeRefs } from "./lib";
 
@@ -157,9 +154,6 @@ export const DropdownMenuTrigger = ({
 			<span className={clsx("truncate", !selectedLabel && !children && "text-(--neutrals-3)")}>
 				{selectedLabel ?? children ?? placeholder}
 			</span>
-			<motion.span animate={{ rotate: open ? 180 : 0 }} transition={DROPDOWN_MENU_TRANSITION}>
-				<Icon type={ICON_TYPES.Chevron} size={16} className="text-[#95ACCB]" />
-			</motion.span>
 		</button>
 	);
 };

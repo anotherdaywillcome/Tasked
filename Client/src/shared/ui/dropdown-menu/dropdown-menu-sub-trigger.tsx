@@ -1,22 +1,35 @@
 "use client";
 
 import { clsx } from "clsx";
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef, ComponentType } from "react";
 
 import { Icon, ICON_TYPES } from "../icon";
 import { useDropdownMenuSub } from "./context";
 import { callAll } from "./lib";
 
-type DropdownMenuSubTriggerProps = ComponentPropsWithoutRef<"button">;
+export type DropdownMenuSubTriggerChevronProps = {
+	className?: string;
+	open: boolean;
+};
+
+type DropdownMenuSubTriggerProps = ComponentPropsWithoutRef<"button"> & {
+	renderChevron?: ComponentType<DropdownMenuSubTriggerChevronProps> | null;
+};
+
+const DefaultChevron = ({ className }: Readonly<DropdownMenuSubTriggerChevronProps>) => (
+	<Icon type={ICON_TYPES.Chevron} size={16} className={className} />
+);
 
 export const DropdownMenuSubTrigger = ({
 	children,
 	className,
 	onClick,
 	onKeyDown,
+	renderChevron,
 	...props
 }: Readonly<DropdownMenuSubTriggerProps>) => {
 	const { open, setOpen, triggerId, triggerRef, updatePosition } = useDropdownMenuSub("DropdownMenuSubTrigger");
+	const Chevron = renderChevron === undefined ? DefaultChevron : renderChevron;
 
 	return (
 		<button
@@ -46,7 +59,7 @@ export const DropdownMenuSubTrigger = ({
 			{...props}
 		>
 			<span className="truncate">{children}</span>
-			<Icon type={ICON_TYPES.Chevron} size={16} className="-rotate-90 text-[#95ACCB]" />
+			{Chevron && <Chevron open={open} className="text-[#95ACCB]" />}
 		</button>
 	);
 };

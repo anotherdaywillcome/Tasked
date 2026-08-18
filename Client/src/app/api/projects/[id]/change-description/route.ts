@@ -2,13 +2,16 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-// import { updateProjectName } from "@entities/projects";
 import { delay } from "@shared/lib/utils";
 
 const projectIdSchema = z.uuid("Invalid project ID");
 
-const updateProjectNameSchema = z.object({
-	name: z.string().trim().min(1, "Project name is required").max(86, "Project name must be less than 86 characters")
+const updateProjectDescriptionSchema = z.object({
+	description: z
+		.string()
+		.trim()
+		.min(1, "Project description is required")
+		.max(216, "Project description must be less than 216 characters")
 });
 
 export const PATCH = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
@@ -36,21 +39,21 @@ export const PATCH = async (request: NextRequest, { params }: { params: Promise<
 		return NextResponse.json({ message: "Invalid JSON body" }, { status: 400 });
 	}
 
-	const projectNameValidationResult = updateProjectNameSchema.safeParse(body);
+	const projectDescriptionValidationResult = updateProjectDescriptionSchema.safeParse(body);
 
-	if (!projectNameValidationResult.success) {
+	if (!projectDescriptionValidationResult.success) {
 		return NextResponse.json(
 			{
 				message: "Invalid request body",
-				errors: z.treeifyError(projectNameValidationResult.error)
+				errors: z.treeifyError(projectDescriptionValidationResult.error)
 			},
 			{ status: 400 }
 		);
 	}
 
-	const { name } = projectNameValidationResult.data;
+	const { description } = projectDescriptionValidationResult.data;
 
-	// await updateProjectName({ id, name });
+	// await updateProjectDescription({ id, description });
 
 	return NextResponse.json(null, { status: 204 });
 };

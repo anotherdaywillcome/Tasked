@@ -45,6 +45,7 @@ export const DropdownMenu = ({
 	const [selectedLabel, setSelectedLabel] = useState<ReactNode>(null);
 	const [activeItemId, setActiveItemId] = useState<string | null>(null);
 	const [position, setPosition] = useState<DropdownMenuPosition | null>(null);
+
 	const itemsRef = useRef<DropdownMenuItemRecord[]>([]);
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);

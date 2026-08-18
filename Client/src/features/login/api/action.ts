@@ -3,8 +3,7 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-import { ApiError, resolveApiError } from "@shared/api";
-import { serverApiClient } from "@shared/api/server-api-client";
+import { ApiError, resolveApiError, serverApiClient } from "@shared/api";
 import { ROUTES } from "@shared/config";
 
 import type { LoginFormData } from "../model";

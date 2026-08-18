@@ -1,8 +1,8 @@
-import { GetAssignedProjectsQuery, GetAssignedProjectsResponse } from "@entities/projects/api";
+import type { GetAssignedProjectsQuery, GetAssignedProjectsResponse } from "@entities/projects";
 
-import { bffApiClient } from "@shared/api/bff-api-client";
+import { bffServerApiClient } from "@shared/api";
 import { BFF_ENDPOINTS } from "@shared/config";
 
 export const getAssignedProjects = async ({ id }: Readonly<GetAssignedProjectsQuery>) => {
-	return bffApiClient.get<GetAssignedProjectsResponse>(BFF_ENDPOINTS.Users.Projects.Assigned(id));
+	return bffServerApiClient.get<GetAssignedProjectsResponse>(BFF_ENDPOINTS.Users.Projects.Assigned(id));
 };

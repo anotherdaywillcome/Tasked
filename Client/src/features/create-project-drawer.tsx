@@ -6,9 +6,10 @@ import { use, useEffect } from "react";
 import { Drawer } from "@widgets/drawer";
 import { DrawerContext } from "@widgets/drawer/model";
 
-import { ChangeProjectDescription } from "@features/(projects)/change-project-description";
-import { RenameProject } from "@features/(projects)/rename-project";
-import { UploadProjectImage } from "@features/(projects)/upload-project-image";
+import { ChangeDescription } from "@features/(projects)/change-description";
+import { ChangePrivacy } from "@features/(projects)/change-privacy";
+import { Rename } from "@features/(projects)/rename";
+import { UploadImage } from "@features/(projects)/upload-image";
 import { CreateProjectDrawerSkeleton } from "@features/create-project-drawer-skeleton";
 
 import { projectMutations } from "@entities/projects/api/project.mutations";
@@ -49,18 +50,12 @@ export const CreateProjectDrawer = () => {
 		<section className="relative">
 			<h2 className="sr-only">Basic project information</h2>
 			<div className="flex items-center gap-x-[1rem] p-[0.75rem]">
-				<UploadProjectImage id={project.id} />
-				<RenameProject project={project} />
+				<UploadImage project={project} />
+				<Rename project={project} />
 			</div>
-			<ChangeProjectDescription project={project} />
-			<div>
-				<div>
-					<label htmlFor="">Privacy</label>
-					<select name="" id="">
-						<option value="">Public</option>
-						<option value="">Private</option>
-					</select>
-				</div>
+			<ChangeDescription project={project} />
+			<div className="flex">
+				<ChangePrivacy project={project} />
 				<div>
 					<button>Assign User</button>
 					<div>
@@ -73,7 +68,7 @@ export const CreateProjectDrawer = () => {
 					</div>
 				</div>
 			</div>
-			<div className="bg-red-400">
+			<div className="pt-[200px]">
 				<Drawer.Trigger id="assign-user">
 					<button className="w-full h-[2.5rem] bg-blue-400 cursor-pointer">Assign User</button>
 				</Drawer.Trigger>

@@ -5,15 +5,15 @@ import { useId } from "react";
 
 import { Icon, ICON_TYPES } from "@shared/ui";
 
-import { useUploadProjectImage } from "../model";
+import { useUploadImage } from "../model";
+import { Project } from "@entities/projects/model/types";
 
 type UploadProjectImageProps = {
-	id: string;
-	imageUrl?: string;
+	project: Omit<Project, "taskSummary">;
 };
 
-export const UploadProjectImage = ({ id, imageUrl }: Readonly<UploadProjectImageProps>) => {
-	const uploadProjectImageId = useId();
+export const UploadImage = ({ project: { id, imageUrl } }: Readonly<UploadProjectImageProps>) => {
+	const uploadImageId = useId();
 
 	const {
 		handleImageChange,
@@ -22,7 +22,7 @@ export const UploadProjectImage = ({ id, imageUrl }: Readonly<UploadProjectImage
 		isPending,
 		isError,
 		errors: { image: imageValidationError }
-	} = useUploadProjectImage({ id });
+	} = useUploadImage({ id });
 
 	const displayedImageUrl = previewUrl ?? imageUrl;
 
@@ -30,7 +30,7 @@ export const UploadProjectImage = ({ id, imageUrl }: Readonly<UploadProjectImage
 		<section className="relative">
 			<h2 className="sr-only">Project image</h2>
 			<form className="relative">
-				<label htmlFor={uploadProjectImageId} className="block cursor-pointer">
+				<label htmlFor={uploadImageId} className="block cursor-pointer">
 					{displayedImageUrl ? (
 						<Image
 							src={displayedImageUrl}
@@ -53,7 +53,7 @@ export const UploadProjectImage = ({ id, imageUrl }: Readonly<UploadProjectImage
 					{...register("image", {
 						onChange: handleImageChange
 					})}
-					id={uploadProjectImageId}
+					id={uploadImageId}
 					type="file"
 					accept="image/*"
 					className="sr-only"

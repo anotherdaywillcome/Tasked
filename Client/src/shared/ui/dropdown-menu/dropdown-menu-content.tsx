@@ -1,7 +1,7 @@
 "use client";
 
 import { clsx } from "clsx";
-import { AnimatePresence, motion, type HTMLMotionProps } from "motion/react";
+import { AnimatePresence, type HTMLMotionProps, motion } from "motion/react";
 import type { ReactNode } from "react";
 import { createPortal } from "react-dom";
 

@@ -6,14 +6,14 @@ import { useForm } from "react-hook-form";
 
 import { projectMutations } from "@entities/projects/api/project.mutations";
 
-import type { UploadProjectImageFormValues } from "./schema";
-import { uploadProjectImageSchema } from "./schema";
+import type { UploadImageFormValues } from "./schema";
+import { uploadImageSchema } from "./schema";
 
-type UseUploadProjectImageParams = {
+type UseUploadImageParams = {
 	id: string;
 };
 
-export const useUploadProjectImage = ({ id }: Readonly<UseUploadProjectImageParams>) => {
+export const useUploadImage = ({ id }: Readonly<UseUploadImageParams>) => {
 	const queryClient = useQueryClient();
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -24,11 +24,11 @@ export const useUploadProjectImage = ({ id }: Readonly<UseUploadProjectImagePara
 		handleSubmit: handleFormSubmit,
 		setValue,
 		formState: { errors }
-	} = useForm<UploadProjectImageFormValues>({
-		resolver: zodResolver(uploadProjectImageSchema)
+	} = useForm<UploadImageFormValues>({
+		resolver: zodResolver(uploadImageSchema)
 	});
 
-	const onValidFormSubmit = ({ image }: UploadProjectImageFormValues) => {
+	const onValidFormSubmit = ({ image }: UploadImageFormValues) => {
 		updateProjectImage({
 			id,
 			image

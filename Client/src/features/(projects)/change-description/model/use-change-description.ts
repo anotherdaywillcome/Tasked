@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 
 import { projectMutations } from "@entities/projects/api/project.mutations";
 
-import type { ChangeProjectDescriptionFormValues } from "./schema";
-import { changeProjectDescriptionSchema } from "./schema";
+import type { ChangeDescriptionFormValues } from "./schema";
+import { changeDescriptionSchema } from "./schema";
 
-type UseChangeProjectDescriptionParams = {
+type UseChangeDescriptionParams = {
 	id: string;
 };
 
-export const useChangeProjectDescription = ({ id }: Readonly<UseChangeProjectDescriptionParams>) => {
+export const useChangeDescription = ({ id }: Readonly<UseChangeDescriptionParams>) => {
 	const queryClient = useQueryClient();
 
 	const {
@@ -23,11 +23,11 @@ export const useChangeProjectDescription = ({ id }: Readonly<UseChangeProjectDes
 	const {
 		register,
 		formState: { errors }
-	} = useForm<ChangeProjectDescriptionFormValues>({
-		resolver: zodResolver(changeProjectDescriptionSchema)
+	} = useForm<ChangeDescriptionFormValues>({
+		resolver: zodResolver(changeDescriptionSchema)
 	});
 
-	const handleDescriptionChange = ({ description }: ChangeProjectDescriptionFormValues) => {
+	const handleDescriptionChange = ({ description }: ChangeDescriptionFormValues) => {
 		changeDescription({
 			id,
 			description
