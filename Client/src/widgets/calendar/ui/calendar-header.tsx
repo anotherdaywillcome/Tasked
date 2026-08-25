@@ -6,8 +6,8 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-	ICON,
-	Icon
+	Icon,
+	ICON_TYPES
 } from "@shared/ui";
 import { clsx } from "clsx";
 import { motion } from "motion/react";
@@ -72,7 +72,11 @@ const NavigationButton = ({
 			whileTap={{ scale: 0.96 }}
 			onClick={onClick}
 		>
-			<Icon type={ICON.Chevron} size={14} className={direction === "previous" ? "rotate-90" : "-rotate-90"} />
+			<Icon
+				type={ICON_TYPES.Chevron}
+				size={14}
+				className={direction === "previous" ? "rotate-90" : "-rotate-90"}
+			/>
 		</motion.button>
 	);
 };
@@ -98,7 +102,7 @@ export const CalendarHeader = ({ children }: Readonly<CalendarHeaderProps>) => {
 		<header className="flex min-w-0 flex-wrap items-center justify-between gap-[10px] rounded-[14px] border-[0.50px] border-solid border-(--white-pallete-10) bg-(--geek-blue-primary-opacity-50) px-[12px] py-[10px] backdrop-blur-[24px]">
 			<div className="flex min-w-0 items-center gap-x-[10px]">
 				<span className="flex h-[32px] w-[32px] shrink-0 items-center justify-center rounded-[9px] bg-(--geek-blue-primary-opacity-200) text-(--geek-blue-4)">
-					<Icon type={ICON.Calendar} size={15} />
+					<Icon type={ICON_TYPES.Calendar} size={15} />
 				</span>
 				<div className="min-w-0">
 					<h2

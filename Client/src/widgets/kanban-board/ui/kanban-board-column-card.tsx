@@ -1,7 +1,7 @@
 "use client";
 
 import { getFormattedId, getPriority, getPriorityBadgeVariant } from "@entities/tasks";
-import { AvatarStack, Badge, ICON, Icon } from "@shared/ui";
+import { AvatarStack, Badge, Icon, ICON_TYPES } from "@shared/ui";
 import { clsx } from "clsx";
 import { animate, motion, useDragControls, useMotionValue } from "motion/react";
 import type { KeyboardEvent, ReactNode } from "react";
@@ -48,7 +48,7 @@ const DefaultTaskCardContent = ({ task, headingId }: Readonly<{ task: KanbanTask
 						</span>
 						<span className="sr-only">{task.dueDate.accessibleLabel}</span>
 					</time>
-					<Icon type={ICON.Clock} size={10} className="text-(--neutrals-2)" />
+					<Icon type={ICON_TYPES.Clock} size={10} className="text-(--neutrals-2)" />
 				</p>
 			</footer>
 		</article>
@@ -169,7 +169,7 @@ export const KanbanBoardColumnCard = ({ task, children }: Readonly<KanbanBoardCo
 				transition={{ type: "spring", stiffness: 500, damping: 30 }}
 				onClick={() => removeTask(task.id)}
 			>
-				<Icon type={ICON.TrashBold} size={16} />
+				<Icon type={ICON_TYPES.TrashBold} size={16} />
 			</motion.button>
 		</motion.li>
 	);

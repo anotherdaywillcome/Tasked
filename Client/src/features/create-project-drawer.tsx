@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { use, useEffect } from "react";
+import { Suspense, use, useEffect } from "react";
 
 import { Drawer } from "@widgets/drawer";
 import { DrawerContext } from "@widgets/drawer/model";
@@ -13,6 +13,8 @@ import { UploadImage } from "@features/(projects)/upload-image";
 import { CreateProjectDrawerSkeleton } from "@features/create-project-drawer-skeleton";
 
 import { projectMutations } from "@entities/projects/api/project.mutations";
+import { AssignUser } from "@features/assign-user";
+import { AssignedUsers, AssignedUsersSkeleton } from "@widgets/assigned-users";
 
 export const CreateProjectDrawer = () => {
 	const { isOpen } = use(DrawerContext);
@@ -56,22 +58,16 @@ export const CreateProjectDrawer = () => {
 			<ChangeDescription project={project} />
 			<div className="flex">
 				<ChangePrivacy project={project} />
-				<div>
-					<button>Assign User</button>
-					<div>
-						{/* Avatar stack */}
-						<img src="" alt="" />
-						<img src="" alt="" />
-						<img src="" alt="" />
-						<img src="" alt="" />
-						<img src="" alt="" />
-					</div>
+				<div className="flex items-center">
+					<Drawer.Trigger id="assign-user">
+						<div className="relative">
+							<AssignUser projectId={project.id} />
+						</div>
+					</Drawer.Trigger>
+					<Suspense fallback={<AssignedUsersSkeleton />}>
+						<AssignedUsers projectId={project.id} />
+					</Suspense>
 				</div>
-			</div>
-			<div className="pt-[200px]">
-				<Drawer.Trigger id="assign-user">
-					<button className="w-full h-[2.5rem] bg-blue-400 cursor-pointer">Assign User</button>
-				</Drawer.Trigger>
 			</div>
 		</section>
 	);

@@ -1,6 +1,6 @@
 "use client";
 
-import { ICON, Icon } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -63,7 +63,7 @@ export const KanbanBoardDeleteColumnDialog = ({
 				transition={{ type: "spring", stiffness: 420, damping: 32, mass: 0.7 }}
 			>
 				<div className="mb-[18px] flex h-[44px] w-[44px] items-center justify-center rounded-[12px] bg-(--volcano-150) text-(--volcano-1000)">
-					<Icon type={ICON.TrashBold} size={22} />
+					<Icon type={ICON_TYPES.TrashBold} size={22} />
 				</div>
 				<h2
 					className="font-(family-name:--font-barlow) text-[18px] leading-[130%] font-bold text-(--white-pallete-100)"

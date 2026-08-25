@@ -2,13 +2,14 @@
 
 import { clsx } from "clsx";
 import type { ComponentPropsWithoutRef } from "react";
-import { useEffect, useId, useMemo } from "react";
+import { Children, isValidElement, useEffect, useId, useMemo } from "react";
 
 import { useDropdownMenu } from "./context";
+import { DropdownMenuShortcut } from "./dropdown-menu-shortcut";
 import { callAll, getTextContent } from "./lib";
 import type { DropdownMenuItemRecord } from "./types";
 
-type DropdownMenuItemProps = Omit<ComponentPropsWithoutRef<"button">, "onSelect" | "value"> & {
+export type DropdownMenuItemProps = Omit<ComponentPropsWithoutRef<"button">, "onSelect" | "value"> & {
 	onSelect?: () => void;
 	value?: string;
 };
@@ -28,7 +29,10 @@ export const DropdownMenuItem = ({
 	const itemId = id ?? generatedId;
 	const { activeItemId, registerItem, selectItem, selectedValue, setActiveItemId } =
 		useDropdownMenu("DropdownMenuItem");
-	const label = getTextContent(children);
+	const childNodes = Children.toArray(children);
+	const shortcut = childNodes.find((child) => isValidElement(child) && child.type === DropdownMenuShortcut);
+	const labelChildren = childNodes.filter((child) => child !== shortcut);
+	const label = getTextContent(labelChildren);
 	const selected = value !== undefined && value === selectedValue;
 	const active = activeItemId === itemId;
 
@@ -67,7 +71,8 @@ export const DropdownMenuItem = ({
 			})}
 			{...props}
 		>
-			<span className="truncate">{children}</span>
+			<span className="min-w-0 flex-1 truncate">{labelChildren}</span>
+			{shortcut}
 			{selected && <span className="h-[0.375rem] w-[0.375rem] rounded-full bg-(--daybreak-blue-200)" />}
 		</button>
 	);

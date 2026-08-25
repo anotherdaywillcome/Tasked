@@ -1,7 +1,7 @@
 "use client";
 
 import { clsx } from "clsx";
-import { AnimatePresence, motion, type HTMLMotionProps } from "motion/react";
+import { AnimatePresence, type HTMLMotionProps, motion } from "motion/react";
 import type { ReactNode } from "react";
 
 import { DROPDOWN_MENU_SUB_CONTENT_ANIMATION_VARIANTS, DROPDOWN_MENU_TRANSITION } from "./animations";

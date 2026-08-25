@@ -1,6 +1,6 @@
 "use client";
 
-import { ICON, Icon } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 import { AnimatePresence, motion } from "motion/react";
 import { type FormEvent, useState } from "react";
 
@@ -85,7 +85,7 @@ export const KanbanBoardAddColumn = () => {
 						whileTap={{ scale: 0.99 }}
 						onClick={() => setIsCreating(true)}
 					>
-						<Icon type={ICON.Add} size={16} />
+						<Icon type={ICON_TYPES.Add} size={16} />
 						<span className="font-(family-name:--font-barlow) text-[12px] leading-[133%] font-bold tracking-[0.01em] capitalize">
 							Add new column
 						</span>

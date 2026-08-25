@@ -1,9 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useCallback, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 
-import { DropdownMenuSubContext } from "./context";
+import { DropdownMenuSubContext, useDropdownMenu } from "./context";
 import { getElementById } from "./lib";
 import type { DropdownMenuPosition, DropdownMenuSubContextValue } from "./types";
 
@@ -21,6 +21,7 @@ export const DropdownMenuSub = ({
 	open
 }: Readonly<DropdownMenuSubProps>) => {
 	const generatedId = useId();
+	const { registerSubmenu } = useDropdownMenu("DropdownMenuSub");
 
 	const isControlled = open !== undefined;
 
@@ -42,6 +43,8 @@ export const DropdownMenuSub = ({
 		},
 		[isControlled, onOpenChange]
 	);
+
+	useEffect(() => registerSubmenu(() => setOpen(false)), [registerSubmenu, setOpen]);
 
 	const updatePosition = useCallback(() => {
 		const triggerElement = triggerRef.current ?? getElementById<HTMLButtonElement>(generatedId);

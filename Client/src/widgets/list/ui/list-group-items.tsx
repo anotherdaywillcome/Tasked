@@ -1,6 +1,6 @@
 "use client";
 
-import { ICON, Icon } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 import { AnimatePresence, motion } from "motion/react";
 import { Children, cloneElement, isValidElement, type ReactElement, type ReactNode } from "react";
 
@@ -65,7 +65,7 @@ export const ListGroupItems = ({ children }: Readonly<ListGroupItemsProps>) => {
 					transition={{ type: "spring", stiffness: 500, damping: 34 }}
 					onClick={() => addTask(group.id)}
 				>
-					<Icon type={ICON.Add} size={16} />
+					<Icon type={ICON_TYPES.Add} size={16} />
 					<span className="font-(family-name:--font-barlow) text-[12px] font-bold tracking-[0.01em]">
 						Add new row
 					</span>

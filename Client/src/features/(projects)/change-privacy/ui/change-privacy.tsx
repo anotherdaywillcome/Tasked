@@ -60,7 +60,7 @@ export const ChangePrivacy = ({ project }: Readonly<ChangePrivacyProps>) => {
 					</DropdownMenuSub>
 					<DropdownMenuItem>
 						New Team
-						<DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+						<DropdownMenuShortcut shortcut="⌘+X" />
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 			</DropdownMenuContent>

@@ -3,9 +3,11 @@
 import { clsx } from "clsx";
 import type { ComponentPropsWithoutRef } from "react";
 
-type DropdownMenuShortcutProps = ComponentPropsWithoutRef<"span">;
+export type DropdownMenuShortcutProps = Omit<ComponentPropsWithoutRef<"span">, "children"> & {
+	shortcut: string;
+};
 
-export const DropdownMenuShortcut = ({ children, className, ...props }: Readonly<DropdownMenuShortcutProps>) => {
+export const DropdownMenuShortcut = ({ className, shortcut, ...props }: Readonly<DropdownMenuShortcutProps>) => {
 	return (
 		<span
 			className={clsx(
@@ -14,7 +16,7 @@ export const DropdownMenuShortcut = ({ children, className, ...props }: Readonly
 			)}
 			{...props}
 		>
-			{children}
+			{shortcut}
 		</span>
 	);
 };

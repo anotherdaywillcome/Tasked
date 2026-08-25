@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ComponentPropsWithoutRef, useId, useState } from "react";
+import type { ChangeEvent, ComponentPropsWithoutRef } from "react";
+import { useId, useState } from "react";
 
 type CheckboxProps = ComponentPropsWithoutRef<"input"> & {
 	label: string;
@@ -9,30 +10,50 @@ type CheckboxProps = ComponentPropsWithoutRef<"input"> & {
 	value: string;
 };
 
-export const Checkbox = ({ label, name, value, ...props }: Readonly<CheckboxProps>) => {
+export const Checkbox = ({
+	label,
+	name,
+	value,
+	checked: controlledChecked,
+	defaultChecked = false,
+	disabled,
+	onChange,
+	...props
+}: Readonly<CheckboxProps>) => {
 	const checkboxId = useId();
+	const [uncontrolledChecked, setUncontrolledChecked] = useState(defaultChecked);
+	const checked = controlledChecked ?? uncontrolledChecked;
 
-	const [checked, setChecked] = useState<boolean>(false);
+	const handleCheckboxCheck = (event: ChangeEvent<HTMLInputElement>) => {
+		if (controlledChecked === undefined) {
+			setUncontrolledChecked(event.target.checked);
+		}
 
-	const handleCheckboxCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setChecked(event.target.checked);
+		onChange?.(event);
 	};
 
 	return (
-		<label htmlFor={checkboxId} className="inline-flex items-center cursor-pointer gap-2">
+		<label
+			htmlFor={checkboxId}
+			className="inline-flex cursor-pointer items-center gap-2 has-disabled:cursor-not-allowed has-disabled:opacity-50"
+		>
 			<input
 				id={checkboxId}
 				type="checkbox"
-				className="sr-only"
+				className="peer sr-only"
+				name={name}
+				value={value}
 				checked={checked}
 				onChange={handleCheckboxCheck}
+				disabled={disabled}
 				{...props}
 			/>
 			<motion.div
 				animate={{
 					backgroundColor: checked ? "var(--geek-blue-6)" : "rgba(1,0,9,.1)"
 				}}
-				className="flex h-4 w-4 items-center justify-center rounded border border-(--geek-blue-6)"
+				className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-(--geek-blue-6) transition-shadow peer-focus-visible:shadow-[0_0_0_0.125rem_var(--daybreak-blue-200)]"
+				aria-hidden="true"
 			>
 				<svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<motion.path

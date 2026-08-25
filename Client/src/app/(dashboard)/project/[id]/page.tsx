@@ -67,7 +67,7 @@ const ProjectContent = async ({ params }: Readonly<ProjectPageProps>) => {
 					<Suspense fallback={<AssignedUsersSkeleton />}>
 						<AssignedUsers projectId={id} />
 					</Suspense>
-					<AssignUser />
+					<AssignUser projectId={id} />
 				</ViewHeader.Info>
 				<ViewHeader.Actions>
 					<PinProject projectId={id} />

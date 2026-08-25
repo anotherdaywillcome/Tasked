@@ -9,6 +9,7 @@ export const BFF_ENDPOINTS = {
 		}
 	},
 	Projects: {
+		Assignees: (id: string) => `projects/${id}/assignees`,
 		Update: {
 			Name: (id: string) => `projects/${id}/rename`,
 			Description: (id: string) => `projects/${id}/change-description`

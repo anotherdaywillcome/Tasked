@@ -2,10 +2,29 @@
 
 import { clsx } from "clsx";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+	Children,
+	isValidElement,
+	useCallback,
+	useEffect,
+	useId,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState
+} from "react";
 
 import { DropdownMenuContext } from "./context";
-import { getElementById, getFirstEnabledItem, getLastEnabledItem, getNextEnabledItem } from "./lib";
+import { DropdownMenuItem, type DropdownMenuItemProps } from "./dropdown-menu-item";
+import { DropdownMenuShortcut, type DropdownMenuShortcutProps } from "./dropdown-menu-shortcut";
+import {
+	getElementById,
+	getFirstEnabledItem,
+	getLastEnabledItem,
+	getNextEnabledItem,
+	getTextContent,
+	matchesShortcut
+} from "./lib";
 import type { DropdownMenuContextValue, DropdownMenuItemRecord, DropdownMenuPosition } from "./types";
 
 type DropdownMenuProps = ComponentPropsWithoutRef<"div"> & {
@@ -18,6 +37,57 @@ type DropdownMenuProps = ComponentPropsWithoutRef<"div"> & {
 	onValueChange?: (value: string) => void;
 	open?: boolean;
 	value?: string;
+};
+
+type DropdownMenuShortcutBinding = Pick<DropdownMenuItemProps, "disabled" | "onSelect" | "value"> & {
+	label: string;
+	shortcut: string;
+};
+
+const getShortcut = (children: ReactNode): string | undefined => {
+	let shortcut: string | undefined;
+
+	Children.forEach(children, (child) => {
+		if (shortcut || !isValidElement(child)) return;
+
+		if (child.type === DropdownMenuShortcut) {
+			shortcut = (child.props as DropdownMenuShortcutProps).shortcut;
+			return;
+		}
+
+		shortcut = getShortcut((child.props as { children?: ReactNode }).children);
+	});
+
+	return shortcut;
+};
+
+const getShortcutBindings = (children: ReactNode): DropdownMenuShortcutBinding[] => {
+	const bindings: DropdownMenuShortcutBinding[] = [];
+
+	Children.forEach(children, (child) => {
+		if (!isValidElement(child)) return;
+
+		if (child.type === DropdownMenuItem) {
+			const itemProps = child.props as DropdownMenuItemProps;
+			const shortcut = getShortcut(itemProps.children);
+
+			if (shortcut) {
+				bindings.push({
+					disabled: itemProps.disabled,
+					label: getTextContent(itemProps.children),
+					onSelect: itemProps.onSelect,
+					shortcut,
+					value: itemProps.value
+				});
+			}
+
+			return;
+		}
+
+		bindings.push(...getShortcutBindings((child.props as { children?: ReactNode }).children));
+	});
+
+	return bindings;
 };
 
 export const DropdownMenu = ({
@@ -47,11 +117,17 @@ export const DropdownMenu = ({
 	const [position, setPosition] = useState<DropdownMenuPosition | null>(null);
 
 	const itemsRef = useRef<DropdownMenuItemRecord[]>([]);
+	const submenuClosersRef = useRef(new Set<() => void>());
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 
 	const isOpen = isOpenControlled ? open : uncontrolledOpen;
 	const selectedValue = isValueControlled ? value : uncontrolledValue;
+	const shortcutBindings = useMemo(() => getShortcutBindings(children), [children]);
+
+	const closeSubmenus = useCallback(() => {
+		submenuClosersRef.current.forEach((close) => close());
+	}, []);
 
 	const setOpen = useCallback(
 		(nextOpen: boolean) => {
@@ -59,6 +135,7 @@ export const DropdownMenu = ({
 
 			if (!nextOpen) {
 				setActiveItemId(null);
+				closeSubmenus();
 			}
 
 			if (!isOpenControlled) {
@@ -67,7 +144,7 @@ export const DropdownMenu = ({
 
 			onOpenChange?.(nextOpen);
 		},
-		[disabled, isOpenControlled, onOpenChange]
+		[closeSubmenus, disabled, isOpenControlled, onOpenChange]
 	);
 
 	const updatePosition = useCallback(() => {
@@ -109,6 +186,39 @@ export const DropdownMenu = ({
 		},
 		[activeItemId, isOpen, selectedValue]
 	);
+
+	const registerSubmenu = useCallback((close: () => void) => {
+		submenuClosersRef.current.add(close);
+
+		return () => {
+			submenuClosersRef.current.delete(close);
+		};
+	}, []);
+
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			const binding = shortcutBindings.find(({ shortcut }) => matchesShortcut(event, shortcut));
+
+			if (!binding || binding.disabled) return;
+
+			event.preventDefault();
+			binding.onSelect?.();
+
+			if (binding.value !== undefined) {
+				setSelectedValue(binding.value);
+				setSelectedLabel(binding.label);
+			}
+			console.log("selected label", binding.label);
+
+			if (isOpen) {
+				setOpen(false);
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown, true);
+
+		return () => window.removeEventListener("keydown", handleKeyDown, true);
+	}, [isOpen, setOpen, setSelectedValue, shortcutBindings]);
 
 	const selectItem = useCallback(
 		(item: DropdownMenuItemRecord, label: ReactNode) => {
@@ -209,6 +319,7 @@ export const DropdownMenu = ({
 			triggerRef,
 			updatePosition,
 			registerItem,
+			registerSubmenu,
 			selectActiveItem,
 			selectItem,
 			setFirstItemActive,
@@ -224,6 +335,7 @@ export const DropdownMenu = ({
 			name,
 			position,
 			registerItem,
+			registerSubmenu,
 			selectActiveItem,
 			selectItem,
 			selectedLabel,

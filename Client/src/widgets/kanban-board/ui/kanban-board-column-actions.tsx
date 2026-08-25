@@ -1,6 +1,6 @@
 "use client";
 
-import { ICON, Icon } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 import { motion } from "motion/react";
 import { cloneElement, isValidElement, type ReactElement, type ReactNode } from "react";
 
@@ -30,7 +30,7 @@ export const KanbanBoardColumnActions = ({ children }: Readonly<KanbanBoardColum
 			whileTap={{ scale: 0.92 }}
 			transition={{ type: "spring", stiffness: 500, damping: 30 }}
 		>
-			<Icon type={ICON.AddCircle} size={16} />
+			<Icon type={ICON_TYPES.AddCircle} size={16} />
 		</motion.button>
 	);
 
@@ -46,7 +46,7 @@ export const KanbanBoardColumnActions = ({ children }: Readonly<KanbanBoardColum
 				transition={{ type: "spring", stiffness: 500, damping: 30 }}
 				onClick={() => requestColumnDeletion(columnId)}
 			>
-				<Icon type={ICON.TrashBold} size={16} />
+				<Icon type={ICON_TYPES.TrashBold} size={16} />
 			</motion.button>
 		</div>
 	);

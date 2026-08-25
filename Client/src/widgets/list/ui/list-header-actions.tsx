@@ -1,6 +1,6 @@
 "use client";
 
-import { ICON, Icon } from "@shared/ui";
+import { Icon, ICON_TYPES } from "@shared/ui";
 import { motion } from "motion/react";
 
 import { useGroupedList, useListGroup } from "../model/grouped-list-context";
@@ -19,7 +19,7 @@ export const ListHeaderActions = () => {
 			transition={{ type: "spring", stiffness: 500, damping: 30 }}
 			onClick={() => addTask(group.id)}
 		>
-			<Icon type={ICON.AddCircle} size={16} />
+			<Icon type={ICON_TYPES.AddCircle} size={16} />
 		</motion.button>
 	);
 };

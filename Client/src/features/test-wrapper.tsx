@@ -1,5 +1,6 @@
 import { Drawer, DRAWER_POSITIONS } from "@widgets/drawer";
 
+import { AssignUserDrawer } from "@features/assign-user";
 import { CreateProjectDrawer } from "@features/create-project-drawer";
 
 export const TestWrapper = () => {
@@ -24,7 +25,7 @@ export const TestWrapper = () => {
 						<Drawer.Title>Assign user</Drawer.Title>
 						<Drawer.Close id="assign-user" />
 					</Drawer.Header>
-					<div className="bg-red-400">Assign user content</div>
+					<AssignUserDrawer />
 				</Drawer.Content>
 			</Drawer.Group>
 		</Drawer>

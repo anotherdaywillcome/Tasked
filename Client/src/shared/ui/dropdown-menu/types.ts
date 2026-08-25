@@ -33,6 +33,7 @@ export type DropdownMenuContextValue = {
 	triggerRef: Ref<HTMLButtonElement>;
 	updatePosition: () => void;
 	registerItem: (item: DropdownMenuItemRecord) => () => void;
+	registerSubmenu: (close: () => void) => () => void;
 	selectActiveItem: () => void;
 	selectItem: (item: DropdownMenuItemRecord, label: ReactNode) => void;
 	setFirstItemActive: () => void;
