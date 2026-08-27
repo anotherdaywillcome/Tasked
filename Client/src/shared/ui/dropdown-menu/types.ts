@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from "react";
+import type { ReactNode, RefObject } from "react";
 
 export type DropdownMenuPosition = {
 	left: number;
@@ -11,42 +11,19 @@ export type DropdownMenuItemRecord = {
 	label: ReactNode;
 	value?: string;
 	disabled?: boolean;
+	parentSubmenuId: string | null;
+	submenuId?: string;
 	onSelect?: () => void;
 };
 
-export type DropdownMenuContextValue = {
-	activeItemId: string | null;
-	contentId: string;
-	contentRef: Ref<HTMLDivElement>;
-	disabled?: boolean;
-	isControlled: boolean;
-	name?: string;
-	open: boolean;
-	position: DropdownMenuPosition | null;
-	selectedLabel: ReactNode;
-	selectedValue?: string;
-	setActiveItemId: (itemId: string | null) => void;
-	setOpen: (open: boolean) => void;
-	setSelectedLabel: (label: ReactNode) => void;
-	setSelectedValue: (value: string) => void;
-	triggerId: string;
-	triggerRef: Ref<HTMLButtonElement>;
-	updatePosition: () => void;
-	registerItem: (item: DropdownMenuItemRecord) => () => void;
-	registerSubmenu: (close: () => void) => () => void;
-	selectActiveItem: () => void;
-	selectItem: (item: DropdownMenuItemRecord, label: ReactNode) => void;
-	setFirstItemActive: () => void;
-	setLastItemActive: () => void;
-	setNextItemActive: (direction: 1 | -1) => void;
-};
-
 export type DropdownMenuSubContextValue = {
-	contentRef: Ref<HTMLDivElement>;
+	id: string;
+	parentSubmenuId: string | null;
 	open: boolean;
-	position: Omit<DropdownMenuPosition, "width"> | null;
 	setOpen: (open: boolean) => void;
-	triggerId: string;
-	triggerRef: Ref<HTMLButtonElement>;
+	position: DropdownMenuPosition | null;
 	updatePosition: () => void;
+	triggerId: string;
+	triggerRef: RefObject<HTMLButtonElement | null>;
+	contentRef: RefObject<HTMLDivElement | null>;
 };

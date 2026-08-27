@@ -1,18 +1,6 @@
 import { Project } from "@entities/projects/model/types";
 
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuItem,
-	DropdownMenuPortal,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
-	DropdownMenuTrigger
-} from "@shared/ui";
+import { DropdownMenu } from "@shared/ui";
 
 type ChangePrivacyProps = {
 	project: Omit<Project, "taskSummary">;
@@ -30,40 +18,38 @@ export const ChangePrivacy = ({ project }: Readonly<ChangePrivacyProps>) => {
 		// 	</DropdownMenuContent>
 		// </DropdownMenu>
 		<DropdownMenu>
-			<DropdownMenuTrigger>
-				<span>Large Button Tests</span>
-			</DropdownMenuTrigger>
-			<DropdownMenuContent>
-				<DropdownMenuGroup>
-					<DropdownMenuItem>Team</DropdownMenuItem>
-					<DropdownMenuSub>
-						<DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-						<DropdownMenuPortal>
-							<DropdownMenuSubContent>
-								<DropdownMenuItem>Email</DropdownMenuItem>
-								<DropdownMenuItem>Message</DropdownMenuItem>
-								<DropdownMenuSub>
-									<DropdownMenuSubTrigger>More options</DropdownMenuSubTrigger>
-									<DropdownMenuPortal>
-										<DropdownMenuSubContent>
-											<DropdownMenuItem>Calendly</DropdownMenuItem>
-											<DropdownMenuItem>Slack</DropdownMenuItem>
-											<DropdownMenuSeparator />
-											<DropdownMenuItem>Webhook</DropdownMenuItem>
-										</DropdownMenuSubContent>
-									</DropdownMenuPortal>
-								</DropdownMenuSub>
-								<DropdownMenuSeparator />
-								<DropdownMenuItem>Advanced...</DropdownMenuItem>
-							</DropdownMenuSubContent>
-						</DropdownMenuPortal>
-					</DropdownMenuSub>
-					<DropdownMenuItem>
+			<DropdownMenu.Trigger>Large Button Tests</DropdownMenu.Trigger>
+			<DropdownMenu.Content>
+				<DropdownMenu.Group>
+					<DropdownMenu.Item>Team</DropdownMenu.Item>
+					<DropdownMenu.Sub>
+						<DropdownMenu.SubTrigger>Invite users</DropdownMenu.SubTrigger>
+						<DropdownMenu.Portal>
+							<DropdownMenu.SubContent>
+								<DropdownMenu.Item>Email</DropdownMenu.Item>
+								<DropdownMenu.Item>Message</DropdownMenu.Item>
+								<DropdownMenu.Sub>
+									<DropdownMenu.SubTrigger>More options</DropdownMenu.SubTrigger>
+									<DropdownMenu.Portal>
+										<DropdownMenu.SubContent>
+											<DropdownMenu.Item>Calendly</DropdownMenu.Item>
+											<DropdownMenu.Item>Slack</DropdownMenu.Item>
+											<DropdownMenu.Separator />
+											<DropdownMenu.Item>Webhook</DropdownMenu.Item>
+										</DropdownMenu.SubContent>
+									</DropdownMenu.Portal>
+								</DropdownMenu.Sub>
+								<DropdownMenu.Separator />
+								<DropdownMenu.Item>Advanced...</DropdownMenu.Item>
+							</DropdownMenu.SubContent>
+						</DropdownMenu.Portal>
+					</DropdownMenu.Sub>
+					<DropdownMenu.Item>
 						New Team
-						<DropdownMenuShortcut shortcut="⌘+X" />
-					</DropdownMenuItem>
-				</DropdownMenuGroup>
-			</DropdownMenuContent>
+						<DropdownMenu.Shortcut shortcut="⌘+X" />
+					</DropdownMenu.Item>
+				</DropdownMenu.Group>
+			</DropdownMenu.Content>
 		</DropdownMenu>
 	);
 };

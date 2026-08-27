@@ -2,9 +2,9 @@
 
 import { clsx } from "clsx";
 import type { ComponentPropsWithoutRef, KeyboardEvent, MouseEvent, ReactElement, ReactNode, Ref } from "react";
-import { cloneElement, useCallback } from "react";
+import { cloneElement, use, useCallback } from "react";
 
-import { useDropdownMenu } from "./context";
+import { DropdownMenuContext } from "./dropdown-menu-context";
 import { mergeRefs } from "./lib";
 
 type DropdownMenuTriggerRenderProps = ComponentPropsWithoutRef<"button"> & {
@@ -26,9 +26,10 @@ export const DropdownMenuTrigger = ({
 	placeholder = "Select option",
 	render,
 	...props
-}: Readonly<DropdownMenuTriggerProps>) => {
+}: DropdownMenuTriggerProps) => {
 	const {
 		contentId,
+		contentRef,
 		disabled: menuDisabled,
 		open,
 		selectActiveItem,
@@ -39,21 +40,34 @@ export const DropdownMenuTrigger = ({
 		setOpen,
 		triggerId,
 		triggerRef,
-		updatePosition
-	} = useDropdownMenu("DropdownMenuTrigger");
+		updatePosition,
+		setActiveSubmenuId,
+		openActiveSubmenu,
+		closeActiveSubmenu
+	} = use(DropdownMenuContext)!;
+
 	const isDisabled = disabled ?? menuDisabled;
 
 	const openMenu = useCallback(() => {
-		if (isDisabled) return;
+		if (isDisabled) {
+			return;
+		}
 
 		updatePosition();
 		setOpen(true);
-	}, [isDisabled, setOpen, updatePosition]);
+		setActiveSubmenuId(null);
+		setFirstItemActive();
+
+		queueMicrotask(() => {
+			contentRef.current?.focus();
+		});
+	}, [isDisabled, setOpen, setFirstItemActive, updatePosition, setActiveSubmenuId, contentRef]);
 
 	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
 		onClick?.(event);
-
-		if (event.defaultPrevented) return;
+		if (event.defaultPrevented) {
+			return;
+		}
 
 		if (open) {
 			setOpen(false);
@@ -65,8 +79,9 @@ export const DropdownMenuTrigger = ({
 
 	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
 		onKeyDown?.(event);
-
-		if (event.defaultPrevented || isDisabled) return;
+		if (event.defaultPrevented || isDisabled) {
+			return;
+		}
 
 		if (event.key === "Escape") {
 			setOpen(false);
@@ -75,39 +90,49 @@ export const DropdownMenuTrigger = ({
 
 		if (event.key === "Enter" || event.key === " ") {
 			event.preventDefault();
-
 			if (open) {
 				selectActiveItem();
 				return;
 			}
-
 			openMenu();
 			return;
 		}
 
 		if (event.key === "ArrowDown") {
 			event.preventDefault();
-
 			if (!open) {
 				openMenu();
-				setFirstItemActive();
 				return;
 			}
-
 			setNextItemActive(1);
 			return;
 		}
 
 		if (event.key === "ArrowUp") {
 			event.preventDefault();
-
 			if (!open) {
-				openMenu();
+				updatePosition();
+				setOpen(true);
+				setActiveSubmenuId(null);
 				setLastItemActive();
+				queueMicrotask(() => contentRef.current?.focus());
 				return;
 			}
-
 			setNextItemActive(-1);
+			return;
+		}
+
+		if (event.key === "ArrowRight") {
+			if (!open) return;
+			event.preventDefault();
+			openActiveSubmenu();
+			return;
+		}
+
+		if (event.key === "ArrowLeft") {
+			if (!open) return;
+			event.preventDefault();
+			closeActiveSubmenu();
 			return;
 		}
 

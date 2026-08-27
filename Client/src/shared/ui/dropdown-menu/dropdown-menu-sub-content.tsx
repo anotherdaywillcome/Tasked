@@ -1,11 +1,14 @@
 "use client";
 
 import { clsx } from "clsx";
-import { AnimatePresence, type HTMLMotionProps, motion } from "motion/react";
+import type { HTMLMotionProps } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
+import { use } from "react";
 
+import { DropdownMenuSubContext } from "@shared/ui/dropdown-menu/dropdown-menu-submenu-context";
 import { DROPDOWN_MENU_SUB_CONTENT_ANIMATION_VARIANTS, DROPDOWN_MENU_TRANSITION } from "./animations";
-import { useDropdownMenuSub } from "./context";
+import { DropdownMenuContext } from "./dropdown-menu-context";
 
 type DropdownMenuSubContentProps = Omit<HTMLMotionProps<"div">, "children"> & {
 	children: ReactNode;
@@ -17,13 +20,71 @@ export const DropdownMenuSubContent = ({
 	style,
 	...props
 }: Readonly<DropdownMenuSubContentProps>) => {
-	const { contentRef, open, position } = useDropdownMenuSub("DropdownMenuSubContent");
+	const {
+		setNextItemActive,
+		setFirstItemActive,
+		setLastItemActive,
+		selectActiveItem,
+		openActiveSubmenu,
+		closeActiveSubmenu
+	} = use(DropdownMenuContext)!;
+
+	const { open, position, contentRef, setOpen, triggerId, id: submenuId } = use(DropdownMenuSubContext)!;
+
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+		if (event.defaultPrevented) return;
+
+		switch (event.key) {
+			case "ArrowDown":
+				event.preventDefault();
+				event.stopPropagation();
+				setNextItemActive(1);
+				break;
+			case "ArrowUp":
+				event.preventDefault();
+				event.stopPropagation();
+				setNextItemActive(-1);
+				break;
+			case "Home":
+				event.preventDefault();
+				event.stopPropagation();
+				setFirstItemActive();
+				break;
+			case "End":
+				event.preventDefault();
+				event.stopPropagation();
+				setLastItemActive();
+				break;
+			case "ArrowRight":
+				event.preventDefault();
+				event.stopPropagation();
+				openActiveSubmenu();
+				break;
+			case "ArrowLeft":
+				event.preventDefault();
+				event.stopPropagation();
+				closeActiveSubmenu();
+				break;
+			case "Escape":
+				event.preventDefault();
+				event.stopPropagation();
+				closeActiveSubmenu();
+				break;
+			case "Enter":
+			case " ":
+				event.preventDefault();
+				event.stopPropagation();
+				selectActiveItem();
+				break;
+		}
+	};
 
 	return (
 		<AnimatePresence>
 			{open && position && (
 				<motion.div
 					ref={contentRef}
+					data-dropdown-submenu-content={submenuId}
 					variants={DROPDOWN_MENU_SUB_CONTENT_ANIMATION_VARIANTS}
 					initial="initial"
 					animate="visible"
@@ -39,6 +100,8 @@ export const DropdownMenuSubContent = ({
 						...style
 					}}
 					role="menu"
+					tabIndex={-1}
+					onKeyDown={handleKeyDown}
 					{...props}
 				>
 					{children}

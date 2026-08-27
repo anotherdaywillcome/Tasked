@@ -1,14 +1,14 @@
 "use client";
 
 import { clsx } from "clsx";
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
-type DropdownMenuGroupProps = ComponentPropsWithoutRef<"div">;
-
-export const DropdownMenuGroup = ({ children, className, ...props }: Readonly<DropdownMenuGroupProps>) => {
-	return (
-		<div className={clsx("flex flex-col gap-y-[0.125rem]", className)} role="group" {...props}>
-			{children}
-		</div>
-	);
+type DropdownMenuGroupProps = ComponentPropsWithoutRef<"div"> & {
+	children: ReactNode;
 };
+
+export const DropdownMenuGroup = ({ children, className, ...props }: DropdownMenuGroupProps) => (
+	<div role="group" className={clsx("flex flex-col", className)} {...props}>
+		{children}
+	</div>
+);

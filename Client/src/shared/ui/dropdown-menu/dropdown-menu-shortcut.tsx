@@ -3,20 +3,12 @@
 import { clsx } from "clsx";
 import type { ComponentPropsWithoutRef } from "react";
 
-export type DropdownMenuShortcutProps = Omit<ComponentPropsWithoutRef<"span">, "children"> & {
+export type DropdownMenuShortcutProps = ComponentPropsWithoutRef<"span"> & {
 	shortcut: string;
 };
 
-export const DropdownMenuShortcut = ({ className, shortcut, ...props }: Readonly<DropdownMenuShortcutProps>) => {
-	return (
-		<span
-			className={clsx(
-				"ml-auto shrink-0 font-(family-name:--font-barlow) text-[0.6875rem] leading-[1] tracking-[0.01em] text-(--neutrals-3)",
-				className
-			)}
-			{...props}
-		>
-			{shortcut}
-		</span>
-	);
-};
+export const DropdownMenuShortcut = ({ shortcut, className, ...props }: DropdownMenuShortcutProps) => (
+	<span className={clsx("ml-auto text-[0.625rem] tracking-widest text-(--white-pallete-40)", className)} {...props}>
+		{shortcut}
+	</span>
+);

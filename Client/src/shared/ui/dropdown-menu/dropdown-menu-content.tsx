@@ -1,12 +1,14 @@
 "use client";
 
 import { clsx } from "clsx";
-import { AnimatePresence, type HTMLMotionProps, motion } from "motion/react";
-import type { ReactNode } from "react";
+import type { HTMLMotionProps } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import type { KeyboardEvent, ReactNode } from "react";
+import { use } from "react";
 import { createPortal } from "react-dom";
 
 import { DROPDOWN_MENU_CONTENT_ANIMATION_VARIANTS, DROPDOWN_MENU_TRANSITION } from "./animations";
-import { useDropdownMenu } from "./context";
+import { DropdownMenuContext } from "./dropdown-menu-context";
 
 type DropdownMenuContentProps = Omit<HTMLMotionProps<"div">, "children"> & {
 	align?: "start" | "center" | "end";
@@ -22,9 +24,65 @@ export const DropdownMenuContent = ({
 	style,
 	...props
 }: Readonly<DropdownMenuContentProps>) => {
-	const { contentId, contentRef, open, position } = useDropdownMenu("DropdownMenuContent");
+	const {
+		contentId,
+		contentRef,
+		open,
+		position,
+		setNextItemActive,
+		setFirstItemActive,
+		setLastItemActive,
+		selectActiveItem,
+		openActiveSubmenu,
+		closeActiveSubmenu,
+		setOpen
+	} = use(DropdownMenuContext)!;
 
 	const alignOffset = align === "center" ? "-50%" : align === "end" ? "-100%" : undefined;
+
+	const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+		if (event.defaultPrevented) {
+			return;
+		}
+
+		switch (event.key) {
+			case "ArrowDown":
+				event.preventDefault();
+				setNextItemActive(1);
+				break;
+			case "ArrowUp":
+				event.preventDefault();
+				setNextItemActive(-1);
+				break;
+			case "Home":
+				event.preventDefault();
+				setFirstItemActive();
+				break;
+			case "End":
+				event.preventDefault();
+				setLastItemActive();
+				break;
+			case "ArrowLeft":
+				event.preventDefault();
+				event.stopPropagation();
+				closeActiveSubmenu();
+				break;
+			case "ArrowRight":
+				event.preventDefault();
+				event.stopPropagation();
+				openActiveSubmenu();
+				break;
+			case "Escape":
+				event.preventDefault();
+				setOpen(false);
+				break;
+			case "Enter":
+			case " ":
+				event.preventDefault();
+				selectActiveItem();
+				break;
+		}
+	};
 
 	const content = (
 		<AnimatePresence>
@@ -54,6 +112,8 @@ export const DropdownMenuContent = ({
 					}}
 					id={contentId}
 					role="menu"
+					tabIndex={-1}
+					onKeyDown={handleKeyDown}
 					{...props}
 				>
 					{children}

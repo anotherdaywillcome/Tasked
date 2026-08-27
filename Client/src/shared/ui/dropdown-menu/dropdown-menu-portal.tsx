@@ -5,12 +5,13 @@ import { createPortal } from "react-dom";
 
 type DropdownMenuPortalProps = {
 	children: ReactNode;
+	container?: HTMLElement | null;
 };
 
-export const DropdownMenuPortal = ({ children }: Readonly<DropdownMenuPortalProps>) => {
+export const DropdownMenuPortal = ({ children, container }: DropdownMenuPortalProps) => {
 	if (typeof document === "undefined") {
 		return null;
 	}
 
-	return createPortal(children, document.body);
+	return createPortal(children, container ?? document.body);
 };
