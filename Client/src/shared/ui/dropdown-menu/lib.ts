@@ -1,9 +1,9 @@
 import type { ReactNode, Ref, RefCallback } from "react";
 import { Children, isValidElement } from "react";
 
-import type { DropdownMenuItemRecord } from "./types";
-import { DropdownMenuItem, DropdownMenuItemProps } from "@shared/ui/dropdown-menu/dropdown-menu-item";
-import { DropdownMenuShortcut, DropdownMenuShortcutProps } from "@shared/ui/dropdown-menu/dropdown-menu-shortcut";
+import type { DropdownMenuItemRecord } from "./dropdown-menu";
+import { DropdownMenuItem, DropdownMenuItemProps } from "./dropdown-menu-item";
+import { DropdownMenuShortcut, DropdownMenuShortcutProps } from "./dropdown-menu-shortcut";
 
 type DropdownMenuShortcutBinding = Pick<DropdownMenuItemProps, "disabled" | "onSelect" | "value"> & {
 	label: string;
@@ -21,7 +21,9 @@ export const getShortcut = (children: ReactNode): string | undefined => {
 	let shortcut: string | undefined;
 
 	Children.forEach(children, (child) => {
-		if (shortcut || !isValidElement(child)) return;
+		if (shortcut || !isValidElement(child)) {
+			return;
+		}
 
 		if (child.type === DropdownMenuShortcut) {
 			shortcut = (child.props as DropdownMenuShortcutProps).shortcut;
@@ -38,7 +40,9 @@ export const getShortcutBindings = (children: ReactNode): DropdownMenuShortcutBi
 	const bindings: DropdownMenuShortcutBinding[] = [];
 
 	Children.forEach(children, (child) => {
-		if (!isValidElement(child)) return;
+		if (!isValidElement(child)) {
+			return;
+		}
 
 		if (child.type === DropdownMenuItem) {
 			const itemProps = child.props as DropdownMenuItemProps;
@@ -80,7 +84,9 @@ export const matchesShortcut = (event: KeyboardEvent, shortcut: string) => {
 	const expectsControl = includesModifier("ctrl") || (expectsPrimaryModifier && !usesMetaAsPrimaryModifier);
 	const expectsMeta = expectsPrimaryModifier && usesMetaAsPrimaryModifier;
 
-	if (!shortcutKey || event.repeat) return false;
+	if (!shortcutKey || event.repeat) {
+		return false;
+	}
 
 	return (
 		event.key.toLowerCase() === shortcutKey &&
@@ -92,7 +98,10 @@ export const matchesShortcut = (event: KeyboardEvent, shortcut: string) => {
 };
 
 export const getElementById = <TElement extends HTMLElement>(id: string) => {
-	if (typeof document === "undefined") return null;
+	if (typeof document === "undefined") {
+		return null;
+	}
+
 	return document.getElementById(id) as TElement | null;
 };
 
@@ -106,7 +115,9 @@ export const getNextEnabledItem = (
 	parentSubmenuId: string | null
 ) => {
 	const enabledItems = getEnabledItems(items, parentSubmenuId);
-	if (!enabledItems.length) return null;
+	if (!enabledItems.length) {
+		return null;
+	}
 
 	const currentIndex = enabledItems.findIndex((item) => item.id === currentItemId);
 	const nextIndex = currentIndex === -1 ? 0 : (currentIndex + direction + enabledItems.length) % enabledItems.length;
@@ -119,20 +130,24 @@ export const getFirstEnabledItem = (items: DropdownMenuItemRecord[], parentSubme
 
 export const getLastEnabledItem = (items: DropdownMenuItemRecord[], parentSubmenuId: string | null) => {
 	const enabledItems = getEnabledItems(items, parentSubmenuId);
+
 	return enabledItems[enabledItems.length - 1] ?? null;
 };
 
 export const getTextContent = (children: ReactNode): string => {
 	let textContent = "";
+
 	Children.forEach(children, (child) => {
 		if (typeof child === "string" || typeof child === "number") {
 			textContent += child;
 			return;
 		}
+
 		if (isValidElement<{ children?: ReactNode }>(child)) {
 			textContent += getTextContent(child.props.children);
 		}
 	});
+
 	return textContent;
 };
 

@@ -6,15 +6,15 @@ import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
 import { use } from "react";
 
-import { DropdownMenuSubContext } from "@shared/ui/dropdown-menu/dropdown-menu-submenu-context";
 import { DROPDOWN_MENU_SUB_CONTENT_ANIMATION_VARIANTS, DROPDOWN_MENU_TRANSITION } from "./animations";
 import { DropdownMenuContext } from "./dropdown-menu-context";
+import { DropdownMenuSubmenuContext } from "./dropdown-menu-submenu-context";
 
 type DropdownMenuSubContentProps = Omit<HTMLMotionProps<"div">, "children"> & {
 	children: ReactNode;
 };
 
-export const DropdownMenuSubContent = ({
+export const DropdownMenuSubmenuContent = ({
 	children,
 	className,
 	style,
@@ -27,12 +27,14 @@ export const DropdownMenuSubContent = ({
 		selectActiveItem,
 		openActiveSubmenu,
 		closeActiveSubmenu
-	} = use(DropdownMenuContext)!;
+	} = use(DropdownMenuContext);
 
-	const { open, position, contentRef, setOpen, triggerId, id: submenuId } = use(DropdownMenuSubContext)!;
+	const { open, position, contentRef, id: submenuId } = use(DropdownMenuSubmenuContext);
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-		if (event.defaultPrevented) return;
+		if (event.defaultPrevented) {
+			return;
+		}
 
 		switch (event.key) {
 			case "ArrowDown":

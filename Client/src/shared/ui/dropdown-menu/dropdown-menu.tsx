@@ -2,31 +2,44 @@
 
 import { clsx } from "clsx";
 import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from "react";
-import { use } from "react";
 
 import { DropdownMenuContent } from "./dropdown-menu-content";
-import { DropdownMenuContext } from "./dropdown-menu-context";
 import { DropdownMenuGroup } from "./dropdown-menu-group";
 import { DropdownMenuItem } from "./dropdown-menu-item";
 import { DropdownMenuPortal } from "./dropdown-menu-portal";
 import { DropdownMenuProvider } from "./dropdown-menu-provider";
 import { DropdownMenuSeparator } from "./dropdown-menu-separator";
 import { DropdownMenuShortcut } from "./dropdown-menu-shortcut";
-import { DropdownMenuSub } from "./dropdown-menu-sub";
-import { DropdownMenuSubContent } from "./dropdown-menu-sub-content";
-import { DropdownMenuSubTrigger } from "./dropdown-menu-sub-trigger";
+import { DropdownMenuSubmenu } from "./dropdown-menu-submenu";
+import { DropdownMenuSubmenuContent } from "./dropdown-menu-submenu-content";
+import { DropdownMenuSubmenuTrigger } from "./dropdown-menu-submenu-trigger";
 import { DropdownMenuTrigger } from "./dropdown-menu-trigger";
+import { DropdownMenuWrapper } from "./dropdown-menu-wrapper";
 
-export type { DropdownMenuItemRecord, DropdownMenuPosition } from "./types";
+export type DropdownMenuPosition = {
+	left: number;
+	top: number;
+	width: number;
+};
+
+export type DropdownMenuItemRecord = {
+	id: string;
+	label: ReactNode;
+	value?: string;
+	disabled?: boolean;
+	parentSubmenuId: string | null;
+	submenuId?: string;
+	onSelect?: () => void;
+};
 
 type DropdownMenuComponents = {
 	Trigger: typeof DropdownMenuTrigger;
 	Content: typeof DropdownMenuContent;
 	Item: typeof DropdownMenuItem;
 	Group: typeof DropdownMenuGroup;
-	Sub: typeof DropdownMenuSub;
-	SubTrigger: typeof DropdownMenuSubTrigger;
-	SubContent: typeof DropdownMenuSubContent;
+	Submenu: typeof DropdownMenuSubmenu;
+	SubmenuTrigger: typeof DropdownMenuSubmenuTrigger;
+	SubmenuContent: typeof DropdownMenuSubmenuContent;
 	Portal: typeof DropdownMenuPortal;
 	Separator: typeof DropdownMenuSeparator;
 	Shortcut: typeof DropdownMenuShortcut;
@@ -45,24 +58,6 @@ type DropdownMenuProps = ComponentPropsWithoutRef<"div"> & {
 };
 
 type DropdownMenu = ((props: Readonly<DropdownMenuProps>) => ReactElement) & DropdownMenuComponents;
-
-const DropdownMenuValue = ({
-	children,
-	name,
-	...props
-}: {
-	children: ReactNode;
-	name?: string;
-} & ComponentPropsWithoutRef<"div">) => {
-	const { selectedValue } = use(DropdownMenuContext)!;
-
-	return (
-		<div {...props}>
-			{name && <input readOnly type="hidden" name={name} value={selectedValue ?? ""} />}
-			{children}
-		</div>
-	);
-};
 
 export const DropdownMenu = (({
 	children,
@@ -90,9 +85,9 @@ export const DropdownMenu = (({
 			onOpenChange={onOpenChange}
 			onValueChange={onValueChange}
 		>
-			<DropdownMenuValue name={name} className={clsx("flex flex-col gap-y-[0.25rem]", className)} {...props}>
+			<DropdownMenuWrapper name={name} className={clsx("flex flex-col gap-y-[0.25rem]", className)} {...props}>
 				{children}
-			</DropdownMenuValue>
+			</DropdownMenuWrapper>
 		</DropdownMenuProvider>
 	);
 }) as DropdownMenu;
@@ -101,9 +96,9 @@ DropdownMenu.Trigger = DropdownMenuTrigger;
 DropdownMenu.Content = DropdownMenuContent;
 DropdownMenu.Item = DropdownMenuItem;
 DropdownMenu.Group = DropdownMenuGroup;
-DropdownMenu.Sub = DropdownMenuSub;
-DropdownMenu.SubTrigger = DropdownMenuSubTrigger;
-DropdownMenu.SubContent = DropdownMenuSubContent;
+DropdownMenu.Submenu = DropdownMenuSubmenu;
+DropdownMenu.SubmenuTrigger = DropdownMenuSubmenuTrigger;
+DropdownMenu.SubmenuContent = DropdownMenuSubmenuContent;
 DropdownMenu.Portal = DropdownMenuPortal;
 DropdownMenu.Separator = DropdownMenuSeparator;
 DropdownMenu.Shortcut = DropdownMenuShortcut;

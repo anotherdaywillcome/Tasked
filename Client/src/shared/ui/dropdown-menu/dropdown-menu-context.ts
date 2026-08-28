@@ -2,7 +2,8 @@
 
 import type { ReactNode, RefObject } from "react";
 import { createContext } from "react";
-import type { DropdownMenuItemRecord, DropdownMenuPosition } from "./types";
+
+import type { DropdownMenuItemRecord, DropdownMenuPosition } from "./dropdown-menu";
 
 export type DropdownMenuContextValue = {
 	activeItemId: string | null;
@@ -38,4 +39,38 @@ export type DropdownMenuContextValue = {
 	selectItem: (item: DropdownMenuItemRecord, label: ReactNode) => void;
 };
 
-export const DropdownMenuContext = createContext<DropdownMenuContextValue | null>(null);
+const dropdownMenuContextInitialValues: DropdownMenuContextValue = {
+	activeItemId: null,
+	activeSubmenuId: null,
+	contentId: "",
+	contentRef: { current: null },
+	disabled: false,
+	isControlled: false,
+	name: undefined,
+	open: false,
+	position: null,
+	selectedLabel: null,
+	selectedValue: undefined,
+	triggerId: "",
+	triggerRef: { current: null },
+	setActiveItemId: () => {},
+	setActiveSubmenuId: () => {},
+	setOpen: () => {},
+	setSelectedLabel: () => {},
+	setSelectedValue: () => {},
+	updatePosition: () => {},
+	registerItem: () => () => {},
+	registerSubmenu: () => () => {},
+	registerSubmenuOpener: () => () => {},
+	setSubmenuOpen: () => {},
+	getItems: () => [],
+	setFirstItemActive: () => {},
+	setLastItemActive: () => {},
+	setNextItemActive: () => {},
+	openActiveSubmenu: () => {},
+	closeActiveSubmenu: () => {},
+	selectActiveItem: () => {},
+	selectItem: () => {}
+};
+
+export const DropdownMenuContext = createContext<DropdownMenuContextValue>(dropdownMenuContextInitialValues);

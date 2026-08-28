@@ -1,4 +1,4 @@
-import type { ReactNode, Ref, RefCallback } from "react";
+import type { ReactNode } from "react";
 import { Children, isValidElement } from "react";
 
 import type { SelectItemRecord } from "./types";
@@ -54,12 +54,3 @@ export const getNextEnabledItem = (items: SelectItemRecord[], currentItemId: str
 
 	return enabledItems[nextIndex] ?? null;
 };
-
-export const mergeRefs =
-	<TElement>(...refs: Array<Ref<TElement> | undefined>): RefCallback<TElement> =>
-	(element) => {
-		refs.forEach((ref) => {
-			if (typeof ref === "function") ref(element);
-			else if (ref && "current" in ref) ref.current = element;
-		});
-	};

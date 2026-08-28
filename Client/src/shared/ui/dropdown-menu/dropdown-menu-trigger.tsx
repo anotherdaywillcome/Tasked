@@ -44,7 +44,7 @@ export const DropdownMenuTrigger = ({
 		setActiveSubmenuId,
 		openActiveSubmenu,
 		closeActiveSubmenu
-	} = use(DropdownMenuContext)!;
+	} = use(DropdownMenuContext);
 
 	const isDisabled = disabled ?? menuDisabled;
 

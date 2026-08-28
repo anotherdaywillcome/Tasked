@@ -36,7 +36,7 @@ export const DropdownMenuContent = ({
 		openActiveSubmenu,
 		closeActiveSubmenu,
 		setOpen
-	} = use(DropdownMenuContext)!;
+	} = use(DropdownMenuContext);
 
 	const alignOffset = align === "center" ? "-50%" : align === "end" ? "-100%" : undefined;
 

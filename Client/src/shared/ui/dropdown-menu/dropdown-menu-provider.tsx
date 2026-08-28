@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 
-import { DropdownMenuContext, type DropdownMenuContextValue } from "./dropdown-menu-context";
+import { DropdownMenuContext } from "./dropdown-menu-context";
 import {
 	getElementById,
 	getFirstEnabledItem,
@@ -12,7 +12,7 @@ import {
 	getShortcutBindings,
 	matchesShortcut
 } from "./lib";
-import type { DropdownMenuItemRecord, DropdownMenuPosition } from "./types";
+import type { DropdownMenuItemRecord, DropdownMenuPosition } from "./dropdown-menu";
 
 type DropdownMenuProviderProps = {
 	children: ReactNode;
@@ -331,69 +331,43 @@ export const DropdownMenuProvider = ({
 		};
 	}, [isOpen, updatePosition]);
 
-	const contextValue = useMemo<DropdownMenuContextValue>(
-		() => ({
-			activeItemId,
-			activeSubmenuId,
-			contentId,
-			contentRef,
-			disabled,
-			isControlled: isValueControlled,
-			name,
-			open: isOpen,
-			position,
-			selectedLabel,
-			selectedValue,
-			triggerId,
-			triggerRef,
-			setActiveItemId,
-			setActiveSubmenuId,
-			setOpen,
-			setSelectedLabel,
-			setSelectedValue,
-			updatePosition,
-			registerItem,
-			registerSubmenu,
-			registerSubmenuOpener,
-			setSubmenuOpen,
-			getItems,
-			setFirstItemActive,
-			setLastItemActive,
-			setNextItemActive,
-			openActiveSubmenu,
-			closeActiveSubmenu,
-			selectActiveItem,
-			selectItem
-		}),
-		[
-			activeItemId,
-			activeSubmenuId,
-			contentId,
-			disabled,
-			isValueControlled,
-			name,
-			isOpen,
-			position,
-			selectedLabel,
-			selectedValue,
-			triggerId,
-			setOpen,
-			setSelectedValue,
-			updatePosition,
-			registerItem,
-			registerSubmenu,
-			registerSubmenuOpener,
-			setSubmenuOpen,
-			getItems,
-			setFirstItemActive,
-			setLastItemActive,
-			setNextItemActive,
-			openActiveSubmenu,
-			closeActiveSubmenu,
-			selectActiveItem,
-			selectItem
-		]
+	return (
+		<DropdownMenuContext
+			value={{
+				activeItemId,
+				activeSubmenuId,
+				contentId,
+				contentRef,
+				disabled,
+				isControlled: isValueControlled,
+				name,
+				open: isOpen,
+				position,
+				selectedLabel,
+				selectedValue,
+				triggerId,
+				triggerRef,
+				setActiveItemId,
+				setActiveSubmenuId,
+				setOpen,
+				setSelectedLabel,
+				setSelectedValue,
+				updatePosition,
+				registerItem,
+				registerSubmenu,
+				registerSubmenuOpener,
+				setSubmenuOpen,
+				getItems,
+				setFirstItemActive,
+				setLastItemActive,
+				setNextItemActive,
+				openActiveSubmenu,
+				closeActiveSubmenu,
+				selectActiveItem,
+				selectItem
+			}}
+		>
+			{children}
+		</DropdownMenuContext>
 	);
-
-	return <DropdownMenuContext.Provider value={contextValue}>{children}</DropdownMenuContext.Provider>;
 };

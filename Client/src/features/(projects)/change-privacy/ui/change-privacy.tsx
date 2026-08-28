@@ -22,28 +22,28 @@ export const ChangePrivacy = ({ project }: Readonly<ChangePrivacyProps>) => {
 			<DropdownMenu.Content>
 				<DropdownMenu.Group>
 					<DropdownMenu.Item>Team</DropdownMenu.Item>
-					<DropdownMenu.Sub>
-						<DropdownMenu.SubTrigger>Invite users</DropdownMenu.SubTrigger>
+					<DropdownMenu.Submenu>
+						<DropdownMenu.SubmenuTrigger>Invite users</DropdownMenu.SubmenuTrigger>
 						<DropdownMenu.Portal>
-							<DropdownMenu.SubContent>
+							<DropdownMenu.SubmenuContent>
 								<DropdownMenu.Item>Email</DropdownMenu.Item>
 								<DropdownMenu.Item>Message</DropdownMenu.Item>
-								<DropdownMenu.Sub>
-									<DropdownMenu.SubTrigger>More options</DropdownMenu.SubTrigger>
+								<DropdownMenu.Submenu>
+									<DropdownMenu.SubmenuTrigger>More options</DropdownMenu.SubmenuTrigger>
 									<DropdownMenu.Portal>
-										<DropdownMenu.SubContent>
+										<DropdownMenu.SubmenuContent>
 											<DropdownMenu.Item>Calendly</DropdownMenu.Item>
 											<DropdownMenu.Item>Slack</DropdownMenu.Item>
 											<DropdownMenu.Separator />
 											<DropdownMenu.Item>Webhook</DropdownMenu.Item>
-										</DropdownMenu.SubContent>
+										</DropdownMenu.SubmenuContent>
 									</DropdownMenu.Portal>
-								</DropdownMenu.Sub>
+								</DropdownMenu.Submenu>
 								<DropdownMenu.Separator />
 								<DropdownMenu.Item>Advanced...</DropdownMenu.Item>
-							</DropdownMenu.SubContent>
+							</DropdownMenu.SubmenuContent>
 						</DropdownMenu.Portal>
-					</DropdownMenu.Sub>
+					</DropdownMenu.Submenu>
 					<DropdownMenu.Item>
 						New Team
 						<DropdownMenu.Shortcut shortcut="⌘+X" />

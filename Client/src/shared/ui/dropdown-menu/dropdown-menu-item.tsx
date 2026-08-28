@@ -6,8 +6,7 @@ import { Children, isValidElement, use, useEffect, useId, useMemo } from "react"
 
 import { DropdownMenuContext } from "./dropdown-menu-context";
 import { DropdownMenuShortcut } from "./dropdown-menu-shortcut";
-
-import { DropdownMenuSubContext } from "@shared/ui/dropdown-menu/dropdown-menu-submenu-context";
+import { DropdownMenuSubmenuContext } from "./dropdown-menu-submenu-context";
 import { callAll, getTextContent } from "./lib";
 
 export type DropdownMenuItemProps = Omit<ComponentPropsWithoutRef<"button">, "onSelect" | "value"> & {
@@ -37,10 +36,9 @@ export const DropdownMenuItem = ({
 		selectedValue,
 		setActiveItemId,
 		closeActiveSubmenu
-	} = use(DropdownMenuContext)!;
+	} = use(DropdownMenuContext);
 
-	const subCtx = use(DropdownMenuSubContext);
-	const parentSubmenuId = subCtx?.id ?? null;
+	const { id: parentSubmenuId } = use(DropdownMenuSubmenuContext);
 
 	const childNodes = Children.toArray(children);
 	const shortcut = childNodes.find((child) => isValidElement(child) && child.type === DropdownMenuShortcut);

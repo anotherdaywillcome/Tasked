@@ -6,8 +6,8 @@ import { use, useEffect, useId, useMemo } from "react";
 
 import { DropdownMenuContext } from "./dropdown-menu-context";
 import { callAll, getTextContent } from "./lib";
-import type { DropdownMenuItemRecord } from "./types";
-import { DropdownMenuSubContext } from "@shared/ui/dropdown-menu/dropdown-menu-submenu-context";
+import type { DropdownMenuItemRecord } from "./dropdown-menu";
+import { DropdownMenuSubmenuContext } from "./dropdown-menu-submenu-context";
 import { Icon, ICON_TYPES } from "@shared/ui";
 
 export type DropdownMenuSubTriggerChevronProps = {
@@ -23,7 +23,7 @@ const DefaultChevron = ({ className }: Readonly<DropdownMenuSubTriggerChevronPro
 	<Icon type={ICON_TYPES.Chevron} size={16} className={className} />
 );
 
-export const DropdownMenuSubTrigger = ({
+export const DropdownMenuSubmenuTrigger = ({
 	children,
 	className,
 	onClick,
@@ -34,14 +34,10 @@ export const DropdownMenuSubTrigger = ({
 	...props
 }: Readonly<DropdownMenuSubTriggerProps>) => {
 	const generatedItemId = useId();
-	const { activeItemId, registerItem, setActiveItemId, setActiveSubmenuId } = use(DropdownMenuContext)!;
 
-	const { open, setOpen, triggerId, triggerRef, updatePosition, id: submenuId } = use(DropdownMenuSubContext)!;
-
-	const parentSub = use(DropdownMenuSubContext);
-	const parentSubmenuId = parentSub?.parentSubmenuId ?? null;
-
-	const itemParentSubmenuId = use(DropdownMenuSubContext)?.parentSubmenuId ?? null;
+	const { activeItemId, registerItem, setActiveItemId, setActiveSubmenuId } = use(DropdownMenuContext);
+	const { open, setOpen, triggerId, triggerRef, updatePosition, id: submenuId } = use(DropdownMenuSubmenuContext);
+	const itemParentSubmenuId = use(DropdownMenuSubmenuContext)?.parentSubmenuId ?? null;
 
 	const Chevron = renderChevron === undefined ? DefaultChevron : renderChevron;
 	const label = getTextContent(children);

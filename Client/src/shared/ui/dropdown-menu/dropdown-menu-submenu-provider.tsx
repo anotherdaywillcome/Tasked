@@ -4,9 +4,8 @@ import type { ReactNode } from "react";
 import { use, useCallback, useId, useLayoutEffect, useRef, useState } from "react";
 
 import { DropdownMenuContext } from "./dropdown-menu-context";
-
-import { DropdownMenuSubContext } from "@shared/ui/dropdown-menu/dropdown-menu-submenu-context";
-import type { DropdownMenuPosition } from "./types";
+import type { DropdownMenuPosition } from "./dropdown-menu";
+import { DropdownMenuSubmenuContext } from "./dropdown-menu-submenu-context";
 
 type DropdownMenuSubProviderProps = {
 	children: ReactNode;
@@ -15,7 +14,7 @@ type DropdownMenuSubProviderProps = {
 	onOpenChange?: (open: boolean) => void;
 };
 
-export const DropdownMenuSubProvider = ({
+export const DropdownMenuSubmenuProvider = ({
 	children,
 	defaultOpen = false,
 	open,
@@ -32,7 +31,7 @@ export const DropdownMenuSubProvider = ({
 	const contentRef = useRef<HTMLDivElement | null>(null);
 
 	const parentMenu = use(DropdownMenuContext)!;
-	const parentSub = use(DropdownMenuSubContext);
+	const parentSub = use(DropdownMenuSubmenuContext);
 
 	const parentSubmenuId = parentSub?.id ?? null;
 
@@ -86,23 +85,31 @@ export const DropdownMenuSubProvider = ({
 		};
 	}, [isOpen, updatePosition]);
 
-	useLayoutEffect(() => {
-		if (!parentMenu.open && isOpen) {
-			setOpen(false);
-		}
-	}, [parentMenu.open, isOpen, setOpen]);
+	// useLayoutEffect(() => {
+	// 	if (!parentMenu.open && isOpen) {
+	// 		setOpen(false);
+	// 	}
+	// }, [parentMenu.open, isOpen, setOpen]);
 
-	const value = {
-		id: submenuId,
-		parentSubmenuId,
-		open: isOpen,
-		setOpen,
-		position,
-		updatePosition,
-		triggerId,
-		triggerRef,
-		contentRef
-	};
+	if (!parentMenu.open && isOpen) {
+		setOpen(false);
+	}
 
-	return <DropdownMenuSubContext.Provider value={value}>{children}</DropdownMenuSubContext.Provider>;
+	return (
+		<DropdownMenuSubmenuContext
+			value={{
+				id: submenuId,
+				parentSubmenuId,
+				open: isOpen,
+				setOpen,
+				position,
+				updatePosition,
+				triggerId,
+				triggerRef,
+				contentRef
+			}}
+		>
+			{children}
+		</DropdownMenuSubmenuContext>
+	);
 };

@@ -1,7 +1,8 @@
 "use client";
 
-import { DropdownMenuSubProvider } from "@shared/ui/dropdown-menu/dropdown-menu-submenu-provider";
 import type { ReactNode } from "react";
+
+import { DropdownMenuSubmenuProvider } from "./dropdown-menu-submenu-provider";
 
 export type DropdownMenuSubProps = {
 	children: ReactNode;
@@ -10,13 +11,13 @@ export type DropdownMenuSubProps = {
 	onOpenChange?: (open: boolean) => void;
 };
 
-export const DropdownMenuSub = ({
+export const DropdownMenuSubmenu = ({
 	children,
 	defaultOpen = false,
 	open,
 	onOpenChange
 }: Readonly<DropdownMenuSubProps>) => (
-	<DropdownMenuSubProvider defaultOpen={defaultOpen} open={open} onOpenChange={onOpenChange}>
+	<DropdownMenuSubmenuProvider defaultOpen={defaultOpen} open={open} onOpenChange={onOpenChange}>
 		{children}
-	</DropdownMenuSubProvider>
+	</DropdownMenuSubmenuProvider>
 );
