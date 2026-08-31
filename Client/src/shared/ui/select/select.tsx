@@ -1,12 +1,23 @@
 "use client";
 
-import { clsx } from "clsx";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 
-import { SelectContext } from "./context";
-import { getDeclaredItems, getNextEnabledItem } from "./lib";
-import type { SelectContextValue, SelectItemRecord, SelectPosition } from "./types";
+import { SelectProvider } from "./select-provider";
+
+export type SelectItemRecord = {
+	disabled: boolean;
+	id: string;
+	label: string;
+	value: string;
+};
+
+export type SelectPosition = {
+	left: number;
+	top: number;
+	triggerHeight: number;
+	triggerTop: number;
+	width: number;
+};
 
 export type SelectProps = Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange"> & {
 	children: ReactNode;
@@ -36,209 +47,22 @@ export const Select = ({
 	value,
 	...props
 }: Readonly<SelectProps>) => {
-	const generatedId = useId();
-	const triggerId = id ?? generatedId;
-	const contentId = `${triggerId}-content`;
-	const isOpenControlled = open !== undefined;
-	const isValueControlled = value !== undefined;
-	const declaredItems = useMemo(() => getDeclaredItems(children), [children]);
-
-	const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
-	const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
-	const [activeItemId, setActiveItemId] = useState<string | null>(null);
-	const [position, setPosition] = useState<SelectPosition | null>(null);
-	const [registeredItems, setRegisteredItems] = useState<SelectItemRecord[]>([]);
-	const typeaheadRef = useRef("");
-	const typeaheadTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	const triggerRef = useRef<HTMLButtonElement>(null);
-	const contentRef = useRef<HTMLDivElement>(null);
-
-	const isOpen = isOpenControlled ? open : uncontrolledOpen;
-	const selectedValue = isValueControlled ? value : uncontrolledValue;
-	const selectedItem = [...registeredItems, ...declaredItems].find(
-		({ value: itemValue }) => itemValue === selectedValue
-	);
-
-	const setOpen = useCallback(
-		(nextOpen: boolean) => {
-			if (disabled && nextOpen) return;
-
-			if (!nextOpen) setActiveItemId(null);
-			if (!isOpenControlled) setUncontrolledOpen(nextOpen);
-
-			onOpenChange?.(nextOpen);
-		},
-		[disabled, isOpenControlled, onOpenChange]
-	);
-
-	const updatePosition = useCallback(() => {
-		const rect = triggerRef.current?.getBoundingClientRect();
-
-		if (!rect) return;
-
-		setPosition({
-			left: rect.left,
-			top: rect.bottom + 4,
-			triggerHeight: rect.height,
-			triggerTop: rect.top,
-			width: rect.width
-		});
-	}, []);
-
-	const registerItem = useCallback(
-		(item: SelectItemRecord) => {
-			setRegisteredItems((current) => [...current.filter(({ id: itemId }) => itemId !== item.id), item]);
-			setActiveItemId((current) => (item.value === selectedValue ? item.id : (current ?? item.id)));
-
-			return () => setRegisteredItems((current) => current.filter(({ id: itemId }) => itemId !== item.id));
-		},
-		[selectedValue]
-	);
-
-	const selectItem = useCallback(
-		(item: SelectItemRecord) => {
-			if (item.disabled) return;
-
-			if (!isValueControlled) setUncontrolledValue(item.value);
-			onValueChange?.(item.value);
-			setOpen(false);
-			queueMicrotask(() => triggerRef.current?.focus());
-		},
-		[isValueControlled, onValueChange, setOpen]
-	);
-
-	const enabledItems = registeredItems.filter(({ disabled: itemDisabled }) => !itemDisabled);
-
-	const setFirstItemActive = useCallback(() => {
-		setActiveItemId(enabledItems[0]?.id ?? null);
-	}, [enabledItems]);
-
-	const setLastItemActive = useCallback(() => {
-		setActiveItemId(enabledItems.at(-1)?.id ?? null);
-	}, [enabledItems]);
-
-	const setNextItemActive = useCallback(
-		(direction: 1 | -1) => {
-			setActiveItemId(getNextEnabledItem(registeredItems, activeItemId, direction)?.id ?? null);
-		},
-		[activeItemId, registeredItems]
-	);
-
-	const selectActiveItem = useCallback(() => {
-		const item = registeredItems.find(({ id: itemId }) => itemId === activeItemId);
-
-		if (item) selectItem(item);
-	}, [activeItemId, registeredItems, selectItem]);
-
-	const typeahead = useCallback(
-		(character: string) => {
-			if (typeaheadTimerRef.current) clearTimeout(typeaheadTimerRef.current);
-			typeaheadRef.current += character.toLocaleLowerCase();
-
-			const match = enabledItems.find(({ label }) => label.toLocaleLowerCase().startsWith(typeaheadRef.current));
-			if (match) setActiveItemId(match.id);
-
-			typeaheadTimerRef.current = setTimeout(() => {
-				typeaheadRef.current = "";
-			}, 500);
-		},
-		[enabledItems]
-	);
-
-	useLayoutEffect(() => {
-		if (!isOpen) return;
-
-		updatePosition();
-		window.addEventListener("resize", updatePosition);
-		window.addEventListener("scroll", updatePosition, true);
-
-		return () => {
-			window.removeEventListener("resize", updatePosition);
-			window.removeEventListener("scroll", updatePosition, true);
-		};
-	}, [isOpen, updatePosition]);
-
-	useEffect(() => {
-		if (!isOpen) return;
-
-		const handlePointerDown = (event: PointerEvent) => {
-			if (!(event.target instanceof Node)) return;
-			if (triggerRef.current?.contains(event.target) || contentRef.current?.contains(event.target)) return;
-
-			setOpen(false);
-		};
-
-		document.addEventListener("pointerdown", handlePointerDown);
-		return () => document.removeEventListener("pointerdown", handlePointerDown);
-	}, [isOpen, setOpen]);
-
-	useEffect(
-		() => () => {
-			if (typeaheadTimerRef.current) clearTimeout(typeaheadTimerRef.current);
-		},
-		[]
-	);
-
-	const contextValue = useMemo<SelectContextValue>(
-		() => ({
-			activeItemId,
-			contentId,
-			contentRef,
-			disabled,
-			open: isOpen,
-			position,
-			registerItem,
-			required: Boolean(required),
-			selectedLabel: selectedItem?.label ?? null,
-			selectedValue,
-			selectActiveItem,
-			selectItem,
-			setActiveItemId,
-			setFirstItemActive,
-			setLastItemActive,
-			setNextItemActive,
-			setOpen,
-			triggerId,
-			triggerRef,
-			typeahead,
-			updatePosition
-		}),
-		[
-			activeItemId,
-			contentId,
-			disabled,
-			isOpen,
-			position,
-			registerItem,
-			required,
-			selectedItem?.label,
-			selectedValue,
-			selectActiveItem,
-			selectItem,
-			setFirstItemActive,
-			setLastItemActive,
-			setNextItemActive,
-			setOpen,
-			triggerId,
-			typeahead,
-			updatePosition
-		]
-	);
-
 	return (
-		<SelectContext.Provider value={contextValue}>
-			<div className={clsx("flex flex-col gap-y-[0.25rem]", className)} {...props}>
-				{name && (
-					<input
-						type="hidden"
-						name={name}
-						value={selectedValue ?? ""}
-						required={required}
-						disabled={disabled}
-					/>
-				)}
-				{children}
-			</div>
-		</SelectContext.Provider>
+		<SelectProvider
+			className={className}
+			defaultOpen={defaultOpen}
+			defaultValue={defaultValue}
+			disabled={disabled}
+			id={id}
+			name={name}
+			onOpenChange={onOpenChange}
+			onValueChange={onValueChange}
+			open={open}
+			required={required}
+			value={value}
+			{...props}
+		>
+			{children}
+		</SelectProvider>
 	);
 };

@@ -6,6 +6,8 @@ export enum Privacy {
 	Private
 }
 
+export const projectPrivacyOptions = Object.values(Privacy).filter((value) => typeof value === "string");
+
 export type User = {
 	id: string;
 	imageUrl: string;

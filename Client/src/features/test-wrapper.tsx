@@ -16,7 +16,7 @@ export const TestWrapper = () => {
 						<Drawer.Title>Create project</Drawer.Title>
 						<Drawer.Close id="create-project" />
 					</Drawer.Header>
-					<div className="relative">
+					<div className="relative h-full">
 						<CreateProjectDrawer />
 					</div>
 				</Drawer.Content>

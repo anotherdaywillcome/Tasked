@@ -1,12 +1,12 @@
 "use client";
 
 import { clsx } from "clsx";
-import { AnimatePresence, type HTMLMotionProps, motion } from "motion/react";
+import type { HTMLMotionProps } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
-import { useLayoutEffect, useState } from "react";
+import { use, useLayoutEffect, useState } from "react";
 import { createPortal } from "react-dom";
-
-import { useSelect } from "./context";
+import { SelectContext } from "@shared/ui/select/context";
 
 export type SelectContentProps = Omit<HTMLMotionProps<"div">, "children"> & {
 	align?: "start" | "center" | "end";
@@ -26,7 +26,8 @@ export const SelectContent = ({
 	style,
 	...props
 }: Readonly<SelectContentProps>) => {
-	const { contentId, contentRef, open, position, selectedValue } = useSelect("SelectContent");
+	const { contentId, contentRef, open, position, selectedValue } = use(SelectContext);
+
 	const [alignedTop, setAlignedTop] = useState<number | null>(null);
 
 	useLayoutEffect(() => {
@@ -37,7 +38,9 @@ export const SelectContent = ({
 
 		const content = contentRef.current;
 		const selected = content.querySelector<HTMLElement>("[data-selected=true]");
-		if (!selected) return;
+		if (!selected) {
+			return;
+		}
 
 		content.scrollTop = selected.offsetTop - content.clientHeight / 2 + selected.offsetHeight / 2;
 		const selectedCenter = selected.offsetTop - content.scrollTop + selected.offsetHeight / 2;
@@ -85,6 +88,9 @@ export const SelectContent = ({
 		</AnimatePresence>
 	);
 
-	if (!portalled || typeof document === "undefined") return content;
+	if (!portalled || typeof document === "undefined") {
+		return content;
+	}
+
 	return createPortal(content, document.body);
 };

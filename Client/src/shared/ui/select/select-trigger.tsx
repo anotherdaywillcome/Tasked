@@ -2,9 +2,10 @@
 
 import { clsx } from "clsx";
 import type { ComponentPropsWithoutRef, KeyboardEvent, MouseEvent } from "react";
+import { use } from "react";
 
 import { Icon, ICON_TYPES } from "../icon";
-import { useSelect } from "./context";
+import { SelectContext } from "./context";
 
 export type SelectTriggerProps = ComponentPropsWithoutRef<"button">;
 
@@ -31,26 +32,36 @@ export const SelectTrigger = ({
 		triggerRef,
 		typeahead,
 		updatePosition
-	} = useSelect("SelectTrigger");
+	} = use(SelectContext);
 	const isDisabled = disabled ?? selectDisabled;
 
 	const openSelect = () => {
-		if (isDisabled) return;
+		if (isDisabled) {
+			return;
+		}
+
 		updatePosition();
 		setOpen(true);
 	};
 
 	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
 		onClick?.(event);
-		if (event.defaultPrevented) return;
+		if (event.defaultPrevented) {
+			return;
+		}
 
-		if (open) setOpen(false);
-		else openSelect();
+		if (open) {
+			setOpen(false);
+		} else {
+			openSelect();
+		}
 	};
 
 	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
 		onKeyDown?.(event);
-		if (event.defaultPrevented || isDisabled) return;
+		if (event.defaultPrevented || isDisabled) {
+			return;
+		}
 
 		if (event.key === "Escape") {
 			setOpen(false);
@@ -59,31 +70,49 @@ export const SelectTrigger = ({
 
 		if (event.key === "Enter" || event.key === " ") {
 			event.preventDefault();
-			if (open) selectActiveItem();
-			else openSelect();
+
+			if (open) {
+				selectActiveItem();
+			} else {
+				openSelect();
+			}
+
 			return;
 		}
 
 		if (event.key === "ArrowDown" || event.key === "ArrowUp") {
 			event.preventDefault();
+
 			if (!open) {
 				openSelect();
-				if (event.key === "ArrowDown") setFirstItemActive();
-				else setLastItemActive();
+
+				if (event.key === "ArrowDown") {
+					setFirstItemActive();
+				} else {
+					setLastItemActive();
+				}
 			} else {
 				setNextItemActive(event.key === "ArrowDown" ? 1 : -1);
 			}
+
 			return;
 		}
 
 		if (event.key === "Home" || event.key === "End") {
 			event.preventDefault();
-			if (event.key === "Home") setFirstItemActive();
-			else setLastItemActive();
+
+			if (event.key === "Home") {
+				setFirstItemActive();
+			} else {
+				setLastItemActive();
+			}
+
 			return;
 		}
 
-		if (event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) typeahead(event.key);
+		if (event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey) {
+			typeahead(event.key);
+		}
 	};
 
 	return (

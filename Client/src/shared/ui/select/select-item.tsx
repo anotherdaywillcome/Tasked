@@ -1,18 +1,18 @@
 "use client";
 
 import { clsx } from "clsx";
-import type { ComponentPropsWithoutRef } from "react";
-import { useEffect, useId, useMemo } from "react";
+import type { ComponentPropsWithoutRef, ReactElement } from "react";
+import { use, useEffect, useId, useMemo } from "react";
 
-import { useSelect } from "./context";
 import { getTextContent } from "./lib";
-import type { SelectItemRecord } from "./types";
+import type { SelectItemRecord } from "./select";
+import { SelectContext } from "./context";
 
 export type SelectItemProps = Omit<ComponentPropsWithoutRef<"button">, "value"> & {
 	value: string;
 };
 
-type SelectItemComponent = ((props: Readonly<SelectItemProps>) => React.ReactElement) & {
+type SelectItemComponent = ((props: Readonly<SelectItemProps>) => ReactElement) & {
 	__selectItem?: boolean;
 };
 
@@ -28,7 +28,7 @@ export const SelectItem = (({
 }: Readonly<SelectItemProps>) => {
 	const generatedId = useId();
 	const itemId = id ?? generatedId;
-	const { activeItemId, registerItem, selectItem, selectedValue, setActiveItemId } = useSelect("SelectItem");
+	const { activeItemId, registerItem, selectItem, selectedValue, setActiveItemId } = use(SelectContext);
 	const label = getTextContent(children);
 	const active = activeItemId === itemId;
 	const selected = selectedValue === value;

@@ -1,17 +1,55 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, ReactNode, RefObject } from "react";
 
-import type { SelectContextValue } from "./types";
+import { SelectItemRecord, SelectPosition } from "@shared/ui";
 
-export const SelectContext = createContext<SelectContextValue | null>(null);
-
-export const useSelect = (componentName: string) => {
-	const context = useContext(SelectContext);
-
-	if (!context) {
-		throw new Error(`${componentName} must be used within <Select>.`);
-	}
-
-	return context;
+type SelectContextValue = {
+	activeItemId: string | null;
+	contentId: string;
+	contentRef: RefObject<HTMLDivElement | null>;
+	disabled: boolean;
+	open: boolean;
+	position: SelectPosition | null;
+	required: boolean;
+	selectedLabel: ReactNode;
+	selectedValue?: string;
+	triggerId: string;
+	triggerRef: RefObject<HTMLButtonElement | null>;
+	registerItem: (item: SelectItemRecord) => () => void;
+	selectItem: (item: SelectItemRecord) => void;
+	setActiveItemId: (id: string | null) => void;
+	setFirstItemActive: () => void;
+	setLastItemActive: () => void;
+	setNextItemActive: (direction: 1 | -1) => void;
+	setOpen: (open: boolean) => void;
+	selectActiveItem: () => void;
+	typeahead: (character: string) => void;
+	updatePosition: () => void;
 };
+
+const selectContextInitialValues: SelectContextValue = {
+	activeItemId: null,
+	contentId: "",
+	contentRef: { current: null },
+	disabled: false,
+	open: false,
+	position: null,
+	required: false,
+	selectedLabel: null,
+	selectedValue: undefined,
+	triggerId: "",
+	triggerRef: { current: null },
+	registerItem: () => () => {},
+	selectItem: () => {},
+	setActiveItemId: () => {},
+	setFirstItemActive: () => {},
+	setLastItemActive: () => {},
+	setNextItemActive: () => {},
+	setOpen: () => {},
+	selectActiveItem: () => {},
+	typeahead: () => {},
+	updatePosition: () => {}
+};
+
+export const SelectContext = createContext<SelectContextValue>(selectContextInitialValues);

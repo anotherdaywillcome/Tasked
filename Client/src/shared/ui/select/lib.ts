@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Children, isValidElement } from "react";
 
-import type { SelectItemRecord } from "./types";
+import type { SelectItemRecord } from "./select";
 
 export const getTextContent = (children: ReactNode): string => {
 	let text = "";
