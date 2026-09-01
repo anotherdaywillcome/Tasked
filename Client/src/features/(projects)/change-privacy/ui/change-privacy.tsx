@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import type { Project } from "@entities/projects/model/types";
 import { Privacy, privacyOptions } from "@entities/projects/model/types";
@@ -13,10 +13,6 @@ type ChangePrivacyProps = {
 
 export const ChangePrivacy = ({ project }: Readonly<ChangePrivacyProps>) => {
 	const [privacy, setPrivacy] = useState<string | null>(null);
-
-	useEffect(() => {
-		console.log(privacy);
-	});
 
 	return (
 		<Select defaultValue={Privacy[project.privacy]} onValueChange={(value) => setPrivacy(value)}>
