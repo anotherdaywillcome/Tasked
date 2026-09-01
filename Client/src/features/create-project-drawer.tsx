@@ -14,8 +14,8 @@ import { CreateProjectDrawerSkeleton } from "@features/create-project-drawer-ske
 
 import { projectMutations } from "@entities/projects/api/project.mutations";
 import { AssignUser } from "@features/assign-user";
-import { AssignedUsers, AssignedUsersSkeleton } from "@widgets/assigned-users";
 import { Icon, ICON_TYPES, Tabs } from "@shared/ui";
+import { AssignedUsers, AssignedUsersSkeleton } from "@widgets/assigned-users";
 
 export const CreateProjectDrawer = () => {
 	const { isOpen } = use(DrawerContext);
@@ -48,7 +48,9 @@ export const CreateProjectDrawer = () => {
 	if (!project) {
 		return <div>Unhandled error</div>;
 	}
+
 	const tabIndicatorClassName = "h-[2px] rounded-full bg-(--geek-blue-6)";
+
 	return (
 		<section className="relative flex h-full min-h-0 flex-col">
 			<h2 className="sr-only">Basic project information</h2>
@@ -57,7 +59,7 @@ export const CreateProjectDrawer = () => {
 				<Rename project={project} />
 			</div>
 			<ChangeDescription project={project} />
-			<div className="grid grid-cols-[auto_auto] gap-x-[24px] items-center">
+			<div className="grid grid-cols-[auto_auto] gap-x-[24px] items-center px-[12px] pb-[12px]">
 				<ChangePrivacy project={project} />
 				<div className="flex items-center w-full">
 					<Drawer.Trigger id="assign-user">
@@ -70,8 +72,8 @@ export const CreateProjectDrawer = () => {
 					</Suspense>
 				</div>
 			</div>
-			<Tabs className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden" defaultValue="activity">
-				<Tabs.List className="flex gap-x-[16px]">
+			<Tabs className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden mx-[-24px]" defaultValue="activity">
+				<Tabs.List className="flex gap-x-[16px] px-[24px]">
 					<Tabs.Trigger value="activity" indicatorClassName={tabIndicatorClassName}>
 						<button
 							type="button"
@@ -95,7 +97,7 @@ export const CreateProjectDrawer = () => {
 						</button>
 					</Tabs.Trigger>
 				</Tabs.List>
-				<div className="flex h-full min-h-0 min-w-0 flex-1 overflow-hidden border-t-[0.50px] border-solid border-(--white-pallete-10) pt-[20px]">
+				<div className="flex h-full min-h-0 min-w-0 flex-1 overflow-hidden border-t-[0.50px] border-solid border-(--white-pallete-10) px-[12px]">
 					<Tabs.Content className="bg-blue-600 h-full min-h-0 min-w-0 overflow-hidden" value="activity">
 						<h1 className="text-red-600">Content</h1>
 					</Tabs.Content>

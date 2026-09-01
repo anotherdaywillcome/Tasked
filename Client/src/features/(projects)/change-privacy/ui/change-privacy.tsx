@@ -1,9 +1,11 @@
 "use client";
 
-import { Privacy, Project, projectPrivacyOptions } from "@entities/projects/model/types";
-
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@shared/ui";
 import { useEffect, useState } from "react";
+
+import type { Project } from "@entities/projects/model/types";
+import { Privacy, privacyOptions } from "@entities/projects/model/types";
+
+import { Select } from "@shared/ui";
 
 type ChangePrivacyProps = {
 	project: Omit<Project, "taskSummary">;
@@ -18,19 +20,19 @@ export const ChangePrivacy = ({ project }: Readonly<ChangePrivacyProps>) => {
 
 	return (
 		<Select defaultValue={Privacy[project.privacy]} onValueChange={(value) => setPrivacy(value)}>
-			<SelectLabel>Privacy</SelectLabel>
-			<SelectTrigger>
-				<SelectValue />
-			</SelectTrigger>
-			<SelectContent>
-				<SelectGroup>
-					{projectPrivacyOptions.map((option) => (
-						<SelectItem key={option} value={option}>
+			<Select.Label>Privacy</Select.Label>
+			<Select.Trigger>
+				<Select.Value />
+			</Select.Trigger>
+			<Select.Content>
+				<Select.Group>
+					{privacyOptions.map((option) => (
+						<Select.Item key={option} value={option}>
 							{option}
-						</SelectItem>
+						</Select.Item>
 					))}
-				</SelectGroup>
-			</SelectContent>
+				</Select.Group>
+			</Select.Content>
 		</Select>
 	);
 };

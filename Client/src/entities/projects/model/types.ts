@@ -6,7 +6,7 @@ export enum Privacy {
 	Private
 }
 
-export const projectPrivacyOptions = Object.values(Privacy).filter((value) => typeof value === "string");
+export const privacyOptions = Object.values(Privacy).filter((value) => typeof value === "string");
 
 export type User = {
 	id: string;

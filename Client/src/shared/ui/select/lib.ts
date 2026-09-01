@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Children, isValidElement } from "react";
 
-import type { SelectItemRecord } from "./select";
+import type { SelectOption } from "./select";
 
 export const getTextContent = (children: ReactNode): string => {
 	let text = "";
@@ -9,6 +9,7 @@ export const getTextContent = (children: ReactNode): string => {
 	Children.forEach(children, (child) => {
 		if (typeof child === "string" || typeof child === "number") {
 			text += child;
+
 			return;
 		}
 
@@ -20,11 +21,13 @@ export const getTextContent = (children: ReactNode): string => {
 	return text;
 };
 
-export const getDeclaredItems = (children: ReactNode): SelectItemRecord[] => {
-	const items: SelectItemRecord[] = [];
+export const getDeclaredItems = (children: ReactNode): SelectOption[] => {
+	const items: SelectOption[] = [];
 
 	Children.forEach(children, (child) => {
-		if (!isValidElement<{ children?: ReactNode; disabled?: boolean; id?: string; value?: string }>(child)) return;
+		if (!isValidElement<{ children?: ReactNode; disabled?: boolean; id?: string; value?: string }>(child)) {
+			return;
+		}
 
 		const component = child.type as { __selectItem?: boolean };
 
@@ -35,6 +38,7 @@ export const getDeclaredItems = (children: ReactNode): SelectItemRecord[] => {
 				label: getTextContent(child.props.children),
 				value: child.props.value
 			});
+
 			return;
 		}
 
@@ -44,10 +48,12 @@ export const getDeclaredItems = (children: ReactNode): SelectItemRecord[] => {
 	return items;
 };
 
-export const getNextEnabledItem = (items: SelectItemRecord[], currentItemId: string | null, direction: 1 | -1) => {
+export const getNextEnabledItem = (items: SelectOption[], currentItemId: string | null, direction: 1 | -1) => {
 	const enabledItems = items.filter(({ disabled }) => !disabled);
 
-	if (!enabledItems.length) return null;
+	if (!enabledItems.length) {
+		return null;
+	}
 
 	const currentIndex = enabledItems.findIndex(({ id }) => id === currentItemId);
 	const nextIndex = currentIndex < 0 ? 0 : (currentIndex + direction + enabledItems.length) % enabledItems.length;

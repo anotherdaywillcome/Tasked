@@ -6,12 +6,13 @@ import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
 import { use, useLayoutEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { SelectContext } from "@shared/ui/select/context";
+
+import { SelectContext } from "./context";
 
 export type SelectContentProps = Omit<HTMLMotionProps<"div">, "children"> & {
-	align?: "start" | "center" | "end";
-	alignItemWithTrigger?: boolean;
 	children: ReactNode;
+	alignItemWithTrigger?: boolean;
+	align?: "start" | "center" | "end";
 	portalled?: boolean;
 	sideOffset?: number;
 };
@@ -43,10 +44,12 @@ export const SelectContent = ({
 		}
 
 		content.scrollTop = selected.offsetTop - content.clientHeight / 2 + selected.offsetHeight / 2;
+
 		const selectedCenter = selected.offsetTop - content.scrollTop + selected.offsetHeight / 2;
 		const desiredTop = position.triggerTop + position.triggerHeight / 2 - selectedCenter;
 		const viewportPadding = 8;
 		const maximumTop = Math.max(viewportPadding, window.innerHeight - content.offsetHeight - viewportPadding);
+
 		setAlignedTop(Math.min(Math.max(desiredTop, viewportPadding), maximumTop));
 	}, [alignItemWithTrigger, contentRef, open, position, selectedValue]);
 

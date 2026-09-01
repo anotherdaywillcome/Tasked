@@ -4,7 +4,7 @@ import { clsx } from "clsx";
 
 import { SelectContext } from "./context";
 import { getDeclaredItems, getNextEnabledItem } from "./lib";
-import { SelectItemRecord, SelectPosition } from "./select";
+import { SelectOption, SelectPosition } from "./select";
 
 type SelectProviderProps = {
 	children: ReactNode;
@@ -39,22 +39,28 @@ export const SelectProvider = ({
 	const generatedId = useId();
 	const triggerId = id ?? generatedId;
 	const contentId = `${triggerId}-content`;
-	const isOpenControlled = open !== undefined;
-	const isValueControlled = value !== undefined;
-	const declaredItems = useMemo(() => getDeclaredItems(children), [children]);
 
 	const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
 	const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+
 	const [activeItemId, setActiveItemId] = useState<string | null>(null);
 	const [position, setPosition] = useState<SelectPosition | null>(null);
-	const [registeredItems, setRegisteredItems] = useState<SelectItemRecord[]>([]);
+
+	const [registeredItems, setRegisteredItems] = useState<SelectOption[]>([]);
 
 	const typeaheadRef = useRef("");
 	const typeaheadTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 
+	const declaredItems = useMemo(() => getDeclaredItems(children), [children]);
+	const enabledItems = registeredItems.filter(({ disabled: itemDisabled }) => !itemDisabled);
+
+	const isOpenControlled = open !== undefined;
+	const isValueControlled = value !== undefined;
+
 	const isOpen = isOpenControlled ? open : uncontrolledOpen;
+
 	const selectedValue = isValueControlled ? value : uncontrolledValue;
 	const selectedItem = [...registeredItems, ...declaredItems].find(
 		({ value: itemValue }) => itemValue === selectedValue
@@ -96,7 +102,7 @@ export const SelectProvider = ({
 	}, []);
 
 	const registerItem = useCallback(
-		(item: SelectItemRecord) => {
+		(item: SelectOption) => {
 			setRegisteredItems((current) => [...current.filter(({ id: itemId }) => itemId !== item.id), item]);
 			setActiveItemId((current) => (item.value === selectedValue ? item.id : (current ?? item.id)));
 
@@ -106,7 +112,7 @@ export const SelectProvider = ({
 	);
 
 	const selectItem = useCallback(
-		(item: SelectItemRecord) => {
+		(item: SelectOption) => {
 			if (item.disabled) {
 				return;
 			}
@@ -116,13 +122,13 @@ export const SelectProvider = ({
 			}
 
 			onValueChange?.(item.value);
+
 			setOpen(false);
+
 			queueMicrotask(() => triggerRef.current?.focus());
 		},
 		[isValueControlled, onValueChange, setOpen]
 	);
-
-	const enabledItems = registeredItems.filter(({ disabled: itemDisabled }) => !itemDisabled);
 
 	const setFirstItemActive = useCallback(() => {
 		setActiveItemId(enabledItems[0]?.id ?? null);
@@ -190,6 +196,7 @@ export const SelectProvider = ({
 			if (!(event.target instanceof Node)) {
 				return;
 			}
+
 			if (triggerRef.current?.contains(event.target) || contentRef.current?.contains(event.target)) {
 				return;
 			}
@@ -203,7 +210,9 @@ export const SelectProvider = ({
 
 	useEffect(
 		() => () => {
-			if (typeaheadTimerRef.current) clearTimeout(typeaheadTimerRef.current);
+			if (typeaheadTimerRef.current) {
+				clearTimeout(typeaheadTimerRef.current);
+			}
 		},
 		[]
 	);

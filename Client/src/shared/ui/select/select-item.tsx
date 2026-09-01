@@ -4,9 +4,9 @@ import { clsx } from "clsx";
 import type { ComponentPropsWithoutRef, ReactElement } from "react";
 import { use, useEffect, useId, useMemo } from "react";
 
-import { getTextContent } from "./lib";
-import type { SelectItemRecord } from "./select";
 import { SelectContext } from "./context";
+import { getTextContent } from "./lib";
+import type { SelectOption } from "./select";
 
 export type SelectItemProps = Omit<ComponentPropsWithoutRef<"button">, "value"> & {
 	value: string;
@@ -28,12 +28,14 @@ export const SelectItem = (({
 }: Readonly<SelectItemProps>) => {
 	const generatedId = useId();
 	const itemId = id ?? generatedId;
+
 	const { activeItemId, registerItem, selectItem, selectedValue, setActiveItemId } = use(SelectContext);
+
 	const label = getTextContent(children);
 	const active = activeItemId === itemId;
 	const selected = selectedValue === value;
 
-	const item = useMemo<SelectItemRecord>(
+	const item = useMemo<SelectOption>(
 		() => ({ disabled, id: itemId, label, value }),
 		[disabled, itemId, label, value]
 	);
@@ -52,11 +54,15 @@ export const SelectItem = (({
 			disabled={disabled}
 			onMouseEnter={(event) => {
 				onMouseEnter?.(event);
-				if (!event.defaultPrevented && !disabled) setActiveItemId(itemId);
+				if (!event.defaultPrevented && !disabled) {
+					setActiveItemId(itemId);
+				}
 			}}
 			onClick={(event) => {
 				onClick?.(event);
-				if (!event.defaultPrevented) selectItem(item);
+				if (!event.defaultPrevented) {
+					selectItem(item);
+				}
 			}}
 			className={clsx(
 				"flex w-full cursor-pointer items-center justify-between gap-x-[0.75rem] rounded-[0.5rem] px-[0.5rem] pt-[0.438rem] pb-[0.563rem] text-left font-(family-name:--font-barlow) text-[0.75rem] leading-[133%] font-medium tracking-[0.01em] text-(--white-pallete-100) transition-[background-color,color] duration-150 ease-out focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40",

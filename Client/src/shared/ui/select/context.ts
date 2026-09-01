@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, RefObject } from "react";
 
-import { SelectItemRecord, SelectPosition } from "@shared/ui";
+import { SelectOption, SelectPosition } from "@shared/ui";
 
 type SelectContextValue = {
 	activeItemId: string | null;
@@ -16,8 +16,8 @@ type SelectContextValue = {
 	selectedValue?: string;
 	triggerId: string;
 	triggerRef: RefObject<HTMLButtonElement | null>;
-	registerItem: (item: SelectItemRecord) => () => void;
-	selectItem: (item: SelectItemRecord) => void;
+	registerItem: (item: SelectOption) => () => void;
+	selectItem: (item: SelectOption) => void;
 	setActiveItemId: (id: string | null) => void;
 	setFirstItemActive: () => void;
 	setLastItemActive: () => void;

@@ -5,6 +5,7 @@ import type { ComponentPropsWithoutRef, KeyboardEvent, MouseEvent } from "react"
 import { use } from "react";
 
 import { Icon, ICON_TYPES } from "../icon";
+
 import { SelectContext } from "./context";
 
 export type SelectTriggerProps = ComponentPropsWithoutRef<"button">;
@@ -33,6 +34,7 @@ export const SelectTrigger = ({
 		typeahead,
 		updatePosition
 	} = use(SelectContext);
+
 	const isDisabled = disabled ?? selectDisabled;
 
 	const openSelect = () => {

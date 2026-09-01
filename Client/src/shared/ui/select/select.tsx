@@ -1,10 +1,17 @@
 "use client";
 
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ReactElement, ReactNode } from "react";
 
 import { SelectProvider } from "./select-provider";
+import { SelectContent } from "./select-content";
+import { SelectGroup } from "./select-group";
+import { SelectItem } from "./select-item";
+import { SelectLabel } from "./select-label";
+import { SelectSeparator } from "./select-separator";
+import { SelectTrigger } from "./select-trigger";
+import { SelectValue } from "./select-value";
 
-export type SelectItemRecord = {
+export type SelectOption = {
 	disabled: boolean;
 	id: string;
 	label: string;
@@ -17,6 +24,16 @@ export type SelectPosition = {
 	triggerHeight: number;
 	triggerTop: number;
 	width: number;
+};
+
+type SelectComponents = {
+	Content: typeof SelectContent;
+	Group: typeof SelectGroup;
+	Item: typeof SelectItem;
+	Label: typeof SelectLabel;
+	Separator: typeof SelectSeparator;
+	Trigger: typeof SelectTrigger;
+	Value: typeof SelectValue;
 };
 
 export type SelectProps = Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange"> & {
@@ -32,7 +49,9 @@ export type SelectProps = Omit<ComponentPropsWithoutRef<"div">, "defaultValue" |
 	value?: string;
 };
 
-export const Select = ({
+type Select = ((props: Readonly<SelectProps>) => ReactElement) & SelectComponents;
+
+export const Select = (({
 	children,
 	className,
 	defaultOpen = false,
@@ -65,4 +84,12 @@ export const Select = ({
 			{children}
 		</SelectProvider>
 	);
-};
+}) as Select;
+
+Select.Content = SelectContent;
+Select.Group = SelectGroup;
+Select.Item = SelectItem;
+Select.Label = SelectLabel;
+Select.Separator = SelectSeparator;
+Select.Trigger = SelectTrigger;
+Select.Value = SelectValue;
