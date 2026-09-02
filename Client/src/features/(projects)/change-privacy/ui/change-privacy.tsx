@@ -2,38 +2,87 @@
 
 import { useEffect, useState } from "react";
 
-import type { Project } from "@entities/projects/model/types";
+import type { Project } from "@entities/projects";
 import { Privacy, privacyOptions } from "@entities/projects/model/types";
-
 import { Select } from "@shared/ui";
+import { useDebounce } from "@shared/lib/hooks";
+
+import { useChangePrivacy } from "../model";
 
 type ChangePrivacyProps = {
 	project: Omit<Project, "taskSummary">;
 };
 
-export const ChangePrivacy = ({ project }: Readonly<ChangePrivacyProps>) => {
-	const [privacy, setPrivacy] = useState<string | null>(null);
+export const ChangePrivacy = ({ project: { id, privacy } }: Readonly<ChangePrivacyProps>) => {
+	const [projectPrivacy, setProjectPrivacy] = useState<Privacy>(privacy);
+	const debouncedProjectPrivacy = useDebounce<Privacy>(projectPrivacy, 600);
+
+	const {
+		handlePrivacyChange,
+		register,
+		isPending,
+		isError,
+		errors: { privacy: privacyValidationError }
+	} = useChangePrivacy({ id });
 
 	useEffect(() => {
-		console.log(privacy);
-	});
+		if (debouncedProjectPrivacy === projectPrivacy) {
+			return;
+		}
+
+		handlePrivacyChange({
+			privacy: debouncedProjectPrivacy
+		});
+	}, [debouncedProjectPrivacy, projectPrivacy]);
 
 	return (
-		<Select defaultValue={Privacy[project.privacy]} onValueChange={(value) => setPrivacy(value)}>
-			<Select.Label>Privacy</Select.Label>
-			<Select.Trigger>
-				<Select.Value />
-			</Select.Trigger>
-			<Select.Content>
-				<Select.Group>
-					{privacyOptions.map((option) => (
-						<Select.Item key={option} value={option}>
-							{option}
-						</Select.Item>
-					))}
-				</Select.Group>
-			</Select.Content>
-		</Select>
+		<div className="relative">
+			<form className="relative">
+				<Select
+					{...register("privacy")}
+					defaultValue={Privacy[privacy]}
+					onValueChange={(value) => setProjectPrivacy(Privacy[value as keyof typeof Privacy])}
+				>
+					<Select.Label>Privacy</Select.Label>
+					<Select.Trigger>
+						<Select.Value />
+					</Select.Trigger>
+					<Select.Content>
+						<Select.Group>
+							{privacyOptions.map((option) => (
+								<Select.Item key={option} value={option}>
+									{option}
+								</Select.Item>
+							))}
+						</Select.Group>
+					</Select.Content>
+				</Select>
+			</form>
+			{privacyValidationError && (
+				<small
+					className="font-(family-name:--font-barlow) font-medium text-[0.625rem] leading-[140%] tracking-[0.01em] text-red-600"
+					role="alert"
+				>
+					{privacyValidationError.message}
+				</small>
+			)}
+			{isPending && (
+				<small
+					className="font-(family-name:--font-barlow) font-medium text-[0.625rem] leading-[140%] tracking-[0.01em] text-red-600"
+					role="status"
+				>
+					Changing project privacy...
+				</small>
+			)}
+			{isError && (
+				<small
+					className="font-(family-name:--font-barlow) font-medium text-[0.625rem] leading-[140%] tracking-[0.01em] text-red-600"
+					role="alert"
+				>
+					Unable to change project privacy.
+				</small>
+			)}
+		</div>
 	);
 };
 

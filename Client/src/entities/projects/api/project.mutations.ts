@@ -7,11 +7,12 @@ import { BFF_ENDPOINTS } from "@shared/config";
 
 import { Project } from "../model/types";
 
-import { projectQueryKeys } from "./project.query-keys";
+import { UpdateProjectPrivacyCommand, UpdateProjectPrivacyResponse } from "@entities/projects";
 import type { CreateNewProjectResponse } from "./create-new-project";
+import { projectQueryKeys } from "./project.query-keys";
+import type { UpdateProjectDescriptionCommand, UpdateProjectDescriptionResponse } from "./update-project-description";
 import type { UpdateProjectImageCommand, UpdateProjectImageResponse } from "./update-project-image";
 import type { UpdateProjectNameCommand, UpdateProjectNameResponse } from "./update-project-name";
-import type { UpdateProjectDescriptionCommand, UpdateProjectDescriptionResponse } from "./update-project-description";
 
 export const projectMutations = (queryClient: QueryClient) => ({
 	create: () =>
@@ -99,6 +100,58 @@ export const projectMutations = (queryClient: QueryClient) => ({
 					return {
 						...oldProject,
 						description: updatedProject.description
+					};
+				});
+
+				return {
+					previousProject
+				};
+			},
+			onError: (error, updatedProject, onMutateResult, context) => {
+				if (!onMutateResult) {
+					return;
+				}
+
+				context.client.setQueryData<Project>(
+					projectQueryKeys.detail(updatedProject.id),
+					onMutateResult.previousProject
+				);
+			},
+			onSettled: async (data, error, variables, onMutateResult, context) => {
+				await Promise.all([
+					context.client.invalidateQueries({
+						queryKey: projectQueryKeys.detail(variables.id)
+					}),
+
+					context.client.invalidateQueries({
+						queryKey: projectQueryKeys.lists()
+					})
+				]);
+			}
+		}),
+	changePrivacy: () =>
+		mutationOptions({
+			mutationFn: ({ id, privacy }: Readonly<UpdateProjectPrivacyCommand>) =>
+				bffBrowserApiClient.patch<UpdateProjectPrivacyResponse>(BFF_ENDPOINTS.Projects.Update.Privacy(id), {
+					privacy
+				}),
+			onMutate: async (updatedProject, context) => {
+				await context.client.cancelQueries({
+					queryKey: projectQueryKeys.detail(updatedProject.id)
+				});
+
+				const previousProject = context.client.getQueryData<Project>(
+					projectQueryKeys.detail(updatedProject.id)
+				);
+
+				context.client.setQueryData<Project>(projectQueryKeys.detail(updatedProject.id), (oldProject) => {
+					if (!oldProject) {
+						return oldProject;
+					}
+
+					return {
+						...oldProject,
+						privacy: updatedProject.privacy
 					};
 				});
 

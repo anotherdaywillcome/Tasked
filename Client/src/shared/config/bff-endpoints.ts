@@ -12,7 +12,8 @@ export const BFF_ENDPOINTS = {
 		Assignees: (id: string) => `projects/${id}/assignees`,
 		Update: {
 			Name: (id: string) => `projects/${id}/rename`,
-			Description: (id: string) => `projects/${id}/change-description`
+			Description: (id: string) => `projects/${id}/change-description`,
+			Privacy: (id: string) => `projects/${id}/change-privacy`
 		},
 		Upload: {
 			Image: (id: string) => `projects/${id}/upload-image`,

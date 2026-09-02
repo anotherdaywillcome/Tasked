@@ -26,6 +26,8 @@ const getAssignedUsers = async (projectId: string): Promise<Array<AssignedUser>>
 	});
 };
 
+// Refactor to client component
+
 export const AssignedUsers = async ({ projectId, maxCount = 6 }: Readonly<AssignedUsersProps>) => {
 	const assignedUsers = await getAssignedUsers(projectId);
 

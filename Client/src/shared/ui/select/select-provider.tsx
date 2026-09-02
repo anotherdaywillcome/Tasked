@@ -243,9 +243,10 @@ export const SelectProvider = ({
 				updatePosition
 			}}
 		>
-			<div className={clsx("flex flex-col gap-y-[0.25rem]", className)} {...props}>
+			<div className={clsx("flex flex-col gap-y-[0.25rem]", className)}>
 				{name && (
 					<input
+						{...props}
 						type="hidden"
 						name={name}
 						value={selectedValue ?? ""}
