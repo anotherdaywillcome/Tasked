@@ -17,6 +17,7 @@ export type DrawerConfig = {
 
 export type DrawerContextValue = {
 	isOpen: (id: string) => boolean;
+	isAnyOpen: boolean;
 	drawers: Array<Drawer> | [];
 	config: DrawerConfig;
 	open: (id: string) => void;
@@ -34,6 +35,7 @@ const drawerContextInitialValues = {
 		position: null
 	},
 	isOpen: (id: string) => false,
+	isAnyOpen: false,
 	open: () => {},
 	close: () => {},
 	closeAll: () => {},

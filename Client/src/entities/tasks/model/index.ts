@@ -7,3 +7,4 @@ export type {
 	ProjectTasksData
 } from "./project-tasks";
 export * from "./task-priority";
+export * from "./types";

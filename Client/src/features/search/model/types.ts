@@ -1,4 +1,4 @@
-import { MOTION_ICON } from "@shared/ui";
+import { MOTION_ICON_TYPES } from "@shared/ui";
 
 export type Filter = "all" | "users" | "projects" | "tasks";
 
@@ -8,7 +8,7 @@ export type SearchResult = {
 	type: Exclude<Filter, "all">;
 	description: string;
 	shortcut?: string;
-	icon: keyof typeof MOTION_ICON;
+	icon: keyof typeof MOTION_ICON_TYPES;
 };
 
 export type SearchGroup = Exclude<Filter, "all">;

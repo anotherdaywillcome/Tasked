@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { ProjectImage } from "@shared/ui";
 
-import { TaskSummary } from "../../model";
+import type { TaskSummary } from "../../../tasks";
 
 type ProjectRowCompactProps = {
 	name: string;

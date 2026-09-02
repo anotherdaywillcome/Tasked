@@ -2,7 +2,10 @@ import { CreateNewProjectResponse } from "@entities/projects";
 
 import { withFallback } from "@shared/lib/hofs";
 
-import { Assignee, Privacy, Project } from "@entities/projects/model/types";
+import type { Project } from "../../../projects";
+import { Privacy } from "../../../projects";
+import type { Assignee } from "../../../tasks";
+import type { User } from "../../../users";
 
 const getProjectId = withFallback("Unknown id", {
 	entity: "Project",
@@ -51,11 +54,30 @@ const adaptAssignee = (assignee: Project["assignees"][number]): Assignee => ({
 	fullName: getAssigneeFullName(assignee.fullName)
 });
 
+const getProjectCreatedAt = withFallback("", {
+	entity: "Project",
+	field: "createdAt"
+});
+
+const getProjectCreatedBy = withFallback<Omit<User, "role">>(
+	{
+		id: "Unknown id",
+		imageUrl: "/images/users/default.jpg",
+		fullName: "Unknown user"
+	},
+	{
+		entity: "Project",
+		field: "createdBy"
+	}
+);
+
 export const createNewProjectAdapter = (project: Omit<Project, "taskSummary">): CreateNewProjectResponse => ({
 	id: getProjectId(project.id),
 	imageUrl: project.imageUrl,
 	name: getProjectName(project.name),
 	description: getProjectDescription(project.description),
 	privacy: getProjectPrivacy(project.privacy),
+	createdAt: getProjectCreatedAt(project.createdAt),
+	createdBy: getProjectCreatedBy(project.createdBy),
 	assignees: getProjectAssignees(project.assignees).map(adaptAssignee)
 });

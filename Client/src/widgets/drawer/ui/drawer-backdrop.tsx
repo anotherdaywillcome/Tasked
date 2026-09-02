@@ -12,16 +12,18 @@ type DrawerBackdropProps = {
 };
 
 export const DrawerBackdrop = ({ showBackdrop }: Readonly<DrawerBackdropProps>) => {
-	const { isDrawerOpen } = use(DrawerContext);
+	const { isAnyOpen } = use(DrawerContext);
 
 	const isDrawerRootCreated = typeof document !== "undefined" && !!document.getElementById("drawer-root");
 
-	if (!showBackdrop || !isDrawerRootCreated) return null;
+	if (!showBackdrop || !isDrawerRootCreated) {
+		return null;
+	}
 
 	const renderBackdrop = () => {
 		return (
 			<AnimatePresence>
-				{isDrawerOpen && (
+				{isAnyOpen && (
 					<motion.div
 						initial="initial"
 						animate="base"

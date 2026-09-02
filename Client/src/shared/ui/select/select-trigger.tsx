@@ -138,11 +138,16 @@ export const SelectTrigger = ({
 			{...props}
 		>
 			<span className="min-w-0 flex-1 truncate">{children}</span>
-			<Icon
-				type={ICON_TYPES.Chevron}
-				size={16}
-				className={clsx("shrink-0 text-(--neutrals-3) transition-transform", open ? "-rotate-90" : "rotate-90")}
-			/>
+			<span>
+				<Icon
+					type={ICON_TYPES.Chevron}
+					size={16}
+					className={clsx(
+						"shrink-0 text-(--neutrals-3) transition-transform",
+						open ? "-rotate-90" : "rotate-90"
+					)}
+				/>
+			</span>
 		</button>
 	);
 };

@@ -1,5 +1,8 @@
 import type { ProjectTask, ProjectTasksData } from "./project-tasks";
 
+// TODO
+// Refactor, used in Kanban board
+
 const createTask = (
 	id: string,
 	number: number,

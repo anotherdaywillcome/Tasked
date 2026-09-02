@@ -1,3 +1,6 @@
+// TODO
+// Refactor, used in Kanban board
+
 export type ProjectTaskPriority = "low" | "medium" | "high";
 
 export type ProjectTaskAssignee = {

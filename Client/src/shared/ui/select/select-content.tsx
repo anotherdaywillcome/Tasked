@@ -65,7 +65,7 @@ export const SelectContent = ({
 					exit={{ opacity: 0, scale: 0.98, y: -4 }}
 					transition={{ duration: 0.14, ease: "easeOut" }}
 					className={clsx(
-						"fixed z-[100] overflow-y-auto overscroll-contain rounded-[0.625rem] border-[0.031rem] border-solid border-(--white-pallete-10) bg-(--geek-blue-primary-opacity-200) p-[0.25rem] shadow-[0_1rem_2rem_rgba(0,0,0,0.28)] backdrop-blur-[2rem] [scrollbar-color:var(--geek-blue-6)_transparent] [scrollbar-width:thin]",
+						"fixed z-[100] overflow-hidden overscroll-contain rounded-[0.625rem] border-[0.031rem] border-solid border-(--white-pallete-10) bg-(--geek-blue-primary-opacity-200) p-[0.25rem] shadow-[0_1rem_2rem_rgba(0,0,0,0.28)] backdrop-blur-[2rem] [scrollbar-color:var(--geek-blue-6)_transparent] [scrollbar-width:thin]",
 						className
 					)}
 					style={{

@@ -2,7 +2,6 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import type { CreateNewProjectResponse } from "@entities/projects";
-import { Privacy } from "@entities/projects/model/types";
 
 import { delay } from "@shared/lib/utils";
 
@@ -11,7 +10,7 @@ export const mockData: CreateNewProjectResponse = {
 	imageUrl: "",
 	name: "Untitled project",
 	description: "project description",
-	privacy: Privacy.Private,
+	privacy: 1,
 	createdAt: "2023-12-25T18:00:00Z",
 	createdBy: {
 		id: "3296137b-2f7a-4b1a-819f-b5e6df7ccd19",

@@ -15,6 +15,7 @@ import { DropdownMenuSubmenuContent } from "./dropdown-menu-submenu-content";
 import { DropdownMenuSubmenuTrigger } from "./dropdown-menu-submenu-trigger";
 import { DropdownMenuTrigger } from "./dropdown-menu-trigger";
 import { DropdownMenuWrapper } from "./dropdown-menu-wrapper";
+import { DropdownMenuLabel } from "./dropdown-menu-label";
 
 export type DropdownMenuPosition = {
 	left: number;
@@ -43,6 +44,7 @@ type DropdownMenuComponents = {
 	Portal: typeof DropdownMenuPortal;
 	Separator: typeof DropdownMenuSeparator;
 	Shortcut: typeof DropdownMenuShortcut;
+	Label: typeof DropdownMenuLabel;
 };
 
 type DropdownMenuProps = ComponentPropsWithoutRef<"div"> & {
@@ -102,3 +104,4 @@ DropdownMenu.SubmenuContent = DropdownMenuSubmenuContent;
 DropdownMenu.Portal = DropdownMenuPortal;
 DropdownMenu.Separator = DropdownMenuSeparator;
 DropdownMenu.Shortcut = DropdownMenuShortcut;
+DropdownMenu.Label = DropdownMenuLabel;

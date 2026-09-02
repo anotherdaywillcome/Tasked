@@ -1,15 +1,4 @@
-import {
-	Button,
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuTrigger,
-	Icon,
-	ICON_TYPES,
-	Switch
-} from "@shared/ui";
+import { Button, DropdownMenu, Icon, ICON_TYPES, Switch } from "@shared/ui";
 
 const TIME_OPTIONS = [{ label: "lead time", value: "lead-time" }];
 
@@ -25,17 +14,17 @@ const SettingsDropdown = ({ defaultValue, label, name, options }: Readonly<Setti
 
 	return (
 		<DropdownMenu name={name} id={name} defaultValue={defaultValue}>
-			<DropdownMenuLabel htmlFor={name}>{label}</DropdownMenuLabel>
-			<DropdownMenuTrigger placeholder={defaultOption?.label ?? "Select option"} />
-			<DropdownMenuContent align="start">
-				<DropdownMenuGroup>
+			<DropdownMenu.Label htmlFor={name}>{label}</DropdownMenu.Label>
+			<DropdownMenu.Trigger placeholder={defaultOption?.label ?? "Select option"} />
+			<DropdownMenu.Content align="start">
+				<DropdownMenu.Group>
 					{options.map((option) => (
-						<DropdownMenuItem key={option.value} value={option.value} disabled={option.disabled}>
+						<DropdownMenu.Item key={option.value} value={option.value} disabled={option.disabled}>
 							{option.label}
-						</DropdownMenuItem>
+						</DropdownMenu.Item>
 					))}
-				</DropdownMenuGroup>
-			</DropdownMenuContent>
+				</DropdownMenu.Group>
+			</DropdownMenu.Content>
 		</DropdownMenu>
 	);
 };

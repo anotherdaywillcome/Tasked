@@ -2,13 +2,13 @@ import type { ReactNode } from "react";
 
 import { AvatarStack, AvatarStackVariants, ProgressBar, ProjectImage } from "@shared/ui";
 
-import { TaskSummary, User } from "../../model";
+import type { Assignee, TaskSummary } from "../../../tasks";
 
 type ProjectRowExtendedProps = {
 	name: string;
 	imageUrl: string;
 	taskSummary: TaskSummary;
-	assignedUsers: Array<User>;
+	assignedUsers: Array<Assignee>;
 	children?: ReactNode;
 };
 

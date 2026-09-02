@@ -3,6 +3,7 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { use } from "react";
 
+import { motion } from "motion/react";
 import { SelectContext } from "./context";
 
 export type SelectValueProps = Omit<ComponentPropsWithoutRef<"span">, "children"> & {
@@ -10,11 +11,15 @@ export type SelectValueProps = Omit<ComponentPropsWithoutRef<"span">, "children"
 };
 
 export const SelectValue = ({ placeholder = "Select an option", ...props }: Readonly<SelectValueProps>) => {
-	const { selectedLabel, selectedValue } = use(SelectContext);
+	const { selectedLabel, selectedValue, activeItemId } = use(SelectContext);
 
 	return (
 		<span data-placeholder={!selectedValue || undefined} {...props}>
-			{selectedLabel ?? <span className="text-(--neutrals-3)">{placeholder}</span>}
+			{selectedLabel ?? (
+				<motion.span layout className="text-(--neutrals-3)">
+					{placeholder}
+				</motion.span>
+			)}
 		</span>
 	);
 };

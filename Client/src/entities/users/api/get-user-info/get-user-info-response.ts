@@ -1,7 +1,3 @@
-export type User = {
-	fullName: string;
-	role: string;
-	imageUrl: string;
-};
+import { User } from "../../model";
 
 export type GetUserInfoResponse = User;

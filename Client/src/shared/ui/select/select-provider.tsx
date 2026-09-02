@@ -1,6 +1,6 @@
+import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { clsx } from "clsx";
 
 import { SelectContext } from "./context";
 import { getDeclaredItems, getNextEnabledItem } from "./lib";

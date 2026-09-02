@@ -1,6 +1,12 @@
 import { withFallback } from "@shared/lib/hofs";
 
-import { GetUserInfoResponse, User } from "../../api";
+import type { User } from "../../../users";
+import type { GetUserInfoResponse } from "../../api";
+
+const getProjectId = withFallback("Unknown id", {
+	entity: "User",
+	field: "id"
+});
 
 const getFullName = withFallback("Unknown users", {
 	entity: "User",
@@ -18,6 +24,7 @@ const getImageUrl = withFallback("/images/avatar-placeholder.png", {
 });
 
 export const userInfoAdapter = (user: User): GetUserInfoResponse => ({
+	id: getProjectId(user.id),
 	fullName: getFullName(user.fullName),
 	role: getRole(user.role),
 	imageUrl: getImageUrl(user.imageUrl)

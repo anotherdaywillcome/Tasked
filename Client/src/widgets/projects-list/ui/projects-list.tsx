@@ -6,29 +6,10 @@ import Paypal from "@public/images/projects/paypal.svg";
 import Sleekpay from "@public/images/projects/sleekpay.svg";
 import Youtube from "@public/images/projects/youtube.svg";
 
-import { ProjectRow, ProjectRowActions, ProjectRowVariants } from "@entities/projects";
+import { Privacy, Project, ProjectRow, ProjectRowActions, ProjectRowVariants } from "@entities/projects";
 
 import type { ProjectsListActionsProps } from "./projects-list-actions";
 import { ProjectsListActions } from "./projects-list-actions";
-
-type User = {
-	id: string;
-	fullName: string;
-	imageUrl: string;
-};
-
-type TaskSummary = {
-	total: number;
-	completed: number;
-};
-
-type Project = {
-	id: string;
-	name: string;
-	imageUrl: string;
-	taskSummary: TaskSummary;
-	assignedUsers: Array<User>;
-};
 
 type ProjectsComponents = {
 	Actions: typeof ProjectsListActions;
@@ -48,53 +29,185 @@ const getProjects = (): Promise<Array<Project>> => {
 					id: String(1),
 					name: "Sleekpay App",
 					imageUrl: Sleekpay,
-					taskSummary: { total: 21, completed: 8 },
-					assignedUsers: [
-						{ id: String(1), imageUrl: "/images/users/jensen_ackles.jpg", fullName: "Jensen Ackles" },
-						{ id: String(2), imageUrl: "/images/users/jared_padalecki.jpg", fullName: "Jared Padalecki" },
-						{ id: String(3), imageUrl: "/images/users/robert_palka.jpg", fullName: "Robert Palka" },
-						{ id: String(4), imageUrl: "/images/users/bartozs_zmarzlik.jpg", fullName: "Bartozs Zmarzlik" },
-						{ id: String(5), imageUrl: "/images/users/rupert_grind.jpg", fullName: "Rupert Grind" },
-						{ id: String(6), imageUrl: "/images/users/john_block.jpg", fullName: "John Block" }
+					description:
+						"A modern payment application designed to make online payments simple, secure, and accessible.",
+					taskSummary: {
+						total: 21,
+						completed: 8
+					},
+					privacy: Privacy.Private,
+					createdAt: "2026-01-15T10:30:00Z",
+					createdBy: {
+						id: String(1),
+						imageUrl: "/images/users/jensen_ackles.jpg",
+						fullName: "Jensen Ackles"
+					},
+					assignees: [
+						{
+							id: String(1),
+							imageUrl: "/images/users/jensen_ackles.jpg",
+							fullName: "Jensen Ackles"
+						},
+						{
+							id: String(2),
+							imageUrl: "/images/users/jared_padalecki.jpg",
+							fullName: "Jared Padalecki"
+						},
+						{
+							id: String(3),
+							imageUrl: "/images/users/robert_palka.jpg",
+							fullName: "Robert Palka"
+						},
+						{
+							id: String(4),
+							imageUrl: "/images/users/bartozs_zmarzlik.jpg",
+							fullName: "Bartozs Zmarzlik"
+						},
+						{
+							id: String(5),
+							imageUrl: "/images/users/rupert_grind.jpg",
+							fullName: "Rupert Grind"
+						},
+						{
+							id: String(6),
+							imageUrl: "/images/users/john_block.jpg",
+							fullName: "John Block"
+						}
 					]
 				},
 				{
 					id: String(2),
 					name: "PayPal App",
 					imageUrl: Paypal,
-					taskSummary: { total: 48, completed: 48 },
-					assignedUsers: [
-						{ id: String(1), imageUrl: "/images/users/jensen_ackles.jpg", fullName: "Jensen Ackles" },
-						{ id: String(2), imageUrl: "/images/users/jared_padalecki.jpg", fullName: "Jared Padalecki" },
-						{ id: String(3), imageUrl: "/images/users/robert_palka.jpg", fullName: "Robert Palka" },
-						{ id: String(4), imageUrl: "/images/users/bartozs_zmarzlik.jpg", fullName: "Bartozs Zmarzlik" }
+					description:
+						"A payment management platform focused on fast, reliable, and secure digital transactions.",
+					taskSummary: {
+						total: 48,
+						completed: 48
+					},
+					privacy: Privacy.Public,
+					createdAt: "2026-02-03T14:15:00Z",
+					createdBy: {
+						id: String(2),
+						imageUrl: "/images/users/jared_padalecki.jpg",
+						fullName: "Jared Padalecki"
+					},
+					assignees: [
+						{
+							id: String(1),
+							imageUrl: "/images/users/jensen_ackles.jpg",
+							fullName: "Jensen Ackles"
+						},
+						{
+							id: String(2),
+							imageUrl: "/images/users/jared_padalecki.jpg",
+							fullName: "Jared Padalecki"
+						},
+						{
+							id: String(3),
+							imageUrl: "/images/users/robert_palka.jpg",
+							fullName: "Robert Palka"
+						},
+						{
+							id: String(4),
+							imageUrl: "/images/users/bartozs_zmarzlik.jpg",
+							fullName: "Bartozs Zmarzlik"
+						}
 					]
 				},
 				{
 					id: String(3),
 					name: "Dribble Posts",
 					imageUrl: Dribble,
-					taskSummary: { total: 16, completed: 9 },
-					assignedUsers: [
-						{ id: String(1), imageUrl: "/images/users/jensen_ackles.jpg", fullName: "Jensen Ackles" },
-						{ id: String(2), imageUrl: "/images/users/jared_padalecki.jpg", fullName: "Jared Padalecki" },
-						{ id: String(3), imageUrl: "/images/users/robert_palka.jpg", fullName: "Robert Palka" },
-						{ id: String(4), imageUrl: "/images/users/bartozs_zmarzlik.jpg", fullName: "Bartozs Zmarzlik" },
-						{ id: String(5), imageUrl: "/images/users/rupert_grind.jpg", fullName: "Rupert Grind" }
+					description:
+						"A creative design project for planning, creating, and publishing engaging Dribbble content.",
+					taskSummary: {
+						total: 16,
+						completed: 9
+					},
+					privacy: Privacy.Public,
+					createdAt: "2026-02-21T09:45:00Z",
+					createdBy: {
+						id: String(3),
+						imageUrl: "/images/users/robert_palka.jpg",
+						fullName: "Robert Palka"
+					},
+					assignees: [
+						{
+							id: String(1),
+							imageUrl: "/images/users/jensen_ackles.jpg",
+							fullName: "Jensen Ackles"
+						},
+						{
+							id: String(2),
+							imageUrl: "/images/users/jared_padalecki.jpg",
+							fullName: "Jared Padalecki"
+						},
+						{
+							id: String(3),
+							imageUrl: "/images/users/robert_palka.jpg",
+							fullName: "Robert Palka"
+						},
+						{
+							id: String(4),
+							imageUrl: "/images/users/bartozs_zmarzlik.jpg",
+							fullName: "Bartozs Zmarzlik"
+						},
+						{
+							id: String(5),
+							imageUrl: "/images/users/rupert_grind.jpg",
+							fullName: "Rupert Grind"
+						}
 					]
 				},
 				{
 					id: String(4),
 					name: "Youtube",
 					imageUrl: Youtube,
-					taskSummary: { total: 21, completed: 0 },
-					assignedUsers: [
-						{ id: String(1), imageUrl: "/images/users/jensen_ackles.jpg", fullName: "Jensen Ackles" },
-						{ id: String(2), imageUrl: "/images/users/jared_padalecki.jpg", fullName: "Jared Padalecki" },
-						{ id: String(3), imageUrl: "/images/users/robert_palka.jpg", fullName: "Robert Palka" },
-						{ id: String(4), imageUrl: "/images/users/bartozs_zmarzlik.jpg", fullName: "Bartozs Zmarzlik" },
-						{ id: String(5), imageUrl: "/images/users/rupert_grind.jpg", fullName: "Rupert Grind" },
-						{ id: String(6), imageUrl: "/images/users/john_block.jpg", fullName: "John Block" }
+					description:
+						"A video content project covering channel strategy, production, publishing, and audience growth.",
+					taskSummary: {
+						total: 21,
+						completed: 0
+					},
+					privacy: Privacy.Private,
+					createdAt: "2026-03-10T16:20:00Z",
+					createdBy: {
+						id: String(4),
+						imageUrl: "/images/users/bartozs_zmarzlik.jpg",
+						fullName: "Bartozs Zmarzlik"
+					},
+					assignees: [
+						{
+							id: String(1),
+							imageUrl: "/images/users/jensen_ackles.jpg",
+							fullName: "Jensen Ackles"
+						},
+						{
+							id: String(2),
+							imageUrl: "/images/users/jared_padalecki.jpg",
+							fullName: "Jared Padalecki"
+						},
+						{
+							id: String(3),
+							imageUrl: "/images/users/robert_palka.jpg",
+							fullName: "Robert Palka"
+						},
+						{
+							id: String(4),
+							imageUrl: "/images/users/bartozs_zmarzlik.jpg",
+							fullName: "Bartozs Zmarzlik"
+						},
+						{
+							id: String(5),
+							imageUrl: "/images/users/rupert_grind.jpg",
+							fullName: "Rupert Grind"
+						},
+						{
+							id: String(6),
+							imageUrl: "/images/users/john_block.jpg",
+							fullName: "John Block"
+						}
 					]
 				}
 			]);
@@ -131,10 +244,10 @@ export const ProjectsList = (async ({ children }: Readonly<ProjectsListProps>) =
 
 	return (
 		<ul className="flex flex-col gap-y-[0.5rem]">
-			{projects.map(({ id, ...project }) => (
-				<li key={id}>
+			{projects.map((project) => (
+				<li key={project.id}>
 					<ProjectRow project={project} variant={ProjectRowVariants.Extended}>
-						<ProjectRowActions>{ProjectsActions?.(id)}</ProjectRowActions>
+						<ProjectRowActions>{ProjectsActions?.(project.id)}</ProjectRowActions>
 					</ProjectRow>
 				</li>
 			))}

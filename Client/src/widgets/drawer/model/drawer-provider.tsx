@@ -26,6 +26,8 @@ export const DrawerProvider = ({ children }: DrawerProviderProps) => {
 
 	const isOpen = (id: string) => drawers.some((drawer) => drawer.id === id);
 
+	const isAnyOpen = drawers.length > 0;
+
 	const open = (id: string) => {
 		if (drawers.some((drawer) => drawer.id === id)) {
 			return;
@@ -76,6 +78,7 @@ export const DrawerProvider = ({ children }: DrawerProviderProps) => {
 		<DrawerContext
 			value={{
 				isOpen,
+				isAnyOpen,
 				drawers,
 				config,
 				open,

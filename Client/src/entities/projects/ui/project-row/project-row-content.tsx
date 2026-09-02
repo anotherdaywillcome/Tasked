@@ -13,7 +13,7 @@ type ProjectRowContentProps = {
 };
 
 export const ProjectRowContent = ({
-	project: { name, imageUrl, taskSummary, assignedUsers },
+	project: { name, imageUrl, taskSummary, assignees },
 	children
 }: Readonly<ProjectRowContentProps>) => {
 	const { variant } = use(ProjectRowContext);
@@ -27,12 +27,7 @@ export const ProjectRowContent = ({
 			);
 		case ProjectRowVariants.Extended:
 			return (
-				<ProjectRowExtended
-					name={name}
-					imageUrl={imageUrl}
-					taskSummary={taskSummary}
-					assignedUsers={assignedUsers}
-				>
+				<ProjectRowExtended name={name} imageUrl={imageUrl} taskSummary={taskSummary} assignedUsers={assignees}>
 					{children}
 				</ProjectRowExtended>
 			);
