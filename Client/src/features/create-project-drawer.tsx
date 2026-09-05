@@ -52,8 +52,6 @@ export const CreateProjectDrawer = () => {
 		return <div>Unhandled error</div>;
 	}
 
-	const tabIndicatorClassName = "h-[0.125rem] rounded-full bg-(--geek-blue-6)";
-
 	return (
 		<section className="relative flex h-full min-h-0 flex-col">
 			<h2 className="sr-only">Basic project information</h2>
@@ -89,9 +87,12 @@ export const CreateProjectDrawer = () => {
 					</div>
 				</div>
 			</div>
-			<Tabs className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden mx-[-1.5rem]" defaultValue="activity">
+			<Tabs
+				className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden mx-[-1.5rem] pt-[1rem]"
+				defaultValue="activity"
+			>
 				<Tabs.List className="flex gap-x-[1rem] px-[1.5rem]">
-					<Tabs.Trigger value="activity" indicatorClassName={tabIndicatorClassName}>
+					<Tabs.Trigger value="activity">
 						<button
 							type="button"
 							className="flex cursor-pointer flex-row-reverse items-center gap-x-[0.5rem] border-b-[0.125rem] border-solid border-transparent bg-transparent px-[0.75rem] pt-[1.063rem] pb-[1.125rem] text-(--neutrals-3) transition-[background-color,box-shadow,color] duration-200 ease-out hover:bg-(--geek-blue-primary-opacity-200) hover:text-(--white-pallete-100) focus-visible:bg-(--geek-blue-primary-opacity-100) focus-visible:text-(--white-pallete-100) focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_0.125rem_var(--daybreak-blue-200)] group-data-[state=active]/tab:text-(--white-pallete-100)"
@@ -102,7 +103,7 @@ export const CreateProjectDrawer = () => {
 							<Icon type={ICON_TYPES.Kanban} size={14} />
 						</button>
 					</Tabs.Trigger>
-					<Tabs.Trigger value="last-views" indicatorClassName={tabIndicatorClassName}>
+					<Tabs.Trigger value="last-views">
 						<button
 							type="button"
 							className="flex cursor-pointer flex-row-reverse items-center gap-x-[0.5rem] border-b-[0.125rem] border-solid border-transparent bg-transparent px-[0.75rem] pt-[1.063rem] pb-[1.125rem] text-(--neutrals-3) transition-[background-color,box-shadow,color] duration-200 ease-out hover:bg-(--geek-blue-primary-opacity-200) hover:text-(--white-pallete-100) focus-visible:bg-(--geek-blue-primary-opacity-100) focus-visible:text-(--white-pallete-100) focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_0.125rem_var(--daybreak-blue-200)] group-data-[state=active]/tab:text-(--white-pallete-100)"
@@ -114,11 +115,11 @@ export const CreateProjectDrawer = () => {
 						</button>
 					</Tabs.Trigger>
 				</Tabs.List>
-				<div className="flex h-full min-h-0 min-w-0 flex-1 overflow-hidden border-t-[0.031rem] border-solid border-(--white-pallete-10) px-[0.75rem]">
-					<Tabs.Content className="bg-blue-600 h-full min-h-0 min-w-0 overflow-hidden" value="activity">
+				<div className="bg-[rgba(1,0,9,0.25)] flex h-full min-h-0 min-w-0 flex-1 overflow-hidden border-t-[0.031rem] border-solid border-(--white-pallete-10) px-[0.75rem]">
+					<Tabs.Content className="h-full min-h-0 min-w-0 overflow-hidden" value="activity">
 						<h1 className="text-red-600">Content</h1>
 					</Tabs.Content>
-					<Tabs.Content className="bg-yellow-700 h-full min-h-0 min-w-0 overflow-hidden" value="last-views">
+					<Tabs.Content className="h-full min-h-0 min-w-0 overflow-hidden" value="last-views">
 						<h1 className="text-red-600">Content</h1>
 					</Tabs.Content>
 				</div>

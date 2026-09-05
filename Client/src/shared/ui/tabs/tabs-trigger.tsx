@@ -13,7 +13,11 @@ type TabsTriggerProps = {
 	children: ReactNode;
 };
 
-export const TabsTrigger = ({ children, value, indicatorClassName }: Readonly<TabsTriggerProps>) => {
+export const TabsTrigger = ({
+	children,
+	value,
+	indicatorClassName = "h-[0.125rem] bg-(--geek-blue-6)"
+}: Readonly<TabsTriggerProps>) => {
 	const { activeTab, setActiveTab } = use(TabsContext);
 
 	const state = value ? (activeTab === value ? "active" : "inactive") : undefined;
