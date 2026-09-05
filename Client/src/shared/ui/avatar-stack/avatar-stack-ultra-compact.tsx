@@ -4,12 +4,12 @@ import type { ReactElement } from "react";
 
 import type { GetFeaturedClientsResponse } from "@entities/users";
 
-import type { AvatarStackDescriptionProps } from "./avatar-stack-description";
-import { AvatarStackDescription } from "./avatar-stack-description";
 import type { AvatarStackDirectionVariant } from "./avatar-stack";
 import { AvatarStackDirectionVariants } from "./avatar-stack";
+import type { AvatarStackDescriptionProps } from "./avatar-stack-description";
+import { AvatarStackDescription } from "./avatar-stack-description";
 
-type AvatarStackExtended = {
+type AvatarStackUltraCompactProps = {
 	direction: AvatarStackDirectionVariant;
 	visibleUsers: GetFeaturedClientsResponse;
 	remainingUsers: number;
@@ -17,13 +17,13 @@ type AvatarStackExtended = {
 	className?: string;
 };
 
-export const AvatarStackExtended = ({
+export const AvatarStackUltraCompact = ({
 	direction,
 	visibleUsers,
 	remainingUsers,
 	avatarStackDescription,
 	className
-}: Readonly<AvatarStackExtended>) => {
+}: Readonly<AvatarStackUltraCompactProps>) => {
 	return (
 		<p className={clsx("flex flex-row gap-x-[0.875rem]", className)}>
 			<span className="flex flex-row items-center shrink-0" aria-hidden="true">
@@ -31,12 +31,18 @@ export const AvatarStackExtended = ({
 					<span
 						key={index + "-" + fullName}
 						className={clsx(
-							"relative block w-[1.5rem] h-[1.5rem] rounded-full overflow-hidden border border-solid border-(--black-pearl) shrink-0",
-							index !== 0 && "-ml-[0.25rem]"
+							"relative grow-0 shrink-0 w-[2rem] h-[2rem] rounded-full shadow-[0_0_1.5rem_0_var(--geek-blue-primary-opacity-200)] bg-(--geek-blue-7)",
+							index !== 0 && "ml-[-0.5rem]"
 						)}
 						style={{ zIndex: direction === AvatarStackDirectionVariants.LeftToRight ? index : -index }}
 					>
-						<Image className="object-cover" src={imageUrl} alt={fullName} width={24} height={24} />
+						<Image
+							src={imageUrl}
+							alt={fullName}
+							className="w-[2rem] h-[2rem] rounded-full object-cover"
+							width={32}
+							height={32}
+						/>
 					</span>
 				))}
 				{remainingUsers > 0 && (

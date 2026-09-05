@@ -9,10 +9,11 @@ import { Project } from "../model/types";
 
 import { UpdateProjectPrivacyCommand, UpdateProjectPrivacyResponse } from "@entities/projects";
 import type { CreateNewProjectResponse } from "./create-new-project";
-import { projectQueryKeys } from "./project.query-keys";
 import type { UpdateProjectDescriptionCommand, UpdateProjectDescriptionResponse } from "./update-project-description";
 import type { UpdateProjectImageCommand, UpdateProjectImageResponse } from "./update-project-image";
 import type { UpdateProjectNameCommand, UpdateProjectNameResponse } from "./update-project-name";
+
+import { projectQueryKeys } from "./project.query-keys";
 
 export const projectMutations = (queryClient: QueryClient) => ({
 	create: () =>

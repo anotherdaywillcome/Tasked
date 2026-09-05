@@ -6,8 +6,11 @@ import type { GetFeaturedClientsResponse } from "@entities/users";
 
 import type { AvatarStackDescriptionProps } from "./avatar-stack-description";
 import { AvatarStackDescription } from "./avatar-stack-description";
+import type { AvatarStackDirectionVariant } from "./avatar-stack";
+import { AvatarStackDirectionVariants } from "./avatar-stack";
 
 type AvatarStackCompactProps = {
+	direction: AvatarStackDirectionVariant;
 	visibleUsers: GetFeaturedClientsResponse;
 	remainingUsers: number;
 	avatarStackDescription: ReactElement<AvatarStackDescriptionProps, typeof AvatarStackDescription> | null;
@@ -15,6 +18,7 @@ type AvatarStackCompactProps = {
 };
 
 export const AvatarStackCompact = ({
+	direction,
 	visibleUsers,
 	remainingUsers,
 	avatarStackDescription,
@@ -30,7 +34,7 @@ export const AvatarStackCompact = ({
 							"relative block w-[2.5rem] h-[2.5rem] rounded-[2.5rem] overflow-hidden shadow-[0.063rem_0.063rem_0.375rem_0_rgba(0,0,0,0.12)] shrink-0",
 							index !== 0 && "-ml-[1.25rem]"
 						)}
-						style={{ zIndex: index }}
+						style={{ zIndex: direction === AvatarStackDirectionVariants.LeftToRight ? index : -index }}
 					>
 						<Image className="object-cover" src={imageUrl} alt={fullName} width={40} height={40} />
 					</span>

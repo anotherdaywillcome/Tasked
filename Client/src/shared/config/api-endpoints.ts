@@ -14,6 +14,7 @@ export const API_ENDPOINTS = {
 			Image: (id: string) => `projects/${id}/image`,
 			Attachments: (projectId: string) => `projects/${projectId}/attachments`
 		},
-		Create: "projects"
+		Create: "projects",
+		Assignees: (id: string) => `projects/${id}/assignees`
 	}
 };
