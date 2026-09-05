@@ -5,21 +5,8 @@ import { AnimatePresence, motion } from "motion/react";
 import type { ReactNode } from "react";
 import { use, useEffect } from "react";
 
+import { animationVariants } from "./animations";
 import { TabsContext } from "./tabs-context";
-
-type TabDirection = "left" | "right" | null;
-
-const getEnterX = (direction: TabDirection) => {
-	if (direction === "right") return "100%";
-	if (direction === "left") return "-100%";
-	return 0;
-};
-
-const getExitX = (direction: TabDirection) => {
-	if (direction === "right") return "-100%";
-	if (direction === "left") return "100%";
-	return 0;
-};
 
 type TabsContentProps = {
 	value: string;
@@ -29,21 +16,6 @@ type TabsContentProps = {
 
 export const TabsContent = ({ children, value, className }: Readonly<TabsContentProps>) => {
 	const { addTab, activeTab, direction } = use(TabsContext);
-
-	const variants = {
-		enter: (tabDirection: TabDirection) => ({
-			x: getEnterX(tabDirection),
-			opacity: 0
-		}),
-		center: {
-			x: 0,
-			opacity: 1
-		},
-		exit: (tabDirection: TabDirection) => ({
-			x: getExitX(tabDirection),
-			opacity: 0
-		})
-	};
 
 	useEffect(() => {
 		addTab(value);
@@ -55,13 +27,10 @@ export const TabsContent = ({ children, value, className }: Readonly<TabsContent
 				<motion.div
 					key={value}
 					custom={direction}
-					variants={variants}
+					variants={animationVariants}
 					initial={direction ? "enter" : false}
 					animate="center"
 					exit="exit"
-					transition={{
-						duration: 0.8
-					}}
 					className={clsx("h-full min-h-0 min-w-0 w-full shrink-0 grow-0", className)}
 				>
 					{children}

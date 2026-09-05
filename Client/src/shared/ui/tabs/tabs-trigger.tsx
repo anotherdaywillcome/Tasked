@@ -14,12 +14,13 @@ type TabsTriggerProps = {
 };
 
 export const TabsTrigger = ({ children, value, indicatorClassName }: Readonly<TabsTriggerProps>) => {
-	const context = use(TabsContext);
-	const state = value ? (context.activeTab === value ? "active" : "inactive") : undefined;
+	const { activeTab, setActiveTab } = use(TabsContext);
+
+	const state = value ? (activeTab === value ? "active" : "inactive") : undefined;
 
 	const handleActiveTabChange = () => {
 		if (value) {
-			context.setActiveTabWithDirection(value);
+			setActiveTab(value);
 		}
 	};
 

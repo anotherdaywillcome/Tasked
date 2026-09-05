@@ -1,10 +1,19 @@
 import { createContext } from "react";
 
+import { TabDirection } from "./tabs";
+
 type TabsContextValue = {
 	addTab: (tab: string) => void;
 	activeTab: string | null;
-	setActiveTabWithDirection: (tab: string) => void;
-	direction: "left" | "right" | null;
+	setActiveTab: (tab: string) => void;
+	direction: TabDirection;
 };
 
-export const TabsContext = createContext<TabsContextValue>({} as TabsContextValue);
+const tabsContextInitialValues = {
+	addTab: () => {},
+	activeTab: null,
+	setActiveTab: () => {},
+	direction: null
+};
+
+export const TabsContext = createContext<TabsContextValue>(tabsContextInitialValues);

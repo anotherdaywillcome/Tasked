@@ -25,3 +25,13 @@ export const MOTION_CONFIG_DRAWER: MotionConfigProps = {
 		mass: 0.8
 	}
 };
+
+export const MOTION_CONFIG_TABS: MotionConfigProps = {
+	reducedMotion: "user",
+	transition: {
+		type: "spring",
+		stiffness: 280,
+		damping: 30,
+		mass: 0.75
+	}
+};
