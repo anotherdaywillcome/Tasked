@@ -13,7 +13,7 @@ const NAVIGATION_LETTER_DELAY = 0.015 as const;
 
 const getNavigationLetterDirection = (index: number) => (index % 2 === 0 ? 1 : -1);
 
-const NAVIGATION_WRAPPER_VARIANTS: Variants = {
+const navigationWrapperVariants: Variants = {
 	idle: {
 		scale: 1
 	},
@@ -25,7 +25,7 @@ const NAVIGATION_WRAPPER_VARIANTS: Variants = {
 	}
 };
 
-const NAVIGATION_INITIAL_LETTER_VARIANTS: Variants = {
+const navigationInitialLetterVariants: Variants = {
 	idle: (index: number) => ({
 		opacity: 1,
 		y: 0,
@@ -38,7 +38,7 @@ const NAVIGATION_INITIAL_LETTER_VARIANTS: Variants = {
 	})
 };
 
-const NAVIGATION_SECONDARY_LETTER_VARIANTS: Variants = {
+const navigationSecondaryLetterVariants: Variants = {
 	idle: (index: number) => ({
 		opacity: 0,
 		y: getNavigationLetterDirection(index) * -NAVIGATION_ITEM_HEIGHT,
@@ -62,7 +62,7 @@ export const MainNavigationItem = ({ href, label }: Readonly<MainNavigationItemP
 			<motion.li
 				tabIndex={-1}
 				initial="idle"
-				variants={NAVIGATION_WRAPPER_VARIANTS}
+				variants={navigationWrapperVariants}
 				whileHover="hover"
 				whileTap="press"
 			>
@@ -85,14 +85,14 @@ export const MainNavigationItem = ({ href, label }: Readonly<MainNavigationItemP
 								<motion.span
 									className="block"
 									custom={index}
-									variants={NAVIGATION_INITIAL_LETTER_VARIANTS}
+									variants={navigationInitialLetterVariants}
 								>
 									{character}
 								</motion.span>
 								<motion.span
 									className="absolute inset-x-0 top-0 block"
 									custom={index}
-									variants={NAVIGATION_SECONDARY_LETTER_VARIANTS}
+									variants={navigationSecondaryLetterVariants}
 								>
 									{character}
 								</motion.span>

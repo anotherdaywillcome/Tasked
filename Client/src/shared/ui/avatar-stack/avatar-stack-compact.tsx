@@ -2,7 +2,8 @@ import { clsx } from "clsx";
 import Image from "next/image";
 import type { ReactElement } from "react";
 
-import type { GetFeaturedClientsResponse } from "@entities/users";
+import type { User } from "@entities/users";
+import type { Assignee } from "@entities/tasks";
 
 import type { AvatarStackDescriptionProps } from "./avatar-stack-description";
 import { AvatarStackDescription } from "./avatar-stack-description";
@@ -11,7 +12,7 @@ import { AvatarStackDirectionVariants } from "./avatar-stack";
 
 type AvatarStackCompactProps = {
 	direction: AvatarStackDirectionVariant;
-	visibleUsers: GetFeaturedClientsResponse;
+	visibleUsers: Array<Assignee> | Array<User>;
 	remainingUsers: number;
 	avatarStackDescription: ReactElement<AvatarStackDescriptionProps, typeof AvatarStackDescription> | null;
 	className?: string;

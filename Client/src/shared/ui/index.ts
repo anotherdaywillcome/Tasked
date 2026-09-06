@@ -3,6 +3,7 @@ export * from "./background";
 export * from "./badge";
 export * from "./button";
 export * from "./checkbox";
+export * from "./dialog";
 export * from "./divider";
 export * from "./dropdown-menu";
 export * from "./glow-effect";

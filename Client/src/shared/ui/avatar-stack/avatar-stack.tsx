@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import { isValidElement } from "react";
 
 import type { User } from "@entities/users";
-import { Assignee } from "@entities/tasks";
+import type { Assignee } from "@entities/tasks";
 
 import { AvatarStackCompact } from "./avatar-stack-compact";
 import type { AvatarStackDescriptionProps } from "./avatar-stack-description";

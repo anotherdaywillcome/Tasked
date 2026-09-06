@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { useId } from "react";
 
+import type { Project } from "@entities/projects";
+
 import { Icon, ICON_TYPES } from "@shared/ui";
 
 import { useUploadImage } from "../model";
-import { Project } from "@entities/projects/model/types";
 
 type UploadProjectImageProps = {
 	project: Omit<Project, "taskSummary">;

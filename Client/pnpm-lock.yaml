@@ -1049,8 +1049,8 @@ packages:
   '@preact/signals-core@1.14.4':
     resolution: {integrity: sha512-HNB6HYeYKhQbJ1aKl+YRjrS4+QWHLKX6qKoUsfS/m0vqzsVaEBiZiaKbG/e+NKk2ch5ALQr/ihWaMHxiCuuWHA==}
 
-  '@preact/signals@2.11.1':
-    resolution: {integrity: sha512-uYoD+USkacTNU02kfCBkJEV7xabKTmA78W5pnT2GymsuGEC9n/ZO+UT4S96l0dIL6KLDk77VJyUFuOMBvftVHg==}
+  '@preact/signals@2.11.2':
+    resolution: {integrity: sha512-rVTRTt/T0HIRgbugwS5FigbfF/kfdEFYFtiqxa+lbpqTajepqnR0firuAS2iNdHyejWB7Yc9p9QePkVNBtTAwg==}
     peerDependencies:
       preact: '>= 10.25.0 || >=11.0.0-0'
 
@@ -2995,8 +2995,8 @@ packages:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
 
-  playwright-core@1.62.1:
-    resolution: {integrity: sha512-wPYSwEBJY9GHraISXqyqtx0na0LpO3XEX7jNDhntbex7tzUS7kLnZsOlFruFJB4Hi/rhDMjXGqHewDZ68nYZVw==}
+  playwright-core@1.63.0:
+    resolution: {integrity: sha512-rYCsBF/M5HjUch52bbtVONEFjv6Xu8sm8h72dNlR5bzIE1fvC/bxgspzkjSfU+MweEMmPM8KJebG6nnyxo5mCg==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -4434,7 +4434,7 @@ snapshots:
 
   '@preact/signals-core@1.14.4': {}
 
-  '@preact/signals@2.11.1(preact@10.29.8)':
+  '@preact/signals@2.11.2(preact@10.29.8)':
     dependencies:
       '@preact/signals-core': 1.14.4
       preact: 10.29.8(preact-render-to-string@5.2.6(preact@10.29.8))
@@ -6513,7 +6513,7 @@ snapshots:
 
   picomatch@4.0.7: {}
 
-  playwright-core@1.62.1: {}
+  playwright-core@1.63.0: {}
 
   pluralize@8.0.0: {}
 
@@ -6670,7 +6670,7 @@ snapshots:
       oxc-resolver: 11.24.2
       oxlint: 1.79.0
       oxlint-plugin-react-doctor: 0.9.13
-      playwright-core: 1.62.1
+      playwright-core: 1.63.0
       prompts: 2.4.2
       typescript: 5.9.3
       yaml: 2.9.0
@@ -6706,7 +6706,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.7(supports-color@8.1.1)
       '@babel/types': 7.29.8
-      '@preact/signals': 2.11.1(preact@10.29.8)
+      '@preact/signals': 2.11.2(preact@10.29.8)
       '@rollup/pluginutils': 5.4.0
       bippy: 0.5.43(react@19.2.8)
       commander: 14.0.3

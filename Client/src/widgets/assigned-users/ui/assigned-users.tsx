@@ -3,13 +3,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-import { Project } from "@entities/projects";
-import { Assignee } from "@entities/tasks";
+import type { Project } from "@entities/projects";
+import type { Assignee } from "@entities/tasks";
+import { projectQueries } from "@entities/projects/api/project.queries";
 
 import type { AvatarStackDirectionVariant, AvatarStackVariant } from "@shared/ui";
 import { AvatarStack } from "@shared/ui";
-
-import { projectQueries } from "@entities/projects/api/project.queries";
 
 import { ASSIGNED_USERS_DEFAULT_SETTINGS } from "../config";
 

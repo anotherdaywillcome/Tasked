@@ -3,10 +3,10 @@
 import type { ChangeEvent } from "react";
 import { useEffect, useId, useState } from "react";
 
+import type { Project } from "@entities/projects";
+
 import { useDebounce } from "@shared/lib/hooks";
 import { formatDate } from "@shared/lib/utils";
-
-import { Project } from "@entities/projects/model/types";
 
 import { useRename } from "../model";
 
@@ -63,7 +63,6 @@ export const Rename = ({
 					name="name"
 					disabled={isPending}
 					autoComplete="off"
-					defaultValue={name}
 					value={projectName}
 				/>
 			</form>

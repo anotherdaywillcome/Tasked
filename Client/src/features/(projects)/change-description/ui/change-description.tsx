@@ -3,7 +3,7 @@
 import type { ChangeEvent } from "react";
 import { useEffect, useId, useState } from "react";
 
-import { Project } from "@entities/projects/model/types";
+import type { Project } from "@entities/projects";
 
 import { useDebounce } from "@shared/lib/hooks";
 
@@ -57,7 +57,6 @@ export const ChangeDescription = ({ project: { id, description } }: Readonly<Cha
 					id={changeDescriptionId}
 					disabled={isPending}
 					autoComplete="off"
-					defaultValue={description}
 					value={projectDescription}
 				/>
 			</form>

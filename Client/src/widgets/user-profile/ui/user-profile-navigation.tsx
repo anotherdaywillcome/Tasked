@@ -1,11 +1,12 @@
 "use client";
 
 import { clsx } from "clsx";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, MotionConfig } from "motion/react";
 
 import { useNavigationLinkHighlight } from "@shared/ui";
+import { MOTION_CONFIG_CRISP } from "@shared/config";
 
-import { TRANSITION_HIGHLIGHT, USER_PROFILE_ITEMS, USER_PROFILE_NAVIGATION_VARIANTS } from "../config";
+import { USER_PROFILE_ITEMS, userProfileNavigationVariants } from "../config";
 
 import { UserProfileNavigationLink } from "./user-profile-navigation-link";
 
@@ -27,7 +28,7 @@ export const UserProfileNavigation = ({ isUserProfileOpened, id }: Readonly<User
 					animate="opened"
 					exit="closed"
 					initial="closed"
-					variants={USER_PROFILE_NAVIGATION_VARIANTS}
+					variants={userProfileNavigationVariants}
 					onPointerLeave={handleLinkUnselection}
 					onBlurCapture={handleLinkUnselection}
 				>
@@ -46,11 +47,12 @@ export const UserProfileNavigation = ({ isUserProfileOpened, id }: Readonly<User
 								)}
 							>
 								{isActive && (
-									<motion.div
-										layoutId="nav-highlight"
-										className="absolute inset-0 z-10 rounded-[0.75rem] border-[0.031rem] border-solid border-(--white-pallete-10) bg-(--geek-blue-primary-opacity-300)"
-										transition={TRANSITION_HIGHLIGHT}
-									/>
+									<MotionConfig {...MOTION_CONFIG_CRISP}>
+										<motion.div
+											layoutId="nav-highlight"
+											className="absolute inset-0 z-10 rounded-[0.75rem] border-[0.031rem] border-solid border-(--white-pallete-10) bg-(--geek-blue-primary-opacity-300)"
+										/>
+									</MotionConfig>
 								)}
 								<UserProfileNavigationLink href={href} icon={icon} isActive={isActive}>
 									{label}

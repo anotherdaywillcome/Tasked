@@ -1,8 +1,14 @@
 import { withFallback } from "@shared/lib/hofs";
 
-import { FeaturedClient, GetFeaturedClientsResponse } from "../../api";
+import { GetFeaturedClientsResponse } from "../../api";
+import { User } from "../../model";
 
-const getFullName = withFallback("Unknown users", {
+const getId = withFallback("Unknown id", {
+	entity: "User",
+	field: "id"
+});
+
+const getFullName = withFallback("Unknown user", {
 	entity: "User",
 	field: "fullName"
 });
@@ -12,9 +18,16 @@ const getImageUrl = withFallback("/images/avatar-placeholder.png", {
 	field: "imageUrl"
 });
 
-export const featuredClientsAdapter = (clients: Array<FeaturedClient>): GetFeaturedClientsResponse => {
+const getRole = withFallback("Unknown role", {
+	entity: "User",
+	field: "role"
+});
+
+export const featuredClientsAdapter = (clients: Array<User>): GetFeaturedClientsResponse => {
 	return clients.map((client) => ({
+		id: getId(client.id),
 		fullName: getFullName(client.fullName),
-		imageUrl: getImageUrl(client.imageUrl)
+		imageUrl: getImageUrl(client.imageUrl),
+		role: getRole(client.role)
 	}));
 };

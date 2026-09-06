@@ -13,9 +13,11 @@ import { UploadImage } from "@features/(projects)/upload-image";
 import { CreateProjectDrawerSkeleton } from "@features/create-project-drawer-skeleton";
 
 import { projectMutations } from "@entities/projects/api/project.mutations";
-import { AvatarStackDirectionVariants, AvatarStackVariants, Icon, ICON_TYPES, Tabs } from "@shared/ui";
+import { AvatarStackDirectionVariants, AvatarStackVariants, Tabs } from "@shared/ui";
 import { AssignedUsers } from "@widgets/assigned-users";
 import { AssignMembers } from "./(projects)/assign-members";
+import { Activity } from "@widgets/(project)/activity";
+import { LastViews } from "@widgets/(project)/last-views";
 
 export const CreateProjectDrawer = () => {
 	const { isOpen } = use(DrawerContext);
@@ -60,7 +62,7 @@ export const CreateProjectDrawer = () => {
 				<Rename project={project} />
 			</div>
 			<ChangeDescription project={project} />
-			<div className="grid grid-cols-[auto_auto] gap-x-[1.5rem] items-center px-[0.75rem] pb-[0.75rem]">
+			<div className="grid grid-cols-[1fr_1fr] gap-x-[1.5rem] items-center px-[0.75rem] pb-[0.75rem]">
 				<ChangePrivacy project={project} />
 				<div className="flex flex-col w-full gap-y-[0.25rem]">
 					<span className="font-(family-name:--font-barlow) font-medium text-[0.75rem] leading-[133%] tracking-[0.01em] text-(--neutrals-3)">
@@ -93,34 +95,18 @@ export const CreateProjectDrawer = () => {
 			>
 				<Tabs.List className="flex gap-x-[1rem] px-[1.5rem]">
 					<Tabs.Trigger value="activity">
-						<button
-							type="button"
-							className="flex cursor-pointer flex-row-reverse items-center gap-x-[0.5rem] border-b-[0.125rem] border-solid border-transparent bg-transparent px-[0.75rem] pt-[1.063rem] pb-[1.125rem] text-(--neutrals-3) transition-[background-color,box-shadow,color] duration-200 ease-out hover:bg-(--geek-blue-primary-opacity-200) hover:text-(--white-pallete-100) focus-visible:bg-(--geek-blue-primary-opacity-100) focus-visible:text-(--white-pallete-100) focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_0.125rem_var(--daybreak-blue-200)] group-data-[state=active]/tab:text-(--white-pallete-100)"
-						>
-							<span className="font-(family-name:--font-barlow) text-[0.75rem] leading-[133%] font-bold tracking-[0.01em]">
-								Activity
-							</span>
-							<Icon type={ICON_TYPES.Kanban} size={14} />
-						</button>
+						<Activity.DrawerTrigger />
 					</Tabs.Trigger>
 					<Tabs.Trigger value="last-views">
-						<button
-							type="button"
-							className="flex cursor-pointer flex-row-reverse items-center gap-x-[0.5rem] border-b-[0.125rem] border-solid border-transparent bg-transparent px-[0.75rem] pt-[1.063rem] pb-[1.125rem] text-(--neutrals-3) transition-[background-color,box-shadow,color] duration-200 ease-out hover:bg-(--geek-blue-primary-opacity-200) hover:text-(--white-pallete-100) focus-visible:bg-(--geek-blue-primary-opacity-100) focus-visible:text-(--white-pallete-100) focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_0.125rem_var(--daybreak-blue-200)] group-data-[state=active]/tab:text-(--white-pallete-100)"
-						>
-							<span className="font-(family-name:--font-barlow) text-[0.75rem] leading-[133%] font-bold tracking-[0.01em]">
-								Last Views
-							</span>
-							<Icon type={ICON_TYPES.Calendar} size={14} />
-						</button>
+						<LastViews.DrawerTrigger />
 					</Tabs.Trigger>
 				</Tabs.List>
 				<div className="bg-[rgba(1,0,9,0.25)] flex h-full min-h-0 min-w-0 flex-1 overflow-hidden border-t-[0.031rem] border-solid border-(--white-pallete-10) px-[0.75rem]">
 					<Tabs.Content className="h-full min-h-0 min-w-0 overflow-hidden" value="activity">
-						<h1 className="text-red-600">Content</h1>
+						<Activity.DrawerContent project={project} />
 					</Tabs.Content>
 					<Tabs.Content className="h-full min-h-0 min-w-0 overflow-hidden" value="last-views">
-						<h1 className="text-red-600">Content</h1>
+						<LastViews.DrawerContent project={project} />
 					</Tabs.Content>
 				</div>
 			</Tabs>

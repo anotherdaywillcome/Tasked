@@ -2,16 +2,17 @@ import { clsx } from "clsx";
 import Image from "next/image";
 import type { ReactElement } from "react";
 
-import type { GetFeaturedClientsResponse } from "@entities/users";
+import type { User } from "@entities/users";
+import type { Assignee } from "@entities/tasks";
 
-import type { AvatarStackDescriptionProps } from "./avatar-stack-description";
-import { AvatarStackDescription } from "./avatar-stack-description";
 import type { AvatarStackDirectionVariant } from "./avatar-stack";
 import { AvatarStackDirectionVariants } from "./avatar-stack";
+import type { AvatarStackDescriptionProps } from "./avatar-stack-description";
+import { AvatarStackDescription } from "./avatar-stack-description";
 
 type AvatarStackExtended = {
 	direction: AvatarStackDirectionVariant;
-	visibleUsers: GetFeaturedClientsResponse;
+	visibleUsers: Array<Assignee> | Array<User>;
 	remainingUsers: number;
 	avatarStackDescription: ReactElement<AvatarStackDescriptionProps, typeof AvatarStackDescription> | null;
 	className?: string;

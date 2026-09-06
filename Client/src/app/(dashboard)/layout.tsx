@@ -8,9 +8,9 @@ import { ProjectsNavigation } from "@widgets/projects-navigation";
 import { Sidebar } from "@widgets/sidebar";
 import { UserInfo, UserInfoSkeleton } from "@widgets/user-info";
 
-import { CreateProject } from "@features/create-project";
+import { CREATE_PROJECT_TRIGGER_VARIANTS, CreateProject } from "@features/create-project";
 
-import { Background } from "@shared/ui/background";
+import { Background } from "@shared/ui";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -35,7 +35,7 @@ const DashboardLayout = ({ children }: Readonly<DashboardLayoutProps>) => {
 					<MainNavigation />
 					<ProjectsNavigation>
 						<ProjectsNavigation.Actions>
-							<CreateProject />
+							<CreateProject.Trigger variant={CREATE_PROJECT_TRIGGER_VARIANTS.Icon} />
 						</ProjectsNavigation.Actions>
 					</ProjectsNavigation>
 				</Sidebar.Content>

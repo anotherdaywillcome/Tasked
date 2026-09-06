@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import type { Project } from "@entities/projects";
 import { Privacy, privacyOptions } from "@entities/projects/model/types";
+
 import { Select } from "@shared/ui";
 import { useDebounce } from "@shared/lib/hooks";
 

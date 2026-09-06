@@ -1,6 +1,3 @@
-export type FeaturedClient = {
-	imageUrl: string;
-	fullName: string;
-};
+import { User } from "../../model";
 
-export type GetFeaturedClientsResponse = Array<FeaturedClient>;
+export type GetFeaturedClientsResponse = Array<User>;
