@@ -146,7 +146,7 @@
     --accent-color-success-2: #18a64e;
     --accent-color-success-3: #1ec85f;
     --accent-color-success-4: #179142;
- 
+
     --desert-storm: #f8f8f8;
     --blue-pot: #13184E;
     --black-pearl: #021528;
@@ -179,4 +179,35 @@ progress::-webkit-progress-value {
 
 progress::-moz-progress-bar {
     background: linear-gradient(90deg, #2fbceb 0%, #2f54eb 100%);
+}
+
+.activity-scroll {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.activity-scroll::-webkit-scrollbar {
+    width: 12px;
+}
+
+.activity-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.activity-scroll::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: 4px solid transparent;
+    background-clip: padding-box;
+    border-radius: 999px;
+}
+
+.activity-scroll:hover {
+    scrollbar-color: var(--white-pallete-20) transparent;
+}
+
+.activity-scroll:hover::-webkit-scrollbar-thumb {
+    background: var(--white-pallete-20);
+    border: 4px solid transparent;
+    background-clip: padding-box;
 }
